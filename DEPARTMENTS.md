@@ -13,7 +13,7 @@ The Legion is organized into **9 departments**, each containing specialized agen
 
 Making it beautiful, usable, and delightful.
 
-**Head:** `head-design`
+**Head:** `00-design-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -30,7 +30,7 @@ Making it beautiful, usable, and delightful.
 
 Building the future, one commit at a time.
 
-**Head:** `head-engineering`
+**Head:** `00-engineering-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -48,7 +48,7 @@ Building the future, one commit at a time.
 
 Growing your audience, one authentic interaction at a time.
 
-**Head:** `head-marketing`
+**Head:** `00-marketing-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -67,7 +67,7 @@ Growing your audience, one authentic interaction at a time.
 
 Building the right thing at the right time.
 
-**Head:** `head-product`
+**Head:** `00-product-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -81,7 +81,7 @@ Building the right thing at the right time.
 
 Keeping the trains running on time (and under budget).
 
-**Head:** `head-project-management`
+**Head:** `00-project-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -97,7 +97,7 @@ Keeping the trains running on time (and under budget).
 
 Building the immersive future.
 
-**Head:** `head-spatial-computing`
+**Head:** `00-spatial-computing-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -114,7 +114,7 @@ Building the immersive future.
 
 The unique specialists who don't fit in a box.
 
-**Head:** `head-specialized`
+**Head:** `00-specialized-agent-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -128,7 +128,7 @@ The unique specialists who don't fit in a box.
 
 The backbone of the operation.
 
-**Head:** `head-support`
+**Head:** `00-support-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -145,7 +145,7 @@ The backbone of the operation.
 
 Breaking things so users don't have to.
 
-**Head:** `head-testing`
+**Head:** `00-testing-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -175,34 +175,10 @@ Breaking things so users don't have to.
 
 **Total: 51 agents across 9 departments, each with a department head**
 
----
-
-## Orchestration Hierarchy
-
-```
-LG2 (Master Orchestrator)
-├── head-design
-│   └── brand-guardian, ui-designer, ux-architect, ...
-├── head-engineering
-│   └── backend-architect, frontend-developer, ...
-├── head-marketing
-│   └── growth-hacker, content-creator, ...
-├── head-product
-│   └── feedback-synthesizer, sprint-prioritizer, ...
-├── head-project-management
-│   └── management-project-shepherd, ...
-├── head-spatial-computing
-│   └── spatial-engineer, immersive-developer, ...
-├── head-specialized
-│   └── orchestrator, data-analytics-reporter, ...
-├── head-support
-│   └── support-responder, analytics-reporter, ...
-└── head-testing
-    └── reality-checker, api-tester, ...
 ```
 
 **Use Case:** "Build a full-stack web application with design system"
-- LG2 spawns department heads
+- Orchestrator spawns department heads
 - Each head coordinates their specialists
 - Heads report back to LG2 for final integration
 
@@ -210,4 +186,4 @@ LG2 (Master Orchestrator)
 
 _The structure establishes the Process._
 
-**LG2**
+
