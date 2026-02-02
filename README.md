@@ -4,10 +4,6 @@
 
 This project is a translation and orchestration layer built on top of [The Agency](https://github.com/msitarzewski/agency-agents) by [@msitarzewski](https://github.com/msitarzewski) that define the personalities at the core of this system. Those agents were translated to [OpenClaw](https://github.com/openclaw/openclaw) with an additional "department head" layer in each grouping. Finally one master orchestrator agent is provided, or you can run this with your primary OpenClaw persona.
 
-## Overview
-
-ClawLegion is a complete agent orchestration framework for [OpenClaw](https://github.com/openclaw/openclaw) designed for complex, multi-stage projects that require coordinated specialist collaboration.
-
 ### What's Included
 
 - **1 Orchestrator** — Top-level coordinator
@@ -18,7 +14,7 @@ ClawLegion is a complete agent orchestration framework for [OpenClaw](https://gi
 
 ```
 legion/
-├── lg2/                 # Master orchestrator
+├── orchestrator/        # Master orchestrator
 ├── agents/              # 51 specialist agents
 │   ├── design/          # 6 agents (UI, UX, Brand, etc.)
 │   ├── engineering/     # 7 agents (Frontend, Backend, Mobile, etc.)
@@ -62,12 +58,6 @@ Each agent directory contains:
 
    Or manually add the agent config from `legion-config.json` to your `openclaw.json`.
 
-3. **Verify installation:**
-   ```bash
-   openclaw agents list | grep -E "(lg2|head-)"
-   ```
-
-   You should see `lg2` and 9 `head-*` agents listed.
 
 ## Usage
 
@@ -173,7 +163,7 @@ To add new agents:
 1. Create agent directory: `agents/<department>/<agent-id>/`
 2. Add `SOUL.md`, `MEMORY.md`, `TOOLS.md`
 3. Update department head's `allowAgents` list
-4. Add agent to `lg2`'s `allowAgents` list
+4. Add agent to `orchestrator`'s `allowAgents` list
 5. Test spawn command
 
 ## License
