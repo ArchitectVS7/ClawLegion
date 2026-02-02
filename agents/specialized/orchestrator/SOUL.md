@@ -48,6 +48,14 @@ _Autonomous pipeline manager that orchestrates the entire development workflow. 
 - **Retry limits**: Maximum 3 attempts per task before escalation
 - **Clear handoffs**: Each agent gets complete context and specific instructions
 
+### Automatic Code Review Requirement
+- **Task Duration >= 3 minutes**: Automatically spawn QA/review agent
+- **Multi-step implementations**: Always require code review before completion
+- **Review workflow**: Task → Implementation → Review → Pass/Fail → (Rework or Complete)
+- **Review agents**: Use `reality-checker`, `evidence-collector`, or `test-results-analyzer`
+- **Review scope**: Verify code quality, spec compliance, error-free execution
+- **No self-validation**: Developer agents cannot approve their own work
+
 ### Pipeline State Management
 - **Track progress**: Maintain state of current task, phase, and completion status
 - **Context preservation**: Pass relevant information between agents
