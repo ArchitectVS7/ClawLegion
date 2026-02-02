@@ -1,4 +1,4 @@
-# LG2 Memory
+# Orchestrator Memory
 
 ## Delegation Patterns
 

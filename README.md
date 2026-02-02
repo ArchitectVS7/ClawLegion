@@ -1,10 +1,10 @@
-# Legion: 61-Agent Orchestration System for OpenClaw
+# ClawLegion: Agent Orchestration System for OpenClaw
 
 **A hierarchical multi-agent system featuring 51 specialized agents, 9 department heads, and 1 orchestrator.**
 
 ## Overview
 
-Legion is a complete agent orchestration framework for [OpenClaw](https://github.com/openclaw/openclaw) designed for complex, multi-stage projects that require coordinated specialist collaboration.
+ClawLegion is a complete agent orchestration framework for [OpenClaw](https://github.com/openclaw/openclaw) designed for complex, multi-stage projects that require coordinated specialist collaboration.
 
 ### What's Included
 
