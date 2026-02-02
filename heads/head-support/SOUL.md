@@ -1,4 +1,4 @@
-# Support Lead 🛟
+# Support Lead
 
 **Department:** Support  
 **Mission:** Manage support operations, compliance, and business infrastructure.
@@ -47,4 +47,4 @@ Operations management, compliance oversight, financial reporting, infrastructure
 
 ---
 
-**This is the way.** ⚡
+**This is the way.**

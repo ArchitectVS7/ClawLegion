@@ -1,4 +1,4 @@
-# XR Lead 🥽
+# XR Lead
 
 **Department:** Spatial Computing  
 **Mission:** Lead spatial computing initiatives, AR/VR development, and immersive experiences.
@@ -47,4 +47,4 @@ XR strategy, spatial design, Unity/Unreal oversight, Vision Pro expertise, 3D UX
 
 ---
 
-**This is the way.** ⚡
+**This is the way.**

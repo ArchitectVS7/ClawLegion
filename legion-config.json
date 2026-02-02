@@ -1,1 +1,467 @@
-{"agents":{"list":[{"id":"lg2","name":"LG2 - Orchestrator","agentDir":"legion/lg2","model":"anthropic/claude-sonnet-4-5","identity":{"name":"LG2","emoji":"⚡","theme":"Bridge between dreams and data"},"subagents":{"allowAgents":["head-design","head-engineering","head-marketing","head-product","head-project-management","head-spatial-computing","head-specialized","head-support","head-testing","brand-guardian","ui-designer","ux-architect","ux-researcher","visual-storyteller","whimsy-injector","ai-engineer","backend-architect","devops-automator","frontend-developer","mobile-app-builder","rapid-prototyper","senior-developer","app-store-optimizer","content-creator","growth-hacker","instagram-curator","reddit-community-builder","social-media-strategist","tiktok-strategist","twitter-engager","feedback-synthesizer","sprint-prioritizer","trend-researcher","management-experiment-tracker","management-project-shepherd","management-studio-operations","management-studio-producer","manager-senior","spatial-metal-engineer","integration-specialist","spatial-engineer","cockpit-interaction-specialist","immersive-developer","interface-architect","orchestrator","analytics-reporter","index-engineer","analytics-reporter","executive-summary-generator","finance-tracker","infrastructure-maintainer","legal-compliance-checker","support-responder","api-tester","evidence-collector","performance-benchmarker","reality-checker","test-results-analyzer","tool-evaluator","workflow-optimizer"]}},{"id":"head-design","agentDir":"legion/heads/head-design","model":"anthropic/claude-sonnet-4-5","subagents":{"allowAgents":["brand-guardian","ui-designer","ux-architect","ux-researcher","visual-storyteller","whimsy-injector"]}},{"id":"head-engineering","agentDir":"legion/heads/head-engineering","model":"anthropic/claude-sonnet-4-5","subagents":{"allowAgents":["frontend-developer","backend-architect","senior-developer","mobile-app-builder","ai-engineer","devops-automator","rapid-prototyper"]}},{"id":"head-marketing","agentDir":"legion/heads/head-marketing","model":"anthropic/claude-sonnet-4-5","subagents":{"allowAgents":["growth-hacker","content-creator","social-media-strategist","twitter-engager","instagram-curator","tiktok-strategist","reddit-community-builder","app-store-optimizer"]}},{"id":"head-product","agentDir":"legion/heads/head-product","model":"anthropic/claude-sonnet-4-5","subagents":{"allowAgents":["feedback-synthesizer","sprint-prioritizer","trend-researcher"]}},{"id":"head-project-management","agentDir":"legion/heads/head-project-management","model":"anthropic/claude-sonnet-4-5","subagents":{"allowAgents":["management-project-shepherd","management-studio-producer","management-studio-operations","management-experiment-tracker","manager-senior"]}},{"id":"head-spatial-computing","agentDir":"legion/heads/head-spatial-computing","model":"anthropic/claude-sonnet-4-5","subagents":{"allowAgents":["spatial-engineer","immersive-developer","interface-architect","cockpit-interaction-specialist","integration-specialist","spatial-metal-engineer"]}},{"id":"head-specialized","agentDir":"legion/heads/head-specialized","model":"anthropic/claude-sonnet-4-5","subagents":{"allowAgents":["orchestrator","analytics-reporter","index-engineer"]}},{"id":"head-support","agentDir":"legion/heads/head-support","model":"anthropic/claude-sonnet-4-5","subagents":{"allowAgents":["support-responder","analytics-reporter","finance-tracker","legal-compliance-checker","infrastructure-maintainer","executive-summary-generator"]}},{"id":"head-testing","agentDir":"legion/heads/head-testing","model":"anthropic/claude-sonnet-4-5","subagents":{"allowAgents":["reality-checker","api-tester","performance-benchmarker","evidence-collector","test-results-analyzer","tool-evaluator","workflow-optimizer"]}},{"id":"brand-guardian","agentDir":"legion/agents/design/brand-guardian","model":"anthropic/claude-sonnet-4-5"},{"id":"ui-designer","agentDir":"legion/agents/design/ui-designer","model":"anthropic/claude-sonnet-4-5"},{"id":"ux-architect","agentDir":"legion/agents/design/ux-architect","model":"anthropic/claude-sonnet-4-5"},{"id":"ux-researcher","agentDir":"legion/agents/design/ux-researcher","model":"anthropic/claude-sonnet-4-5"},{"id":"visual-storyteller","agentDir":"legion/agents/design/visual-storyteller","model":"anthropic/claude-sonnet-4-5"},{"id":"whimsy-injector","agentDir":"legion/agents/design/whimsy-injector","model":"anthropic/claude-sonnet-4-5"},{"id":"ai-engineer","agentDir":"legion/agents/engineering/ai-engineer","model":"anthropic/claude-sonnet-4-5"},{"id":"backend-architect","agentDir":"legion/agents/engineering/backend-architect","model":"anthropic/claude-sonnet-4-5"},{"id":"devops-automator","agentDir":"legion/agents/engineering/devops-automator","model":"anthropic/claude-sonnet-4-5"},{"id":"frontend-developer","agentDir":"legion/agents/engineering/frontend-developer","model":"anthropic/claude-sonnet-4-5"},{"id":"mobile-app-builder","agentDir":"legion/agents/engineering/mobile-app-builder","model":"anthropic/claude-sonnet-4-5"},{"id":"rapid-prototyper","agentDir":"legion/agents/engineering/rapid-prototyper","model":"anthropic/claude-sonnet-4-5"},{"id":"senior-developer","agentDir":"legion/agents/engineering/senior-developer","model":"anthropic/claude-sonnet-4-5"},{"id":"app-store-optimizer","agentDir":"legion/agents/marketing/app-store-optimizer","model":"anthropic/claude-sonnet-4-5"},{"id":"content-creator","agentDir":"legion/agents/marketing/content-creator","model":"anthropic/claude-sonnet-4-5"},{"id":"growth-hacker","agentDir":"legion/agents/marketing/growth-hacker","model":"anthropic/claude-sonnet-4-5"},{"id":"instagram-curator","agentDir":"legion/agents/marketing/instagram-curator","model":"anthropic/claude-sonnet-4-5"},{"id":"reddit-community-builder","agentDir":"legion/agents/marketing/reddit-community-builder","model":"anthropic/claude-sonnet-4-5"},{"id":"social-media-strategist","agentDir":"legion/agents/marketing/social-media-strategist","model":"anthropic/claude-sonnet-4-5"},{"id":"tiktok-strategist","agentDir":"legion/agents/marketing/tiktok-strategist","model":"anthropic/claude-sonnet-4-5"},{"id":"twitter-engager","agentDir":"legion/agents/marketing/twitter-engager","model":"anthropic/claude-sonnet-4-5"},{"id":"feedback-synthesizer","agentDir":"legion/agents/product/feedback-synthesizer","model":"anthropic/claude-sonnet-4-5"},{"id":"sprint-prioritizer","agentDir":"legion/agents/product/sprint-prioritizer","model":"anthropic/claude-sonnet-4-5"},{"id":"trend-researcher","agentDir":"legion/agents/product/trend-researcher","model":"anthropic/claude-sonnet-4-5"},{"id":"management-experiment-tracker","agentDir":"legion/agents/project-management/management-experiment-tracker","model":"anthropic/claude-sonnet-4-5"},{"id":"management-project-shepherd","agentDir":"legion/agents/project-management/management-project-shepherd","model":"anthropic/claude-sonnet-4-5"},{"id":"management-studio-operations","agentDir":"legion/agents/project-management/management-studio-operations","model":"anthropic/claude-sonnet-4-5"},{"id":"management-studio-producer","agentDir":"legion/agents/project-management/management-studio-producer","model":"anthropic/claude-sonnet-4-5"},{"id":"manager-senior","agentDir":"legion/agents/project-management/manager-senior","model":"anthropic/claude-sonnet-4-5"},{"id":"spatial-metal-engineer","agentDir":"legion/agents/spatial-computing/spatial-metal-engineer","model":"anthropic/claude-sonnet-4-5"},{"id":"integration-specialist","agentDir":"legion/agents/spatial-computing/integration-specialist","model":"anthropic/claude-sonnet-4-5"},{"id":"spatial-engineer","agentDir":"legion/agents/spatial-computing/spatial-engineer","model":"anthropic/claude-sonnet-4-5"},{"id":"cockpit-interaction-specialist","agentDir":"legion/agents/spatial-computing/cockpit-interaction-specialist","model":"anthropic/claude-sonnet-4-5"},{"id":"immersive-developer","agentDir":"legion/agents/spatial-computing/immersive-developer","model":"anthropic/claude-sonnet-4-5"},{"id":"interface-architect","agentDir":"legion/agents/spatial-computing/interface-architect","model":"anthropic/claude-sonnet-4-5"},{"id":"orchestrator","agentDir":"legion/agents/specialized/orchestrator","model":"anthropic/claude-sonnet-4-5"},{"id":"analytics-reporter","agentDir":"legion/agents/specialized/analytics-reporter","model":"anthropic/claude-sonnet-4-5"},{"id":"index-engineer","agentDir":"legion/agents/specialized/index-engineer","model":"anthropic/claude-sonnet-4-5"},{"id":"analytics-reporter","agentDir":"legion/agents/support/analytics-reporter","model":"anthropic/claude-sonnet-4-5"},{"id":"executive-summary-generator","agentDir":"legion/agents/support/executive-summary-generator","model":"anthropic/claude-sonnet-4-5"},{"id":"finance-tracker","agentDir":"legion/agents/support/finance-tracker","model":"anthropic/claude-sonnet-4-5"},{"id":"infrastructure-maintainer","agentDir":"legion/agents/support/infrastructure-maintainer","model":"anthropic/claude-sonnet-4-5"},{"id":"legal-compliance-checker","agentDir":"legion/agents/support/legal-compliance-checker","model":"anthropic/claude-sonnet-4-5"},{"id":"support-responder","agentDir":"legion/agents/support/support-responder","model":"anthropic/claude-sonnet-4-5"},{"id":"api-tester","agentDir":"legion/agents/testing/api-tester","model":"anthropic/claude-sonnet-4-5"},{"id":"evidence-collector","agentDir":"legion/agents/testing/evidence-collector","model":"anthropic/claude-sonnet-4-5"},{"id":"performance-benchmarker","agentDir":"legion/agents/testing/performance-benchmarker","model":"anthropic/claude-sonnet-4-5"},{"id":"reality-checker","agentDir":"legion/agents/testing/reality-checker","model":"anthropic/claude-sonnet-4-5"},{"id":"test-results-analyzer","agentDir":"legion/agents/testing/test-results-analyzer","model":"anthropic/claude-sonnet-4-5"},{"id":"tool-evaluator","agentDir":"legion/agents/testing/tool-evaluator","model":"anthropic/claude-sonnet-4-5"},{"id":"workflow-optimizer","agentDir":"legion/agents/testing/workflow-optimizer","model":"anthropic/claude-sonnet-4-5"}]}}
+{
+  "agents": {
+    "list": [
+      {
+        "id": "lg2",
+        "name": "LG2 - Orchestrator",
+        "agentDir": "legion/lg2",
+        "model": "anthropic/claude-sonnet-4-5",
+        "identity": {
+          "name": "LG2",
+          "theme": "Bridge between dreams and data"
+        },
+        "subagents": {
+          "allowAgents": [
+            "head-design",
+            "head-engineering",
+            "head-marketing",
+            "head-product",
+            "head-project-management",
+            "head-spatial-computing",
+            "head-specialized",
+            "head-support",
+            "head-testing",
+            "brand-guardian",
+            "ui-designer",
+            "ux-architect",
+            "ux-researcher",
+            "visual-storyteller",
+            "whimsy-injector",
+            "ai-engineer",
+            "backend-architect",
+            "devops-automator",
+            "frontend-developer",
+            "mobile-app-builder",
+            "rapid-prototyper",
+            "senior-developer",
+            "app-store-optimizer",
+            "content-creator",
+            "growth-hacker",
+            "instagram-curator",
+            "reddit-community-builder",
+            "social-media-strategist",
+            "tiktok-strategist",
+            "twitter-engager",
+            "feedback-synthesizer",
+            "sprint-prioritizer",
+            "trend-researcher",
+            "management-experiment-tracker",
+            "management-project-shepherd",
+            "management-studio-operations",
+            "management-studio-producer",
+            "manager-senior",
+            "spatial-metal-engineer",
+            "integration-specialist",
+            "spatial-engineer",
+            "cockpit-interaction-specialist",
+            "immersive-developer",
+            "interface-architect",
+            "orchestrator",
+            "data-analytics-reporter",
+            "index-engineer",
+            "analytics-reporter",
+            "executive-summary-generator",
+            "finance-tracker",
+            "infrastructure-maintainer",
+            "legal-compliance-checker",
+            "support-responder",
+            "api-tester",
+            "evidence-collector",
+            "performance-benchmarker",
+            "reality-checker",
+            "test-results-analyzer",
+            "tool-evaluator",
+            "workflow-optimizer"
+          ]
+        }
+      },
+      {
+        "id": "head-design",
+        "agentDir": "legion/heads/head-design",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "brand-guardian",
+            "ui-designer",
+            "ux-architect",
+            "ux-researcher",
+            "visual-storyteller",
+            "whimsy-injector"
+          ]
+        }
+      },
+      {
+        "id": "head-engineering",
+        "agentDir": "legion/heads/head-engineering",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "frontend-developer",
+            "backend-architect",
+            "senior-developer",
+            "mobile-app-builder",
+            "ai-engineer",
+            "devops-automator",
+            "rapid-prototyper"
+          ]
+        }
+      },
+      {
+        "id": "head-marketing",
+        "agentDir": "legion/heads/head-marketing",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "growth-hacker",
+            "content-creator",
+            "social-media-strategist",
+            "twitter-engager",
+            "instagram-curator",
+            "tiktok-strategist",
+            "reddit-community-builder",
+            "app-store-optimizer"
+          ]
+        }
+      },
+      {
+        "id": "head-product",
+        "agentDir": "legion/heads/head-product",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "feedback-synthesizer",
+            "sprint-prioritizer",
+            "trend-researcher"
+          ]
+        }
+      },
+      {
+        "id": "head-project-management",
+        "agentDir": "legion/heads/head-project-management",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "management-project-shepherd",
+            "management-studio-producer",
+            "management-studio-operations",
+            "management-experiment-tracker",
+            "manager-senior"
+          ]
+        }
+      },
+      {
+        "id": "head-spatial-computing",
+        "agentDir": "legion/heads/head-spatial-computing",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "spatial-engineer",
+            "immersive-developer",
+            "interface-architect",
+            "cockpit-interaction-specialist",
+            "integration-specialist",
+            "spatial-metal-engineer"
+          ]
+        }
+      },
+      {
+        "id": "head-specialized",
+        "agentDir": "legion/heads/head-specialized",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "orchestrator",
+            "data-analytics-reporter",
+            "index-engineer"
+          ]
+        }
+      },
+      {
+        "id": "head-support",
+        "agentDir": "legion/heads/head-support",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "support-responder",
+            "analytics-reporter",
+            "finance-tracker",
+            "legal-compliance-checker",
+            "infrastructure-maintainer",
+            "executive-summary-generator"
+          ]
+        }
+      },
+      {
+        "id": "head-testing",
+        "agentDir": "legion/heads/head-testing",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "reality-checker",
+            "api-tester",
+            "performance-benchmarker",
+            "evidence-collector",
+            "test-results-analyzer",
+            "tool-evaluator",
+            "workflow-optimizer"
+          ]
+        }
+      },
+      {
+        "id": "brand-guardian",
+        "agentDir": "legion/agents/design/brand-guardian",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "ui-designer",
+        "agentDir": "legion/agents/design/ui-designer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "ux-architect",
+        "agentDir": "legion/agents/design/ux-architect",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "ux-researcher",
+        "agentDir": "legion/agents/design/ux-researcher",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "visual-storyteller",
+        "agentDir": "legion/agents/design/visual-storyteller",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "whimsy-injector",
+        "agentDir": "legion/agents/design/whimsy-injector",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "ai-engineer",
+        "agentDir": "legion/agents/engineering/ai-engineer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "backend-architect",
+        "agentDir": "legion/agents/engineering/backend-architect",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "devops-automator",
+        "agentDir": "legion/agents/engineering/devops-automator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "frontend-developer",
+        "agentDir": "legion/agents/engineering/frontend-developer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "mobile-app-builder",
+        "agentDir": "legion/agents/engineering/mobile-app-builder",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "rapid-prototyper",
+        "agentDir": "legion/agents/engineering/rapid-prototyper",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "senior-developer",
+        "agentDir": "legion/agents/engineering/senior-developer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "app-store-optimizer",
+        "agentDir": "legion/agents/marketing/app-store-optimizer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "content-creator",
+        "agentDir": "legion/agents/marketing/content-creator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "growth-hacker",
+        "agentDir": "legion/agents/marketing/growth-hacker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "instagram-curator",
+        "agentDir": "legion/agents/marketing/instagram-curator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "reddit-community-builder",
+        "agentDir": "legion/agents/marketing/reddit-community-builder",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "social-media-strategist",
+        "agentDir": "legion/agents/marketing/social-media-strategist",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "tiktok-strategist",
+        "agentDir": "legion/agents/marketing/tiktok-strategist",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "twitter-engager",
+        "agentDir": "legion/agents/marketing/twitter-engager",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "feedback-synthesizer",
+        "agentDir": "legion/agents/product/feedback-synthesizer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "sprint-prioritizer",
+        "agentDir": "legion/agents/product/sprint-prioritizer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "trend-researcher",
+        "agentDir": "legion/agents/product/trend-researcher",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "management-experiment-tracker",
+        "agentDir": "legion/agents/project-management/management-experiment-tracker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "management-project-shepherd",
+        "agentDir": "legion/agents/project-management/management-project-shepherd",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "management-studio-operations",
+        "agentDir": "legion/agents/project-management/management-studio-operations",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "management-studio-producer",
+        "agentDir": "legion/agents/project-management/management-studio-producer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "manager-senior",
+        "agentDir": "legion/agents/project-management/manager-senior",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "spatial-metal-engineer",
+        "agentDir": "legion/agents/spatial-computing/spatial-metal-engineer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "integration-specialist",
+        "agentDir": "legion/agents/spatial-computing/integration-specialist",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "spatial-engineer",
+        "agentDir": "legion/agents/spatial-computing/spatial-engineer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "cockpit-interaction-specialist",
+        "agentDir": "legion/agents/spatial-computing/cockpit-interaction-specialist",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "immersive-developer",
+        "agentDir": "legion/agents/spatial-computing/immersive-developer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "interface-architect",
+        "agentDir": "legion/agents/spatial-computing/interface-architect",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "orchestrator",
+        "agentDir": "legion/agents/specialized/orchestrator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "data-analytics-reporter",
+        "agentDir": "legion/agents/specialized/data-analytics-reporter",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "index-engineer",
+        "agentDir": "legion/agents/specialized/index-engineer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "analytics-reporter",
+        "agentDir": "legion/agents/support/analytics-reporter",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "executive-summary-generator",
+        "agentDir": "legion/agents/support/executive-summary-generator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "finance-tracker",
+        "agentDir": "legion/agents/support/finance-tracker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "infrastructure-maintainer",
+        "agentDir": "legion/agents/support/infrastructure-maintainer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "legal-compliance-checker",
+        "agentDir": "legion/agents/support/legal-compliance-checker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "support-responder",
+        "agentDir": "legion/agents/support/support-responder",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "api-tester",
+        "agentDir": "legion/agents/testing/api-tester",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "evidence-collector",
+        "agentDir": "legion/agents/testing/evidence-collector",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "performance-benchmarker",
+        "agentDir": "legion/agents/testing/performance-benchmarker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "reality-checker",
+        "agentDir": "legion/agents/testing/reality-checker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "test-results-analyzer",
+        "agentDir": "legion/agents/testing/test-results-analyzer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "tool-evaluator",
+        "agentDir": "legion/agents/testing/tool-evaluator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "workflow-optimizer",
+        "agentDir": "legion/agents/testing/workflow-optimizer",
+        "model": "anthropic/claude-sonnet-4-5"
+      }
+    ]
+  }
+}

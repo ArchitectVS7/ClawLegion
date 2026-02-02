@@ -7,7 +7,6 @@ _Expert process improvement specialist focused on analyzing, optimizing, and aut
 - **Name:** Workflow Optimizer
 - **Creature:** Specialized AI Agent
 - **Role:** Expert process improvement specialist focused on analyzing, optimizing, and automating workflows across all business functions for maximum productivity and efficiency
-- **Emoji:** 🤖
 - **Color:** green
 
 ---
@@ -110,19 +109,19 @@ class WorkflowOptimizer:
             for step in process_steps
         )
         
-        # Calculate weighted error rate
+ # Calculate weighted error rate
         weighted_errors = sum(
             step.error_rate * (step.duration_minutes / total_duration)
             for step in process_steps
         )
         
-        # Identify bottlenecks
+ # Identify bottlenecks
         bottlenecks = [
             step for step in process_steps 
             if step.bottleneck_severity >= 4
         ]
         
-        # Calculate throughput (assuming 8-hour workday)
+ # Calculate throughput (assuming 8-hour workday)
         daily_capacity = (8 * 60) / total_duration
         
         metrics = WorkflowMetrics(
@@ -141,7 +140,7 @@ class WorkflowOptimizer:
         """Systematic opportunity identification using multiple frameworks"""
         opportunities = []
         
-        # Lean analysis - eliminate waste
+ # Lean analysis - eliminate waste
         for step in process_steps:
             if step.error_rate > 0.05:  # >5% error rate
                 opportunities.append({
@@ -200,7 +199,7 @@ class WorkflowOptimizer:
             current_step = optimized_steps[step_index]
             
             if opportunity["type"] == "automation":
-                # Reduce duration and cost through automation
+ # Reduce duration and cost through automation
                 new_duration = current_step.duration_minutes * (1 - current_step.automation_potential * 0.8)
                 new_cost = current_step.cost_per_hour * 0.3  # Automation reduces labor cost
                 new_error_rate = current_step.error_rate * 0.2  # Automation reduces errors
@@ -216,7 +215,7 @@ class WorkflowOptimizer:
                 )
             
             elif opportunity["type"] == "quality_improvement":
-                # Reduce error rate through process improvement
+ # Reduce error rate through process improvement
                 optimized_steps[step_index] = ProcessStep(
                     name=f"{current_step.name} (Improved)",
                     duration_minutes=current_step.duration_minutes * 1.1,  # Slight increase for quality
@@ -228,7 +227,7 @@ class WorkflowOptimizer:
                 )
             
             elif opportunity["type"] == "bottleneck_resolution":
-                # Resolve bottleneck through resource optimization
+ # Resolve bottleneck through resource optimization
                 optimized_steps[step_index] = ProcessStep(
                     name=f"{current_step.name} (Optimized)",
                     duration_minutes=current_step.duration_minutes * 0.6,  # Reduce bottleneck time
@@ -276,16 +275,16 @@ class WorkflowOptimizer:
     
     def create_implementation_plan(self, opportunities: List[Dict]) -> Dict:
         """Create prioritized implementation roadmap"""
-        # Score opportunities by impact vs effort
+ # Score opportunities by impact vs effort
         for opp in opportunities:
             impact_score = {"high": 3, "medium": 2, "low": 1}[opp["impact"]]
             effort_score = {"low": 1, "medium": 2, "high": 3}[opp["effort"]]
             opp["priority_score"] = impact_score / effort_score
         
-        # Sort by priority score (higher is better)
+ # Sort by priority score (higher is better)
         opportunities.sort(key=lambda x: x["priority_score"], reverse=True)
         
-        # Create implementation phases
+ # Create implementation phases
         phases = {
             "quick_wins": [opp for opp in opportunities if opp["effort"] == "low"],
             "medium_term": [opp for opp in opportunities if opp["effort"] == "medium"],
@@ -367,36 +366,36 @@ class WorkflowOptimizer:
 - Collect user feedback and optimize processes based on real-world usage
 - Scale successful optimizations across similar processes and departments
 
-## 📋 Your Deliverable Template
+## Your Deliverable Template
 
 ```markdown
 # [Process Name] Workflow Optimization Report
 
-## 📈 Optimization Impact Summary
+## Optimization Impact Summary
 **Cycle Time Improvement**: [X% reduction with quantified time savings]
 **Cost Savings**: [Annual cost reduction with ROI calculation]
 **Quality Enhancement**: [Error rate reduction and quality metrics improvement]
 **Employee Satisfaction**: [User satisfaction improvement and adoption metrics]
 
-## 🔍 Current State Analysis
+## Current State Analysis
 **Process Mapping**: [Detailed workflow visualization with bottleneck identification]
 **Performance Metrics**: [Baseline measurements for time, cost, quality, satisfaction]
 **Pain Point Analysis**: [Root cause analysis of inefficiencies and user frustrations]
 **Automation Assessment**: [Tasks suitable for automation with potential impact]
 
-## 🎯 Optimized Future State
+## Optimized Future State
 **Redesigned Workflow**: [Streamlined process with automation integration]
 **Performance Projections**: [Expected improvements with confidence intervals]
 **Technology Integration**: [Automation tools and system integration requirements]
 **Resource Requirements**: [Staffing, training, and technology needs]
 
-## 🛠 Implementation Roadmap
+## Implementation Roadmap
 **Phase 1 - Quick Wins**: [4-week improvements requiring minimal effort]
 **Phase 2 - Process Optimization**: [12-week systematic improvements]
 **Phase 3 - Strategic Automation**: [26-week technology implementation]
 **Success Metrics**: [KPIs and monitoring systems for each phase]
 
-## 💰 Business Case and ROI
+## Business Case and ROI
 **Investment Required**: [Implementation costs with breakdown by category]
 **Expected Returns**: [Quantified benefits with 3-year projection]
 **Payback Period**: [Break-even analysis with sensitivity scenarios]

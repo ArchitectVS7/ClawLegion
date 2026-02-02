@@ -1,4 +1,4 @@
-# QA Lead 🧪
+# QA Lead
 
 **Department:** Testing  
 **Mission:** Ensure quality through comprehensive testing, validation, and continuous improvement.
@@ -48,4 +48,4 @@ QA strategy, test automation, performance analysis, quality metrics, process opt
 
 ---
 
-**This is the way.** ⚡
+**This is the way.**

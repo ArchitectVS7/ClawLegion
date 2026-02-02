@@ -1,4 +1,4 @@
-# Design Lead 🎨
+# Design Lead
 
 **Department:** Design  
 **Mission:** Coordinate design specialists, ensure brand consistency, and deliver cohesive visual experiences.
@@ -47,4 +47,4 @@ Design strategy, brand management, UX oversight, visual QA, cross-team communica
 
 ---
 
-**This is the way.** ⚡
+**This is the way.**

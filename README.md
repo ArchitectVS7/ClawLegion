@@ -1,10 +1,10 @@
-# 🎯 Legion: 61-Agent Orchestration System for OpenClaw
+# Legion: 61-Agent Orchestration System for OpenClaw
 
 **A hierarchical multi-agent system featuring 51 specialized agents, 9 department heads, and 1 orchestrator.**
 
 ## Overview
 
-Legion is a complete agent orchestration framework for [OpenClaw](https://openclaw.ai) — designed for complex, multi-stage projects that require coordinated specialist collaboration.
+Legion is a complete agent orchestration framework for [OpenClaw](https://github.com/openclaw/openclaw) designed for complex, multi-stage projects that require coordinated specialist collaboration.
 
 ### What's Included
 
@@ -12,10 +12,11 @@ Legion is a complete agent orchestration framework for [OpenClaw](https://opencl
 - **9 Department Heads** — Orchestrate specialists within their domains
 - **51 Specialist Agents** — Domain experts across 9 departments
 
-## 📂 Structure
+## Structure
 
 ```
 legion/
+├── lg2/                 # Master orchestrator
 ├── agents/              # 51 specialist agents
 │   ├── design/          # 6 agents (UI, UX, Brand, etc.)
 │   ├── engineering/     # 7 agents (Frontend, Backend, Mobile, etc.)
@@ -38,7 +39,7 @@ legion/
 │   ├── head-support/
 │   └── head-testing/
 │
-├── PLAN.md             # Full implementation plan & UAT scenarios
+├── PLAN.md             # Implementation plan & technical decisions
 ├── DEPARTMENTS.md      # Department structure & agent roster
 └── README.md           # This file
 ```
@@ -48,11 +49,11 @@ Each agent directory contains:
 - **MEMORY.md** — Domain knowledge, templates, examples
 - **TOOLS.md** — Agent-specific tool notes (optional)
 
-## 🚀 Installation
+## Installation
 
 ### Prerequisites
 
-- [OpenClaw](https://openclaw.ai) installed and configured
+- [OpenClaw](https://github.com/openclaw/openclaw) installed and configured
 - OpenClaw version `2026.2.1` or later
 
 ### Setup
@@ -60,12 +61,12 @@ Each agent directory contains:
 1. **Clone this repository into your OpenClaw workspace:**
    ```bash
    cd ~/.openclaw/workspace
-   git clone https://github.com/YOUR_USERNAME/legion.git
+   git clone https://github.com/ArchitectVS7/Legion.git legion
    ```
 
 2. **Apply the Legion config:**
    ```bash
-   openclaw gateway config.patch < legion-config.json
+   openclaw gateway config.patch < legion/legion-config.json
    ```
 
    Or manually add the agent config from `legion-config.json` to your `openclaw.json`.
@@ -77,11 +78,11 @@ Each agent directory contains:
 
    You should see `lg2` and 9 `head-*` agents listed.
 
-## 📋 Usage
+## Usage
 
 Legion uses **intelligent delegation** — the orchestrator automatically picks the right level of coordination based on task complexity.
 
-### Example: Simple → Complex
+### Example: Simple to Complex
 
 **Simple Task** (1 specialist):
 ```
@@ -127,7 +128,7 @@ You can also spawn specialists directly:
 
 The orchestrator evaluates each task and picks the optimal approach. See [UAT.md](./UAT.md) for the complete decision framework.
 
-## 🎯 Use Cases
+## Use Cases
 
 ### Engineering
 - Full-stack web apps
@@ -141,7 +142,6 @@ The orchestrator evaluates each task and picks the optimal approach. See [UAT.md
 - Brand identity
 - Visual storytelling
 - Wireframes & mockups
-- Whimsical interactions
 
 ### Marketing
 - Growth campaigns
@@ -163,7 +163,7 @@ The orchestrator evaluates each task and picks the optimal approach. See [UAT.md
 - Evidence collection
 - Workflow optimization
 
-## 🧪 Testing
+## Testing
 
 We include 4 UAT scenarios to validate the orchestration system:
 
@@ -174,34 +174,36 @@ We include 4 UAT scenarios to validate the orchestration system:
 
 **See [UAT.md](./UAT.md) for complete test scenarios, success criteria, and test commands.**
 
-## 🤝 Contributing
+## Contributing
 
-This is a translation of agents from the original [legion repository](https://github.com/YOUR_ORIGINAL_REPO) to OpenClaw format.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on adding agents and improving the system.
 
 To add new agents:
 1. Create agent directory: `agents/<department>/<agent-id>/`
 2. Add `SOUL.md`, `MEMORY.md`, `TOOLS.md`
 3. Update department head's `allowAgents` list
 4. Add agent to `lg2`'s `allowAgents` list
-5. Test with `test-agents.js`
+5. Test spawn command
 
-## 📄 License
+## License
 
-[Your License Here — MIT recommended]
+MIT License - see [LICENSE](./LICENSE)
 
-## 🔗 Links
+## Credits
+
+This project is a translation and orchestration layer built on top of:
+
+- **Original agent concepts:** [The Agency](https://github.com/msitarzewski/agency-agents) by [@msitarzewski](https://github.com/msitarzewski) — The 51 specialized AI agent personalities that form the core of this system
+- **Runtime platform:** [OpenClaw](https://github.com/openclaw/openclaw) — The personal AI assistant platform that powers agent orchestration
+
+The hierarchical orchestration layer (LG2 orchestrator and 9 department heads) was added to enable multi-agent coordination on top of the original agent definitions.
+
+## Links
 
 - [OpenClaw Documentation](https://docs.openclaw.ai)
-- [OpenClaw Discord](https://discord.com/invite/clawd)
-- [Skill Hub](https://clawhub.com)
-- [GitHub Source](https://github.com/openclaw/openclaw)
-
-## 🙏 Credits
-
-- Original agent concepts from the [legion repository](https://github.com/YOUR_ORIGINAL_REPO)
-- Translated and orchestrated by VS7 & LG2
-- Built on [OpenClaw](https://openclaw.ai) by the OpenClaw team
+- [OpenClaw GitHub](https://github.com/openclaw/openclaw)
+- [Original Agency Agents](https://github.com/msitarzewski/agency-agents)
 
 ---
 
-**This is the way.** ⚡
+This is the way.

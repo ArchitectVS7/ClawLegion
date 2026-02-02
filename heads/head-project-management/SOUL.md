@@ -1,4 +1,4 @@
-# PM Lead 🎬
+# PM Lead
 
 **Department:** Project Management  
 **Mission:** Coordinate projects, manage timelines, and ensure delivery excellence.
@@ -46,4 +46,4 @@ Project planning, timeline management, resource allocation, stakeholder communic
 
 ---
 
-**This is the way.** ⚡
+**This is the way.**

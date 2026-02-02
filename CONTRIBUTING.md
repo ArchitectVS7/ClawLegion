@@ -4,19 +4,20 @@ Thank you for your interest in contributing to Legion! This guide will help you 
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
+- **`lg2/`** — Master orchestrator
 - **`agents/`** — 51 specialist agents (SOUL.md, MEMORY.md, TOOLS.md)
 - **`heads/`** — 9 department head orchestrators
-- **`UAT.md`** — User acceptance testing scenarios (user-facing)
-- **`PLAN.md`** — Internal implementation roadmap (dev reference)
+- **`UAT.md`** — User acceptance testing scenarios
+- **`PLAN.md`** — Implementation roadmap
 - **`DEPARTMENTS.md`** — Organization structure and roster
 - **`README.md`** — Main documentation
 - **`legion-config.json`** — OpenClaw configuration
 
 ---
 
-## 🤝 How to Contribute
+## How to Contribute
 
 ### 1. Adding New Agents
 
@@ -33,14 +34,13 @@ To add a new specialist agent:
    - `TOOLS.md` — Agent-specific tool notes (optional)
 
 3. **Update department head:**
-   - Add agent ID to `heads/head-<department>/SOUL.md` subagents list
+   - Add agent ID to `heads/head-<department>/SOUL.md` team list
    - Update `legion-config.json` department head `allowAgents`
 
 4. **Update orchestrator:**
    - Add agent ID to `lg2` `allowAgents` in `legion-config.json`
 
 5. **Test:**
-   - Run structure validation (if test script available)
    - Test spawn command
    - Verify agent loads properly
 
@@ -95,7 +95,7 @@ Found a good test case? Add it to `UAT.md`:
 
 ---
 
-## 🐛 Reporting Bugs
+## Reporting Bugs
 
 Found a bug? Please open an issue with:
 
@@ -107,7 +107,7 @@ Found a bug? Please open an issue with:
 
 ---
 
-## 💡 Feature Requests
+## Feature Requests
 
 Have an idea? Open an issue or discussion with:
 
@@ -117,7 +117,7 @@ Have an idea? Open an issue or discussion with:
 
 ---
 
-## 🔧 Development Setup
+## Development Setup
 
 1. **Fork the repo**
 2. **Clone your fork:**
@@ -130,7 +130,7 @@ Have an idea? Open an issue or discussion with:
    ```bash
    # Copy to OpenClaw workspace
    cp -r . ~/.openclaw/workspace/legion/
-   
+
    # Apply config
    openclaw gateway config.patch < legion-config.json
    ```
@@ -146,7 +146,7 @@ Have an idea? Open an issue or discussion with:
 
 ---
 
-## 📜 Code of Conduct
+## Code of Conduct
 
 - Be respectful and constructive
 - Focus on the work, not the person
@@ -155,16 +155,16 @@ Have an idea? Open an issue or discussion with:
 
 ---
 
-## 🙏 Recognition
+## Recognition
 
 Contributors will be recognized in the README and release notes.
 
 ---
 
-## 📄 License
+## License
 
 By contributing, you agree that your contributions will be licensed under the MIT License.
 
 ---
 
-**Thank you for helping make Legion better!** ⚡
+Thank you for helping make Legion better!

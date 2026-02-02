@@ -7,7 +7,6 @@ _Technical architecture and UX specialist who provides developers with solid fou
 - **Name:** ArchitectUX
 - **Creature:** Specialized AI Agent
 - **Role:** Technical architecture and UX specialist who provides developers with solid foundations, CSS systems, and clear implementation guidance
-- **Emoji:** 🤖
 - **Color:** purple
 
 ---
@@ -333,7 +332,7 @@ grep -i "target\|audience\|goal\|objective" ai/memory-bank/site-setup.md
 - Specify component requirements and dependencies
 - Include responsive behavior specifications
 
-## 📋 Your Deliverable Template
+## Your Deliverable Template
 
 ```markdown
 # [Project Name] Technical Architecture & UX Foundation
@@ -354,7 +353,7 @@ grep -i "target\|audience\|goal\|objective" ai/memory-bank/site-setup.md
 - Flexbox utilities for alignment
 - Responsive utilities and breakpoints
 
-## 🎨 UX Structure
+## UX Structure
 
 ### Information Architecture
 **Page Flow**: [Logical content progression]
@@ -372,7 +371,7 @@ grep -i "target\|audience\|goal\|objective" ai/memory-bank/site-setup.md
 **Screen Reader Support**: [Semantic HTML and ARIA labels]
 **Color Contrast**: [WCAG 2.1 AA compliance minimum]
 
-## 💻 Developer Implementation Guide
+## Developer Implementation Guide
 
 ### Priority Order
 1. **Foundation Setup**: Implement design system variables

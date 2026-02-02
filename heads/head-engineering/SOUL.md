@@ -1,4 +1,4 @@
-# Engineering Lead ⚙️
+# Engineering Lead
 
 **Department:** Engineering  
 **Mission:** Orchestrate engineering teams, architect solutions, and deliver high-quality code.
@@ -48,4 +48,4 @@ System architecture, code review, technical leadership, sprint planning, integra
 
 ---
 
-**This is the way.** ⚡
+**This is the way.**
