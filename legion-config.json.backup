@@ -1,0 +1,467 @@
+{
+  "agents": {
+    "list": [
+      {
+        "id": "lg2",
+        "name": "LG2 - Orchestrator",
+        "agentDir": "agents/00-orchestrator",
+        "model": "anthropic/claude-sonnet-4-5",
+        "identity": {
+          "name": "LG2",
+          "theme": "Bridge between dreams and data"
+        },
+        "subagents": {
+          "allowAgents": [
+            "head-design",
+            "head-engineering",
+            "head-marketing",
+            "head-product",
+            "head-project-management",
+            "head-spatial-computing",
+            "head-specialized",
+            "head-support",
+            "head-testing",
+            "brand-guardian",
+            "ui-designer",
+            "ux-architect",
+            "ux-researcher",
+            "visual-storyteller",
+            "whimsy-injector",
+            "ai-engineer",
+            "backend-architect",
+            "devops-automator",
+            "frontend-developer",
+            "mobile-app-builder",
+            "rapid-prototyper",
+            "senior-developer",
+            "app-store-optimizer",
+            "content-creator",
+            "growth-hacker",
+            "instagram-curator",
+            "reddit-community-builder",
+            "social-media-strategist",
+            "tiktok-strategist",
+            "twitter-engager",
+            "feedback-synthesizer",
+            "sprint-prioritizer",
+            "trend-researcher",
+            "management-experiment-tracker",
+            "management-project-shepherd",
+            "management-studio-operations",
+            "management-studio-producer",
+            "manager-senior",
+            "spatial-metal-engineer",
+            "integration-specialist",
+            "spatial-engineer",
+            "cockpit-interaction-specialist",
+            "immersive-developer",
+            "interface-architect",
+            "orchestrator",
+            "data-analytics-reporter",
+            "index-engineer",
+            "analytics-reporter",
+            "executive-summary-generator",
+            "finance-tracker",
+            "infrastructure-maintainer",
+            "legal-compliance-checker",
+            "support-responder",
+            "api-tester",
+            "evidence-collector",
+            "performance-benchmarker",
+            "reality-checker",
+            "test-results-analyzer",
+            "tool-evaluator",
+            "workflow-optimizer"
+          ]
+        }
+      },
+      {
+        "id": "head-design",
+        "agentDir": "agents/design/00-design-lead",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "brand-guardian",
+            "ui-designer",
+            "ux-architect",
+            "ux-researcher",
+            "visual-storyteller",
+            "whimsy-injector"
+          ]
+        }
+      },
+      {
+        "id": "head-engineering",
+        "agentDir": "agents/engineering/00-engineering-lead",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "frontend-developer",
+            "backend-architect",
+            "senior-developer",
+            "mobile-app-builder",
+            "ai-engineer",
+            "devops-automator",
+            "rapid-prototyper"
+          ]
+        }
+      },
+      {
+        "id": "head-marketing",
+        "agentDir": "agents/marketing/00-marketing-lead",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "growth-hacker",
+            "content-creator",
+            "social-media-strategist",
+            "twitter-engager",
+            "instagram-curator",
+            "tiktok-strategist",
+            "reddit-community-builder",
+            "app-store-optimizer"
+          ]
+        }
+      },
+      {
+        "id": "head-product",
+        "agentDir": "agents/product/00-product-lead",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "feedback-synthesizer",
+            "sprint-prioritizer",
+            "trend-researcher"
+          ]
+        }
+      },
+      {
+        "id": "head-project-management",
+        "agentDir": "agents/project-management/00-project-lead",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "management-project-shepherd",
+            "management-studio-producer",
+            "management-studio-operations",
+            "management-experiment-tracker",
+            "manager-senior"
+          ]
+        }
+      },
+      {
+        "id": "head-spatial-computing",
+        "agentDir": "agents/spatial-computing/00-spatial-computing-lead",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "spatial-engineer",
+            "immersive-developer",
+            "interface-architect",
+            "cockpit-interaction-specialist",
+            "integration-specialist",
+            "spatial-metal-engineer"
+          ]
+        }
+      },
+      {
+        "id": "head-specialized",
+        "agentDir": "agents/specialized/00-specialized-agent-lead",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "orchestrator",
+            "data-analytics-reporter",
+            "index-engineer"
+          ]
+        }
+      },
+      {
+        "id": "head-support",
+        "agentDir": "agents/support/00-support-lead",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "support-responder",
+            "analytics-reporter",
+            "finance-tracker",
+            "legal-compliance-checker",
+            "infrastructure-maintainer",
+            "executive-summary-generator"
+          ]
+        }
+      },
+      {
+        "id": "head-testing",
+        "agentDir": "agents/testing/00-testing-lead",
+        "model": "anthropic/claude-sonnet-4-5",
+        "subagents": {
+          "allowAgents": [
+            "reality-checker",
+            "api-tester",
+            "performance-benchmarker",
+            "evidence-collector",
+            "test-results-analyzer",
+            "tool-evaluator",
+            "workflow-optimizer"
+          ]
+        }
+      },
+      {
+        "id": "brand-guardian",
+        "agentDir": "agents/design/brand-guardian",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "ui-designer",
+        "agentDir": "agents/design/ui-designer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "ux-architect",
+        "agentDir": "agents/design/ux-architect",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "ux-researcher",
+        "agentDir": "agents/design/ux-researcher",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "visual-storyteller",
+        "agentDir": "agents/design/visual-storyteller",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "whimsy-injector",
+        "agentDir": "agents/design/whimsy-injector",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "ai-engineer",
+        "agentDir": "agents/engineering/ai-engineer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "backend-architect",
+        "agentDir": "agents/engineering/backend-architect",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "devops-automator",
+        "agentDir": "agents/engineering/devops-automator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "frontend-developer",
+        "agentDir": "agents/engineering/frontend-developer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "mobile-app-builder",
+        "agentDir": "agents/engineering/mobile-app-builder",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "rapid-prototyper",
+        "agentDir": "agents/engineering/rapid-prototyper",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "senior-developer",
+        "agentDir": "agents/engineering/senior-developer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "app-store-optimizer",
+        "agentDir": "agents/marketing/app-store-optimizer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "content-creator",
+        "agentDir": "agents/marketing/content-creator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "growth-hacker",
+        "agentDir": "agents/marketing/growth-hacker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "instagram-curator",
+        "agentDir": "agents/marketing/instagram-curator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "reddit-community-builder",
+        "agentDir": "agents/marketing/reddit-community-builder",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "social-media-strategist",
+        "agentDir": "agents/marketing/social-media-strategist",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "tiktok-strategist",
+        "agentDir": "agents/marketing/tiktok-strategist",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "twitter-engager",
+        "agentDir": "agents/marketing/twitter-engager",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "feedback-synthesizer",
+        "agentDir": "agents/product/feedback-synthesizer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "sprint-prioritizer",
+        "agentDir": "agents/product/sprint-prioritizer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "trend-researcher",
+        "agentDir": "agents/product/trend-researcher",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "management-experiment-tracker",
+        "agentDir": "agents/project-management/management-experiment-tracker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "management-project-shepherd",
+        "agentDir": "agents/project-management/management-project-shepherd",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "management-studio-operations",
+        "agentDir": "agents/project-management/management-studio-operations",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "management-studio-producer",
+        "agentDir": "agents/project-management/management-studio-producer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "manager-senior",
+        "agentDir": "agents/project-management/manager-senior",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "spatial-metal-engineer",
+        "agentDir": "agents/spatial-computing/spatial-metal-engineer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "integration-specialist",
+        "agentDir": "agents/spatial-computing/integration-specialist",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "spatial-engineer",
+        "agentDir": "agents/spatial-computing/spatial-engineer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "cockpit-interaction-specialist",
+        "agentDir": "agents/spatial-computing/cockpit-interaction-specialist",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "immersive-developer",
+        "agentDir": "agents/spatial-computing/immersive-developer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "interface-architect",
+        "agentDir": "agents/spatial-computing/interface-architect",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "orchestrator",
+        "agentDir": "agents/specialized/orchestrator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "data-analytics-reporter",
+        "agentDir": "agents/specialized/data-analytics-reporter",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "index-engineer",
+        "agentDir": "agents/specialized/index-engineer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "analytics-reporter",
+        "agentDir": "agents/support/analytics-reporter",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "executive-summary-generator",
+        "agentDir": "agents/support/executive-summary-generator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "finance-tracker",
+        "agentDir": "agents/support/finance-tracker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "infrastructure-maintainer",
+        "agentDir": "agents/support/infrastructure-maintainer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "legal-compliance-checker",
+        "agentDir": "agents/support/legal-compliance-checker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "support-responder",
+        "agentDir": "agents/support/support-responder",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "api-tester",
+        "agentDir": "agents/testing/api-tester",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "evidence-collector",
+        "agentDir": "agents/testing/evidence-collector",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "performance-benchmarker",
+        "agentDir": "agents/testing/performance-benchmarker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "reality-checker",
+        "agentDir": "agents/testing/reality-checker",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "test-results-analyzer",
+        "agentDir": "agents/testing/test-results-analyzer",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "tool-evaluator",
+        "agentDir": "agents/testing/tool-evaluator",
+        "model": "anthropic/claude-sonnet-4-5"
+      },
+      {
+        "id": "workflow-optimizer",
+        "agentDir": "agents/testing/workflow-optimizer",
+        "model": "anthropic/claude-sonnet-4-5"
+      }
+    ]
+  }
+}
