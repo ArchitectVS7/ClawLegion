@@ -2,13 +2,15 @@
 
 **A hierarchical multi-agent system featuring 51 specialized agents, 9 department heads, and 1 orchestrator.**
 
+This project is a translation and orchestration layer built on top of [The Agency](https://github.com/msitarzewski/agency-agents) by [@msitarzewski](https://github.com/msitarzewski) that define the personalities at the core of this system. Those agents were translated to [OpenClaw](https://github.com/openclaw/openclaw) with an additional "department head" layer in each grouping. Finally one master orchestrator agent is provided, or you can run this with your primary OpenClaw persona.
+
 ## Overview
 
 ClawLegion is a complete agent orchestration framework for [OpenClaw](https://github.com/openclaw/openclaw) designed for complex, multi-stage projects that require coordinated specialist collaboration.
 
 ### What's Included
 
-- **1 Orchestrator** (`lg2`) — Top-level coordinator
+- **1 Orchestrator** — Top-level coordinator
 - **9 Department Heads** — Orchestrate specialists within their domains
 - **51 Specialist Agents** — Domain experts across 9 departments
 
@@ -28,18 +30,8 @@ legion/
 │   ├── support/         # 6 agents (Finance, Legal, Infra, etc.)
 │   └── testing/         # 7 agents (QA, Performance, Reality Check)
 │
-├── heads/               # 9 department head orchestrators
-│   ├── head-design/
-│   ├── head-engineering/
-│   ├── head-marketing/
-│   ├── head-product/
-│   ├── head-project-management/
-│   ├── head-spatial-computing/
-│   ├── head-specialized/
-│   ├── head-support/
-│   └── head-testing/
 │
-├── PLAN.md             # Implementation plan & technical decisions
+├── UAT.md              # Sample User Acceptance Test 
 ├── DEPARTMENTS.md      # Department structure & agent roster
 └── README.md           # This file
 ```
@@ -54,7 +46,6 @@ Each agent directory contains:
 ### Prerequisites
 
 - [OpenClaw](https://github.com/openclaw/openclaw) installed and configured
-- OpenClaw version `2026.2.1` or later
 
 ### Setup
 
@@ -189,19 +180,10 @@ To add new agents:
 
 MIT License - see [LICENSE](./LICENSE)
 
-## Credits
-
-This project is a translation and orchestration layer built on top of:
-
-- **Original agent concepts:** [The Agency](https://github.com/msitarzewski/agency-agents) by [@msitarzewski](https://github.com/msitarzewski) — The 51 specialized AI agent personalities that form the core of this system
-- **Runtime platform:** [OpenClaw](https://github.com/openclaw/openclaw) — The personal AI assistant platform that powers agent orchestration
-
-The hierarchical orchestration layer (LG2 orchestrator and 9 department heads) was added to enable multi-agent coordination on top of the original agent definitions.
 
 ## Links
 
-- [OpenClaw Documentation](https://docs.openclaw.ai)
-- [OpenClaw GitHub](https://github.com/openclaw/openclaw)
+- [OpenClaw](https://github.com/openclaw/openclaw)
 - [Original Agency Agents](https://github.com/msitarzewski/agency-agents)
 
 ---
