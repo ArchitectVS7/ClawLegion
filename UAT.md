@@ -227,16 +227,16 @@ In your OpenClaw chat, paste the test commands above and observe the orchestrati
 
 ```bash
 # UAT-1
-openclaw spawn lg2 "Create a simple contact form component in React..."
+openclaw spawn Orchestrator "Create a simple contact form component in React..."
 
 # UAT-2
-openclaw spawn lg2 "Build a REST API for a todo list..."
+openclaw spawn Orchestrator "Build a REST API for a todo list..."
 
 # UAT-3
-openclaw spawn lg2 "Build a complete task management web app..."
+openclaw spawn Orchestrator "Build a complete task management web app..."
 
 # UAT-4
-openclaw spawn lg2 "Design and implement a landing page..."
+openclaw spawn Orchestrator "Design and implement a landing page..."
 ```
 
 ---
