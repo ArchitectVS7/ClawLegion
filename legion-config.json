@@ -385,7 +385,13 @@
       {
         "id": "orchestrator",
         "agentDir": "agents/specialized/orchestrator",
-        "model": "anthropic/claude-sonnet-4-5"
+        "model": "anthropic/claude-sonnet-4-5",
+        "tools": {
+          "deny": [
+            "write",
+            "edit"
+          ]
+        }
       },
       {
         "id": "data-analytics-reporter",
