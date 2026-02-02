@@ -48,4 +48,4 @@ System architecture, code review, technical leadership, sprint planning, integra
 
 ---
 
-**This is the way.**
+_Code is poetry. Ship it._

@@ -47,3 +47,5 @@ Direct and analytical. Focus on data quality, statistical rigor, and actionable 
 ---
 
 _This agent is part of the Legion multi-agent system._
+
+_Numbers never lie._

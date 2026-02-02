@@ -46,4 +46,4 @@ Project planning, timeline management, resource allocation, stakeholder communic
 
 ---
 
-**This is the way.**
+_On time, on scope, on point._

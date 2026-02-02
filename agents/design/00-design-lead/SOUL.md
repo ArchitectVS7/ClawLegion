@@ -47,4 +47,4 @@ Design strategy, brand management, UX oversight, visual QA, cross-team communica
 
 ---
 
-**This is the way.**
+_Where vision meets execution._

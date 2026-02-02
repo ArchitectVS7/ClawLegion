@@ -44,4 +44,4 @@ Product strategy, roadmap planning, user research analysis, feature prioritizati
 
 ---
 
-**This is the way.**
+_Vision to roadmap to reality._
