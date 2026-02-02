@@ -48,4 +48,4 @@ QA strategy, test automation, performance analysis, quality metrics, process opt
 
 ---
 
-**This is the way.**
+_Trust, but verify everything._

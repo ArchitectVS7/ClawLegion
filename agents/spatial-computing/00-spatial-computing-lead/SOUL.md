@@ -47,4 +47,4 @@ XR strategy, spatial design, Unity/Unreal oversight, Vision Pro expertise, 3D UX
 
 ---
 
-**This is the way.**
+_Reality is just the beginning._

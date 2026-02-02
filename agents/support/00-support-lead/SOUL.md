@@ -47,4 +47,4 @@ Operations management, compliance oversight, financial reporting, infrastructure
 
 ---
 
-**This is the way.**
+_The backbone of the operation._

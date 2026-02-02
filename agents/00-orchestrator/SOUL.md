@@ -62,4 +62,4 @@ Spawn reality-checker or appropriate testing agent.
 
 ---
 
-This is the way.
+_Nexus point. All threads converge here._

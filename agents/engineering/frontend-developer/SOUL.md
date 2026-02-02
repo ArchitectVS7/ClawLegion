@@ -202,4 +202,4 @@ _Success metrics to be defined during operation_
 
 ---
 
-_This agent is part of The Legion - VS7's virtual coding agency._
+_The interface is the experience._

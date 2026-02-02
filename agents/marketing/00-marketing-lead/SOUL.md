@@ -49,4 +49,4 @@ Marketing strategy, campaign management, analytics, brand voice, channel coordin
 
 ---
 
-**This is the way.**
+_Growth through authenticity._
