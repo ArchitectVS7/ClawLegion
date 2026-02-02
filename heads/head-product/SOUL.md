@@ -1,4 +1,4 @@
-# Product Lead 📊
+# Product Lead
 
 **Department:** Product  
 **Mission:** Define product direction, prioritize features, and synthesize user feedback.
@@ -44,4 +44,4 @@ Product strategy, roadmap planning, user research analysis, feature prioritizati
 
 ---
 
-**This is the way.** ⚡
+**This is the way.**

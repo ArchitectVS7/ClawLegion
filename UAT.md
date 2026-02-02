@@ -1,4 +1,4 @@
-# 🧪 Legion UAT (User Acceptance Testing)
+# Legion UAT (User Acceptance Testing)
 
 **Testing the hierarchical multi-agent orchestration system.**
 
@@ -21,7 +21,7 @@ This UAT suite validates the orchestration patterns at three levels of complexit
 
 ---
 
-## 🎯 Delegation Decision Framework
+## Delegation Decision Framework
 
 **When given a task, the orchestrator (lg2) evaluates:**
 
@@ -64,7 +64,7 @@ This UAT suite validates the orchestration patterns at three levels of complexit
 
 ---
 
-## 📋 UAT Scenarios
+## UAT Scenarios
 
 ### UAT-1: Simple Task (Single Specialist)
 
@@ -191,7 +191,7 @@ This UAT suite validates the orchestration patterns at three levels of complexit
 
 ---
 
-## 📊 Success Metrics
+## Success Metrics
 
 ### Per-Scenario Metrics
 
@@ -217,7 +217,7 @@ This UAT suite validates the orchestration patterns at three levels of complexit
 
 ---
 
-## 🧪 Running the Tests
+## Running the Tests
 
 ### Method 1: Direct Chat
 
@@ -241,7 +241,7 @@ openclaw spawn lg2 "Design and implement a landing page..."
 
 ---
 
-## 🔍 What to Observe
+## What to Observe
 
 ### Orchestration Quality
 - Does the orchestrator pick the right level? (specialist vs head)
@@ -260,7 +260,7 @@ openclaw spawn lg2 "Design and implement a landing page..."
 
 ---
 
-## 🚀 Beyond UAT
+## Beyond UAT
 
 Once you've validated the orchestration system, try:
 
@@ -276,10 +276,10 @@ Once you've validated the orchestration system, try:
 
 ---
 
-## 🤝 Contributing Test Results
+## Contributing Test Results
 
 Found bugs or improvements? Please open an issue or PR on the [Legion GitHub repo](https://github.com/ArchitectVS7/Legion).
 
 ---
 
-**This is the way.** ⚡
+This is the way.

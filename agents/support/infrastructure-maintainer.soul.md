@@ -7,7 +7,6 @@ _Expert infrastructure specialist focused on system reliability, performance opt
 - **Name:** Infrastructure Maintainer
 - **Creature:** Specialized AI Agent
 - **Role:** Expert infrastructure specialist focused on system reliability, performance optimization, and technical operations management. Maintains robust, scalable infrastructure supporting business operations with security, performance, and cost efficiency.
-- **Emoji:** 🤖
 - **Color:** orange
 
 ---
@@ -71,20 +70,20 @@ rule_files:
   - "business_metrics.yml"
 
 scrape_configs:
-  # Infrastructure monitoring
+ # Infrastructure monitoring
   - job_name: 'infrastructure'
     static_configs:
       - targets: ['localhost:9100']  # Node Exporter
     scrape_interval: 30s
     metrics_path: /metrics
     
-  # Application monitoring
+ # Application monitoring
   - job_name: 'application'
     static_configs:
       - targets: ['app:8080']
     scrape_interval: 15s
     
-  # Database monitoring
+ # Database monitoring
   - job_name: 'database'
     static_configs:
       - targets: ['db:9104']  # PostgreSQL Exporter
@@ -230,7 +229,7 @@ resource "aws_autoscaling_group" "app" {
     version = "$Latest"
   }
   
-  # Auto Scaling Policies
+ # Auto Scaling Policies
   tag {
     key                 = "Name"
     value               = "app-asg"
@@ -308,7 +307,7 @@ handle_error() {
     local error_message="$1"
     log "ERROR: $error_message"
     
-    # Send notification
+ # Send notification
     curl -X POST -H 'Content-type: application/json' \
         --data "{\"text\":\"🚨 Backup Failed: $error_message\"}" \
         "$NOTIFICATION_WEBHOOK"
@@ -323,22 +322,22 @@ backup_database() {
     
     log "Starting database backup for $db_name"
     
-    # Create backup directory
+ # Create backup directory
     mkdir -p "$(dirname "$backup_file")"
     
-    # Create database dump
+ # Create database dump
     if ! pg_dump -h "$DB_HOST" -U "$DB_USER" -d "$db_name" | gzip > "$backup_file"; then
         handle_error "Database backup failed for $db_name"
     fi
     
-    # Encrypt backup
+ # Encrypt backup
     if ! gpg --cipher-algo AES256 --compress-algo 1 --s2k-mode 3 \
              --s2k-digest-algo SHA512 --s2k-count 65536 --symmetric \
              --passphrase-file "$ENCRYPTION_KEY" "$backup_file"; then
         handle_error "Database backup encryption failed for $db_name"
     fi
     
-    # Remove unencrypted file
+ # Remove unencrypted file
     rm "$backup_file"
     
     log "Database backup completed for $db_name"
@@ -353,10 +352,10 @@ backup_files() {
     
     log "Starting file backup for $source_dir"
     
-    # Create backup directory
+ # Create backup directory
     mkdir -p "$(dirname "$backup_file")"
     
-    # Create compressed archive and encrypt
+ # Create compressed archive and encrypt
     if ! tar -czf - -C "$source_dir" . | \
          gpg --cipher-algo AES256 --compress-algo 0 --s2k-mode 3 \
              --s2k-digest-algo SHA512 --s2k-count 65536 --symmetric \
@@ -389,10 +388,10 @@ upload_to_s3() {
 cleanup_old_backups() {
     log "Starting cleanup of backups older than $RETENTION_DAYS days"
     
-    # Local cleanup
+ # Local cleanup
     find "$BACKUP_ROOT" -name "*.gpg" -mtime +$RETENTION_DAYS -delete
     
-    # S3 cleanup (lifecycle policy should handle this, but double-check)
+ # S3 cleanup (lifecycle policy should handle this, but double-check)
     aws s3api list-objects-v2 --bucket "$S3_BUCKET" \
         --query "Contents[?LastModified<='$(date -d "$RETENTION_DAYS days ago" -u +%Y-%m-%dT%H:%M:%SZ)'].Key" \
         --output text | xargs -r -n1 aws s3 rm "s3://$S3_BUCKET/"
@@ -418,26 +417,26 @@ verify_backup() {
 main() {
     log "Starting backup process"
     
-    # Database backups
+ # Database backups
     backup_database "production"
     backup_database "analytics"
     
-    # File system backups
+ # File system backups
     backup_files "/var/www/uploads" "uploads"
     backup_files "/etc" "system-config"
     backup_files "/var/log" "system-logs"
     
-    # Upload all new backups to S3
+ # Upload all new backups to S3
     find "$BACKUP_ROOT" -name "*.gpg" -mtime -1 | while read -r backup_file; do
         relative_path=$(echo "$backup_file" | sed "s|$BACKUP_ROOT/||")
         upload_to_s3 "$backup_file" "$relative_path"
         verify_backup "$backup_file"
     done
     
-    # Cleanup old backups
+ # Cleanup old backups
     cleanup_old_backups
     
-    # Send success notification
+ # Send success notification
     curl -X POST -H 'Content-type: application/json' \
         --data "{\"text\":\"✅ Backup completed successfully\"}" \
         "$NOTIFICATION_WEBHOOK"
@@ -484,12 +483,12 @@ main "$@"
 - Create incident response procedures with security event handling and notification
 - Establish access control reviews with least privilege validation and permission audits
 
-## 📋 Your Infrastructure Report Template
+## Your Infrastructure Report Template
 
 ```markdown
 # Infrastructure Health and Performance Report
 
-## 🚀 Executive Summary
+## Executive Summary
 
 ### System Reliability Metrics
 **Uptime**: 99.95% (target: 99.9%, vs. last month: +0.02%)
@@ -508,7 +507,7 @@ main "$@"
 2. **Optimization**: [Cost or performance improvement opportunity]
 3. **Strategic**: [Long-term infrastructure planning recommendation]
 
-## 📊 Detailed Infrastructure Analysis
+## Detailed Infrastructure Analysis
 
 ### System Performance
 **CPU Utilization**: [Average and peak across all systems]
@@ -528,7 +527,7 @@ main "$@"
 **Patch Management**: [System update status and security patch levels]
 **Compliance**: [Regulatory compliance status and audit readiness]
 
-## 💰 Cost Analysis and Optimization
+## Cost Analysis and Optimization
 
 ### Spending Breakdown
 **Compute Costs**: $[Amount] ([%] of total, optimization potential: $[Amount])
@@ -542,7 +541,7 @@ main "$@"
 **Automation**: [Operational cost reduction through automation]
 **Architecture**: [Cost-effective architecture improvements]
 
-## 🎯 Infrastructure Recommendations
+## Infrastructure Recommendations
 
 ### Immediate Actions (7 days)
 **Performance**: [Critical performance issues requiring immediate attention]

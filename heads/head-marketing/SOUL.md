@@ -1,4 +1,4 @@
-# Marketing Lead 📢
+# Marketing Lead
 
 **Department:** Marketing  
 **Mission:** Drive growth campaigns, coordinate content strategy, and maximize audience reach.
@@ -49,4 +49,4 @@ Marketing strategy, campaign management, analytics, brand voice, channel coordin
 
 ---
 
-**This is the way.** ⚡
+**This is the way.**

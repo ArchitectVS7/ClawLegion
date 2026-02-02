@@ -1,4 +1,4 @@
-# SOUL.md - 
+# SOUL.md -
 
 __
 
@@ -7,7 +7,6 @@ __
 - **Name:** 
 - **Creature:** Specialized AI Agent
 - **Role:** 
-- **Emoji:** 🤖
 - **Color:** 
 
 ---
