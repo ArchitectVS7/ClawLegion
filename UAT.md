@@ -8,7 +8,7 @@
 
 Legion is a **hierarchical orchestration framework** featuring:
 
-- **1 Orchestrator** (lg2) — Top-level task router
+- **1 Orchestrator**  — Top-level task router
 - **9 Department Heads** — Mid-level coordinators for specialist squads
 - **51 Specialist Agents** — Domain experts across 9 departments
 
@@ -23,7 +23,7 @@ This UAT suite validates the orchestration patterns at three levels of complexit
 
 ## Delegation Decision Framework
 
-**When given a task, the orchestrator (lg2) evaluates:**
+**When given a task, the orchestrator  evaluates:**
 
 ### 1. Can one specialist handle this?
 → **Spawn that specialist directly**
