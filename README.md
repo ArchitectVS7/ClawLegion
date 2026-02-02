@@ -79,38 +79,53 @@ Each agent directory contains:
 
 ## 📋 Usage
 
+Legion uses **intelligent delegation** — the orchestrator automatically picks the right level of coordination based on task complexity.
+
+### Example: Simple → Complex
+
+**Simple Task** (1 specialist):
+```
+"Create a React contact form component"
+→ Spawns: frontend-developer
+→ Returns: Component code
+```
+
+**Medium Task** (squad with QA):
+```
+"Build a REST API for a todo list with CRUD operations"
+→ Spawns: head-engineering
+→ Coordinates: backend-architect → reality-checker
+→ Returns: Tested, validated API
+```
+
+**Complex Task** (department orchestration):
+```
+"Build a complete task management web app with auth and dashboard"
+→ Spawns: head-engineering
+→ Coordinates: backend-architect, frontend-developer, mobile-app-builder, reality-checker
+→ Returns: Full-stack integrated application
+```
+
+**Cross-Department** (multiple heads):
+```
+"Design and implement a SaaS landing page"
+→ Spawns: head-design + head-engineering
+→ Design: ux-architect → ui-designer
+→ Engineering: frontend-developer → reality-checker
+→ Returns: Designed, implemented, and validated landing page
+```
+
 ### Direct Specialist Spawn
 
-For simple tasks, spawn a specialist directly:
+You can also spawn specialists directly:
 
 ```bash
-# In OpenClaw chat or via sessions_spawn
 "Please spawn frontend-developer to build a contact form component"
 ```
 
-### Department Head Orchestration
+### Delegation Decision Framework
 
-For multi-specialist tasks within one domain:
-
-```bash
-"Please spawn head-engineering to build a full-stack todo app with auth"
-```
-
-The department head will:
-1. Break down the task
-2. Spawn relevant specialists (Backend, Frontend, QA)
-3. Coordinate handoffs
-4. Return integrated deliverable
-
-### Cross-Department Projects
-
-For complex, multi-department work:
-
-```bash
-"Please spawn head-design and head-engineering to build and implement a SaaS landing page"
-```
-
-The orchestrator (lg2) coordinates between department heads for seamless collaboration.
+The orchestrator evaluates each task and picks the optimal approach. See [UAT.md](./UAT.md) for the complete decision framework.
 
 ## 🎯 Use Cases
 
@@ -150,14 +165,14 @@ The orchestrator (lg2) coordinates between department heads for seamless collabo
 
 ## 🧪 Testing
 
-We include 4 UAT scenarios in `PLAN.md`:
+We include 4 UAT scenarios to validate the orchestration system:
 
 1. **UAT-1**: Simple task (single specialist)
 2. **UAT-2**: Medium task (multi-specialist squad)
 3. **UAT-3**: Complex task (department head orchestration)
 4. **UAT-4**: Cross-department coordination
 
-Run `test-agents.js` (if included) to validate structure.
+**See [UAT.md](./UAT.md) for complete test scenarios, success criteria, and test commands.**
 
 ## 🤝 Contributing
 
