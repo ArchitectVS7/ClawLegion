@@ -56,7 +56,7 @@
             "cockpit-interaction-specialist",
             "immersive-developer",
             "interface-architect",
-            "orchestrator",
+            "lg2",
             "data-analytics-reporter",
             "index-engineer",
             "analytics-reporter",
@@ -72,6 +72,13 @@
             "test-results-analyzer",
             "tool-evaluator",
             "workflow-optimizer"
+          ]
+        },
+        "tools": {
+          "deny": [
+            "write",
+            "edit",
+            "exec"
           ]
         }
       },
@@ -170,7 +177,7 @@
         "model": "anthropic/claude-sonnet-4-5",
         "subagents": {
           "allowAgents": [
-            "orchestrator",
+            "lg2",
             "data-analytics-reporter",
             "index-engineer"
           ]
@@ -381,17 +388,6 @@
         "id": "interface-architect",
         "agentDir": "agents/spatial-computing/interface-architect",
         "model": "anthropic/claude-sonnet-4-5"
-      },
-      {
-        "id": "orchestrator",
-        "agentDir": "agents/specialized/orchestrator",
-        "model": "anthropic/claude-sonnet-4-5",
-        "tools": {
-          "deny": [
-            "write",
-            "edit"
-          ]
-        }
       },
       {
         "id": "data-analytics-reporter",
