@@ -1,285 +1,240 @@
-# Legion UAT (User Acceptance Testing)
+# ClawLegion UAT (User Acceptance Testing)
 
-**Testing the hierarchical multi-agent orchestration system.**
+**Testing the flat multi-agent orchestration system.**
 
 ---
 
 ## Overview
 
-Legion is a **hierarchical orchestration framework** featuring:
+ClawLegion uses a **flat orchestration model**:
 
-- **1 Orchestrator**  — Top-level task router
-- **9 Department Heads** — Mid-level coordinators for specialist squads
-- **51 Specialist Agents** — Domain experts across 9 departments
+- **1 Orchestrator** — Coordinator with no write/edit/exec access
+- **51 Specialist Agents** — Domain experts who do the actual work
 
-This UAT suite validates the orchestration patterns at three levels of complexity:
-
-1. **Simple** — Single specialist (direct spawn)
-2. **Medium** — Multi-specialist squad (department head orchestration)
-3. **Complex** — Cross-department coordination (multiple heads)
-4. **Advanced** — Full lifecycle with QA layers
+The user starts a session AS the orchestrator, which must delegate all implementation to specialists.
 
 ---
 
-## Delegation Decision Framework
+## How to Run Tests
 
-**When given a task, the orchestrator  evaluates:**
+### Start an Orchestrator Session
 
-### 1. Can one specialist handle this?
-→ **Spawn that specialist directly**
+```bash
+openclaw agent --agent orchestrator --message "[TEST PROMPT HERE]"
+```
 
-**Example:** "Create a React contact form component"
-- Spawn: `frontend-developer`
-- Returns: Component code
-
----
-
-### 2. Does it need 2-4 specialists in one department?
-→ **Spawn the department head**
-
-**Example:** "Build a REST API for a todo list with CRUD operations"
-- Spawn: `head-engineering`
-- Department head coordinates: `backend-architect` → `reality-checker`
-- Returns: Tested, validated API
+This creates session `agent:orchestrator:main` where:
+- You ARE the orchestrator
+- The orchestrator cannot write/edit/execute directly
+- All work is delegated via `sessions_spawn`
 
 ---
 
-### 3. Does it need multiple departments?
-→ **Spawn multiple department heads, coordinate returns**
+## Test Philosophy
 
-**Example:** "Design and implement a SaaS landing page"
-- Spawn: `head-design` + `head-engineering`
-- Design produces mockups → Engineering implements → QA validates
-- Returns: Complete, production-ready page
+**We're validating that the orchestrator delegates rather than executes.**
 
----
+Each test **PASSES** when:
+1. ✅ Specialist agents are spawned
+2. ✅ Expected deliverables are created
+3. ✅ Orchestrator synthesizes results (doesn't do the work itself)
 
-### 4. Is it a quick clarification?
-→ **Answer directly (don't over-delegate)**
-
----
-
-### 5. Is it QA/validation?
-→ **Spawn `reality-checker` or relevant testing agent**
+Each test **FAILS** when:
+- ❌ Orchestrator tries to write code directly (blocked by tool denial)
+- ❌ No specialists spawned
+- ❌ No deliverables created
 
 ---
 
 ## UAT Scenarios
 
+---
+
 ### UAT-1: Simple Task (Single Specialist)
 
-**Task:** "Create a simple contact form component in React"
-
-**Expected Flow:**
-1. Orchestrator → spawns `frontend-developer`
-2. Frontend Developer → builds component, returns code
-3. Orchestrator → delivers to user
-
-**Success Criteria:**
-- ✅ Component is functional
-- ✅ Clean handoff (no unnecessary agents)
-- ✅ Response time < 2 minutes
+**Goal:** Prove orchestrator delegates simple tasks to a single specialist.
 
 **Test Command:**
 ```
-"Please create a simple contact form component in React with name, email, and message fields."
+Create a React contact form component with name, email, and message fields.
+Include basic validation and styling.
+Save to ~/workspace/uat1/
 ```
+
+**Expected Behavior:**
+1. Orchestrator receives task
+2. Spawns `frontend-developer`
+3. Specialist creates component
+4. Orchestrator reports completion
+
+**Pass Criteria:**
+- ✅ `frontend-developer` spawned
+- ✅ React component file created
+- ✅ Orchestrator did NOT write the file directly
 
 ---
 
-### UAT-2: Medium Task (Squad Deployment)
+### UAT-2: Multi-Specialist Task
 
-**Task:** "Build a REST API for a todo list with CRUD operations"
-
-**Expected Flow:**
-1. Orchestrator → evaluates task → spawns `backend-architect`
-2. Backend Architect → designs schema, writes endpoints
-3. Backend Architect → spawns `reality-checker` for validation
-4. Reality Checker → tests endpoints, provides feedback
-5. Backend Architect → refines, returns final code
-6. Orchestrator → delivers to user
-
-**Success Criteria:**
-- ✅ API works (CRUD functional)
-- ✅ Reality check caught issues (if any)
-- ✅ Clean integration between specialists
-- ✅ Proper error handling and validation
+**Goal:** Prove orchestrator can coordinate multiple specialists in parallel.
 
 **Test Command:**
 ```
-"Build a REST API for a todo list application with full CRUD operations (create, read, update, delete). Include proper error handling and validation."
+Build a REST API for a todo application with:
+- CRUD endpoints (create, read, update, delete)
+- Input validation
+- Unit tests
+
+Save to ~/workspace/uat2/
 ```
+
+**Expected Behavior:**
+1. Orchestrator analyzes task
+2. Spawns `backend-architect` for API design
+3. Spawns `api-tester` for tests
+4. Synthesizes outputs
+
+**Pass Criteria:**
+- ✅ 2+ specialists spawned
+- ✅ API files created
+- ✅ Test files created
+- ✅ Orchestrator coordinated (didn't implement)
 
 ---
 
-### UAT-3: Complex Task (Multi-Department + Head)
+### UAT-3: Cross-Domain Task
 
-**Task:** "Build a complete task management web app with user auth, dashboard, and mobile-responsive UI"
-
-**Expected Flow:**
-1. Orchestrator → evaluates complexity → spawns `head-engineering`
-2. Head Engineering → breaks down into:
-   - Backend: Auth + API
-   - Frontend: Dashboard UI
-   - Mobile: Responsive design
-3. Head Engineering spawns:
-   - `backend-architect` (auth + API)
-   - `frontend-developer` (dashboard)
-   - `mobile-app-builder` (responsive)
-4. Backend finishes first → hands off to Frontend
-5. Frontend integrates → hands off to Mobile
-6. Head Engineering → spawns `reality-checker` for full QA
-7. Reality Checker → tests, provides feedback
-8. Head Engineering → coordinates fixes
-9. Head Engineering → returns integrated deliverable
-10. Orchestrator → delivers to user
-
-**Success Criteria:**
-- ✅ Full app works (auth, CRUD, UI, mobile)
-- ✅ Department head coordinated effectively
-- ✅ QA layer caught integration issues
-- ✅ All specialists contributed
-- ✅ Clean handoff to user
+**Goal:** Prove orchestrator can coordinate specialists from different domains.
 
 **Test Command:**
 ```
-"Build a complete task management web application with:
-- User authentication (signup/login)
-- Dashboard with task list
-- Create, edit, delete tasks
-- Mobile-responsive design
-- Clean, modern UI"
-```
-
----
-
-### UAT-4: Cross-Department Task
-
-**Task:** "Design and implement a landing page for a SaaS product"
-
-**Expected Flow:**
-1. Orchestrator → evaluates → spawns `head-design` + `head-engineering`
-2. Head Design → spawns `ux-architect` + `ui-designer`
-3. UX Architect → wireframes, user flow
-4. UI Designer → mockups, design system
-5. Head Design → hands off to Head Engineering
-6. Head Engineering → spawns `frontend-developer`
-7. Frontend Developer → implements design
-8. Head Engineering → spawns `reality-checker`
-9. Reality Checker → validates design fidelity + responsiveness
-10. Both heads → return to Orchestrator
-11. Orchestrator → delivers to user
-
-**Success Criteria:**
-- ✅ Design is cohesive and professional
-- ✅ Implementation matches design
-- ✅ Cross-department handoff worked smoothly
-- ✅ Both heads coordinated effectively
-- ✅ Reality check validated fidelity
-- ✅ Mobile responsive
-
-**Test Command:**
-```
-"Design and implement a landing page for a SaaS task management product. Include:
+Design and build a landing page for a SaaS product with:
 - Hero section with CTA
 - Features section
 - Pricing table
-- Footer with links
-- Modern, professional design
-- Fully responsive"
+- Modern, responsive design
+
+Save to ~/workspace/uat3/ with design/ and implementation/ subdirectories.
 ```
 
----
+**Expected Behavior:**
+1. Orchestrator identifies need for design + engineering
+2. Spawns design specialists: `ux-architect`, `ui-designer`
+3. Spawns engineering specialists: `frontend-developer`
+4. May spawn `reality-checker` for QA
+5. Synthesizes design + implementation
 
-## Success Metrics
-
-### Per-Scenario Metrics
-
-**UAT-1 (Simple):**
-- Completion time: < 2 min
-- Agent count: 1 specialist
-- Deliverable: Working code
-
-**UAT-2 (Medium):**
-- Completion time: < 5 min
-- Agent count: 2-3 (architect + QA)
-- Deliverable: Tested, validated API
-
-**UAT-3 (Complex):**
-- Completion time: < 10 min
-- Agent count: 4-6 (head + specialists + QA)
-- Deliverable: Full-stack integrated app
-
-**UAT-4 (Cross-Department):**
-- Completion time: < 12 min
-- Agent count: 5-7 (2 heads + specialists + QA)
-- Deliverable: Design + implementation
+**Pass Criteria:**
+- ✅ Design specialists spawned
+- ✅ Engineering specialists spawned
+- ✅ Design artifacts created
+- ✅ Implementation files created
+- ✅ Cross-domain coordination occurred
 
 ---
 
-## Running the Tests
+### UAT-4: Complex Full-Stack Task
 
-### Method 1: Direct Chat
+**Goal:** Prove orchestrator can handle complex, multi-stage projects.
 
-In your OpenClaw chat, paste the test commands above and observe the orchestration flow.
+**Test Command:**
+```
+Build a complete task management web application with:
+- User authentication (signup/login)
+- Dashboard showing tasks
+- Create, edit, delete tasks
+- Mobile-responsive design
+- Unit tests for critical paths
 
-### Method 2: Via sessions_spawn
+Save to ~/workspace/uat4/ with backend/ and frontend/ subdirectories.
+```
+
+**Expected Behavior:**
+1. Orchestrator decomposes into phases
+2. Spawns backend specialists: `backend-architect`, `senior-developer`
+3. Spawns frontend specialists: `frontend-developer`, `ui-designer`
+4. Spawns testing specialists: `api-tester`, `reality-checker`
+5. Coordinates outputs into cohesive deliverable
+
+**Pass Criteria:**
+- ✅ 4+ specialists spawned
+- ✅ Backend files created
+- ✅ Frontend files created
+- ✅ Tests created
+- ✅ Orchestrator synthesized final report
+
+---
+
+## Observing Behavior
+
+### What to Watch For
+
+**Good orchestration:**
+- Orchestrator spawns specialists based on task requirements
+- Multiple specialists run in parallel when tasks are independent
+- Orchestrator synthesizes results from multiple agents
+- QA specialists included for validation tasks
+
+**Signs of problems:**
+- Orchestrator attempts to write/edit (will be blocked)
+- Only 1 specialist for complex tasks
+- No synthesis of multi-agent outputs
+
+### Checking Session Logs
+
+After running a test, check what agents were spawned:
 
 ```bash
-# UAT-1
-openclaw spawn Orchestrator "Create a simple contact form component in React..."
+# List recent sessions
+openclaw sessions list
 
-# UAT-2
-openclaw spawn Orchestrator "Build a REST API for a todo list..."
-
-# UAT-3
-openclaw spawn Orchestrator "Build a complete task management web app..."
-
-# UAT-4
-openclaw spawn Orchestrator "Design and implement a landing page..."
+# Check specific session history
+openclaw sessions history agent:orchestrator:main
 ```
 
 ---
 
-## What to Observe
+## Review Pattern
 
-### Orchestration Quality
-- Does the orchestrator pick the right level? (specialist vs head)
-- Are handoffs clean between agents?
-- Do department heads coordinate effectively?
+If a task needs additional review, the orchestrator can re-prompt any specialist:
 
-### Deliverable Quality
-- Does the code work?
-- Is it clean and maintainable?
-- Does it match requirements?
+```
+After the implementation is complete, spawn senior-developer to review
+the code quality and spawn reality-checker to validate the deliverables.
+```
 
-### Efficiency
-- Are unnecessary agents spawned?
-- Do agents collaborate or work in silos?
-- Is the final deliverable integrated?
+This allows flexible QA without adding architectural complexity.
 
 ---
 
-## Beyond UAT
+## Summary
 
-Once you've validated the orchestration system, try:
-
-### Real-World Projects
-- **E-commerce site** (Design + Engineering + Marketing)
-- **Mobile app** (Product + Engineering + Testing)
-- **Marketing campaign** (Marketing + Design + Analytics)
-
-### Custom Workflows
-- Add your own specialists
-- Create custom department heads
-- Build domain-specific orchestration patterns
+| UAT | Complexity | Expected Specialists | Focus |
+|-----|------------|---------------------|-------|
+| 1 | Simple | 1 | Single delegation |
+| 2 | Medium | 2-3 | Multi-specialist |
+| 3 | Cross-domain | 3-5 | Design + Engineering |
+| 4 | Complex | 4-6 | Full-stack + QA |
 
 ---
 
-## Contributing Test Results
+## Troubleshooting
 
-Found bugs or improvements? Please open an issue or PR on the [Legion GitHub repo](https://github.com/ArchitectVS7/Legion).
+### "Orchestrator says it can't write files"
+
+**This is correct behavior!** The orchestrator has `write`, `edit`, `exec` denied. It must spawn a specialist to do the work.
+
+### "No agents spawned"
+
+- Verify legion-config.json is applied: `openclaw gateway config.show`
+- Check orchestrator's `subagents.allowAgents` includes the needed specialists
+- Try explicit instruction: "Spawn frontend-developer to create..."
+
+### "Specialist created but no files"
+
+- Specialists have full tool access — check session logs for errors
+- Verify workspace path exists and is writable
 
 ---
 
-This is the way.
+_This is the way._
