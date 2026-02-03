@@ -1,9 +1,15 @@
-# TOOLS.md - agents-orchestrator
+# Orchestrator Tools
 
-## Tool Notes
+## Primary Capability
 
-*(Agent-specific tool preferences, shortcuts, or configurations)*
+Agent spawning and coordination through OpenClaw's subagent system.
 
----
+## Available Agents
 
-*Add notes about preferred tools, libraries, or frameworks here.*
+All 9 department heads and 51 specialists are available for delegation via the `allowAgents` configuration.
+
+## Coordination Tools
+
+- Session management for tracking active delegations
+- Context passing between agents
+- Output synthesis from multiple agent responses

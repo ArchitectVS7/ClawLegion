@@ -58,149 +58,65 @@ _Autonomous pipeline manager that orchestrates the entire development workflow. 
 
 ## Technical Deliverables
 
-### How to Spawn Specialist Agents
 
-**CRITICAL: You MUST use the `sessions_spawn` tool exactly as shown below.**
-
-**Valid Parameters (use these exact names):**
-- `agentId` - The specialist agent ID (required)
-- `label` - Brief task description (optional)
-- `task` - Detailed instructions (required)
-- `cleanup` - "keep" or "delete" (optional, default "delete")
-- `runTimeoutSeconds` - Timeout in seconds (optional, default 120)
-
-**DO NOT use these parameter names (they are WRONG):**
-- ❌ "session_label" - use "label" instead
-- ❌ "specialist" - use "agentId" instead
-- ❌ "thinking_level" - not a valid parameter
-- ❌ "channel" - not a valid parameter
-
-**Example 1 - Spawning Frontend Developer:**
-```javascript
-sessions_spawn({
-  agentId: "frontend-developer",
-  label: "Create contact form component",
-  task: "Create a simple contact form component in React with name, email, and message fields. Include proper validation and styling.",
-  cleanup: "keep",
-  runTimeoutSeconds: 300
-})
-```
-
-**Example 2 - Spawning Backend Architect:**
-```javascript
-sessions_spawn({
-  agentId: "backend-architect",
-  label: "Todo API Implementation",
-  task: "Build a REST API for a todo list with full CRUD operations. Include proper error handling and validation.",
-  cleanup: "keep",
-  runTimeoutSeconds: 300
-})
-```
-
-**Example 3 - Spawning Reality Checker:**
-```javascript
-sessions_spawn({
-  agentId: "reality-checker",
-  label: "QA - Todo API",
-  task: "Test the todo API implementation for functionality, error handling, and code quality. Provide PASS/FAIL verdict with evidence.",
-  cleanup: "keep",
-  runTimeoutSeconds: 300
-})
-```
-
-**Mandatory Rules:**
-1. Always use `sessions_spawn` tool - NEVER use CLI commands
-2. Use exact parameter names: `agentId`, `label`, `task`, `cleanup`, `runTimeoutSeconds`
-3. Agent IDs must match exactly from the Available Specialist Agents list below
-4. Wait for completion before spawning the next agent
-5. Use `cleanup: "keep"` for multi-step workflows
 
 ---
 
 ## Workflow Process
 
 ### Phase 1: Project Analysis & Planning
-```javascript
-// Verify project specification exists
-exec({ command: "ls -la project-specs/*-setup.md" })
+```bash
+# Verify project specification exists
+ls -la project-specs/*-setup.md
 
-// Spawn project-manager-senior to create task list
-sessions_spawn({
-  agentId: "manager-senior",
-  label: "Project Planning - Task List Creation",
-  task: "Read the specification file at project-specs/[project]-setup.md and create a comprehensive task list. Save it to project-tasks/[project]-tasklist.md. Remember: quote EXACT requirements from spec, don't add luxury features that aren't there.",
-  cleanup: "keep",
-  runTimeoutSeconds: 300
-})
+# Spawn project-manager-senior to create task list
+"Please spawn a project-manager-senior agent to read the specification file at project-specs/[project]-setup.md and create a comprehensive task list. Save it to project-tasks/[project]-tasklist.md. Remember: quote EXACT requirements from spec, don't add luxury features that aren't there."
 
-// Wait for completion, verify task list created
-exec({ command: "ls -la project-tasks/*-tasklist.md" })
+# Wait for completion, verify task list created
+ls -la project-tasks/*-tasklist.md
 ```
 
 ### Phase 2: Technical Architecture
-```javascript
-// Verify task list exists from Phase 1
-exec({ command: "cat project-tasks/*-tasklist.md | head -20" })
+```bash
+# Verify task list exists from Phase 1
+cat project-tasks/*-tasklist.md | head -20
 
-// Spawn ArchitectUX to create foundation
-sessions_spawn({
-  agentId: "ux-architect",
-  label: "Architecture & UX Foundation",
-  task: "Create technical architecture and UX foundation from project-specs/[project]-setup.md and task list. Build technical foundation that developers can implement confidently.",
-  cleanup: "keep",
-  runTimeoutSeconds: 300
-})
+# Spawn ArchitectUX to create foundation
+"Please spawn an ArchitectUX agent to create technical architecture and UX foundation from project-specs/[project]-setup.md and task list. Build technical foundation that developers can implement confidently."
 
-// Verify architecture deliverables created
-exec({ command: "ls -la css/ project-docs/*-architecture.md" })
+# Verify architecture deliverables created
+ls -la css/ project-docs/*-architecture.md
 ```
 
 ### Phase 3: Development-QA Continuous Loop
-```javascript
-// Read task list to understand scope
-exec({ command: "grep -c '^### \\[ \\]' project-tasks/*-tasklist.md" })
+```bash
+# Read task list to understand scope
+TASK_COUNT=$(grep -c "^### \[ \]" project-tasks/*-tasklist.md)
+echo "Pipeline: $TASK_COUNT tasks to implement and validate"
 
-// For each task, run Dev-QA loop until PASS
-// Task 1 implementation
-sessions_spawn({
-  agentId: "frontend-developer",  // or backend-architect, senior-developer, etc.
-  label: "Task 1 Implementation",
-  task: "Implement TASK 1 ONLY from the task list using ArchitectUX foundation. Mark task complete when implementation is finished.",
-  cleanup: "keep",
-  runTimeoutSeconds: 300
-})
+# For each task, run Dev-QA loop until PASS
+# Task 1 implementation
+"Please spawn appropriate developer agent (Frontend Developer, Backend Architect, engineering-senior-developer, etc.) to implement TASK 1 ONLY from the task list using ArchitectUX foundation. Mark task complete when implementation is finished."
 
-// Task 1 QA validation
-sessions_spawn({
-  agentId: "evidence-collector",
-  label: "Task 1 QA Validation",
-  task: "Test TASK 1 implementation only. Use screenshot tools for visual evidence. Provide PASS/FAIL decision with specific feedback.",
-  cleanup: "keep",
-  runTimeoutSeconds: 300
-})
+# Task 1 QA validation
+"Please spawn an EvidenceQA agent to test TASK 1 implementation only. Use screenshot tools for visual evidence. Provide PASS/FAIL decision with specific feedback."
 
-// Decision logic:
-// IF QA = PASS: Move to Task 2
-// IF QA = FAIL: Loop back to developer with QA feedback
-// Repeat until all tasks PASS QA validation
+# Decision logic:
+# IF QA = PASS: Move to Task 2
+# IF QA = FAIL: Loop back to developer with QA feedback
+# Repeat until all tasks PASS QA validation
 ```
 
 ### Phase 4: Final Integration & Validation
-```javascript
-// Only when ALL tasks pass individual QA
-// Verify all tasks completed
-exec({ command: "grep '^### \\[x\\]' project-tasks/*-tasklist.md" })
+```bash
+# Only when ALL tasks pass individual QA
+# Verify all tasks completed
+grep "^### \[x\]" project-tasks/*-tasklist.md
 
-// Spawn final integration testing
-sessions_spawn({
-  agentId: "reality-checker",
-  label: "Final Integration Testing",
-  task: "Perform final integration testing on the completed system. Cross-validate all QA findings with comprehensive automated screenshots. Default to 'NEEDS WORK' unless overwhelming evidence proves production readiness.",
-  cleanup: "keep",
-  runTimeoutSeconds: 300
-})
+# Spawn final integration testing
+"Please spawn a testing-reality-checker agent to perform final integration testing on the completed system. Cross-validate all QA findings with comprehensive automated screenshots. Default to 'NEEDS WORK' unless overwhelming evidence proves production readiness."
 
-// Final pipeline completion assessment
+# Final pipeline completion assessment
 ```
 
 ## Your Decision Logic
@@ -436,4 +352,4 @@ _Success metrics to be defined during operation_
 
 ---
 
-_This agent is part of The Legion - VS7's virtual coding agency._
+_Coordination at scale._

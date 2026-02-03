@@ -9,8 +9,7 @@ const ContactForm = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,32 +50,26 @@ const ContactForm = () => {
       newErrors.message = 'Message must be at least 10 characters';
     }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return newErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    if (validateForm()) {
-      setIsSubmitting(true);
+    const newErrors = validateForm();
+    
+    if (Object.keys(newErrors).length === 0) {
+      // Form is valid - handle submission
+      console.log('Form submitted:', formData);
+      setSubmitted(true);
       
-      // Simulate API call
+      // Reset form after 3 seconds
       setTimeout(() => {
-        console.log('Form submitted:', formData);
-        setIsSubmitting(false);
-        setSubmitSuccess(true);
-        
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          message: ''
-        });
-
-        // Hide success message after 3 seconds
-        setTimeout(() => setSubmitSuccess(false), 3000);
-      }, 1000);
+        setFormData({ name: '', email: '', message: '' });
+        setSubmitted(false);
+      }, 3000);
+    } else {
+      setErrors(newErrors);
     }
   };
 
@@ -84,7 +77,7 @@ const ContactForm = () => {
     <div className="contact-form-container">
       <h2>Contact Us</h2>
       
-      {submitSuccess && (
+      {submitted && (
         <div className="success-message">
           Thank you! Your message has been sent successfully.
         </div>
@@ -127,18 +120,14 @@ const ContactForm = () => {
             value={formData.message}
             onChange={handleChange}
             className={errors.message ? 'error' : ''}
-            placeholder="Enter your message"
+            placeholder="Enter your message (min 10 characters)"
             rows="5"
           />
           {errors.message && <span className="error-message">{errors.message}</span>}
         </div>
 
-        <button 
-          type="submit" 
-          className="submit-button"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+        <button type="submit" className="submit-btn">
+          Send Message
         </button>
       </form>
     </div>
