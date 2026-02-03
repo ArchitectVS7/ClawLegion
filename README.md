@@ -1,175 +1,246 @@
 # ClawLegion: Agent Orchestration System for OpenClaw
 
-**A hierarchical multi-agent system featuring 51 specialized agents, 9 department heads, and 1 orchestrator.**
+**A multi-agent system featuring 51 specialist agents coordinated by a central orchestrator.**
 
-This project is a translation and orchestration layer built on top of [The Agency](https://github.com/msitarzewski/agency-agents) by [@msitarzewski](https://github.com/msitarzewski) that define the personalities at the core of this system. Those agents were translated to [OpenClaw](https://github.com/openclaw/openclaw) with an additional "department head" layer in each grouping. Finally one master orchestrator agent is provided, or you can run this with your primary OpenClaw persona.
+This project is a translation and orchestration layer built on top of [The Agency](https://github.com/msitarzewski/agency-agents) by [@msitarzewski](https://github.com/msitarzewski) that define the personalities at the core of this system. Those agents were translated to [OpenClaw](https://github.com/openclaw/openclaw) with a central orchestrator that delegates all implementation work to specialists.
+
+## Architecture
+
+ClawLegion uses a **flat delegation model**:
+
+```
+User → Orchestrator (as agent profile) → Specialists
+         depth 0, denied write/edit/exec      depth 1
+```
+
+**Key insight:** You start your OpenClaw session AS the orchestrator agent. The orchestrator has tool restrictions (`write`, `edit`, `exec` denied), forcing it to delegate all implementation work to specialists.
 
 ### What's Included
 
-- **1 Orchestrator** — Top-level coordinator
-- **9 Department Heads** — Orchestrate specialists within their domains
-- **51 Specialist Agents** — Domain experts across 9 departments
+- **1 Orchestrator** — Central coordinator (cannot write code, must delegate)
+- **51 Specialist Agents** — Domain experts across 9 categories
+
+## Quick Start
+
+### 1. Install OpenClaw
+
+```bash
+npm install -g openclaw
+# or
+pnpm add -g openclaw
+```
+
+### 2. Clone ClawLegion
+
+```bash
+cd ~/.openclaw/workspace
+git clone https://github.com/ArchitectVS7/ClawLegion.git legion
+```
+
+### 3. Apply the Legion Config
+
+```bash
+openclaw gateway config.patch < legion/legion-config.json
+```
+
+Or manually merge `legion-config.json` into your `~/.openclaw/openclaw.json`.
+
+### 4. Start a Session as the Orchestrator
+
+```bash
+openclaw agent --agent orchestrator --message "Build a REST API for a todo app"
+```
+
+This starts a session where:
+- You ARE the orchestrator (session key: `agent:orchestrator:main`)
+- The orchestrator cannot write/edit/execute directly
+- All work is delegated to specialists via `sessions_spawn`
+
+## How It Works
+
+### The Orchestrator Pattern
+
+The orchestrator evaluates your request and spawns appropriate specialists:
+
+**Simple Task:**
+```
+"Create a React contact form"
+→ Spawns: frontend-developer
+→ Returns: Component code
+```
+
+**Multi-Specialist Task:**
+```
+"Build a REST API with tests"
+→ Spawns: backend-architect, api-tester
+→ Coordinates outputs
+→ Returns: Tested, validated API
+```
+
+**Cross-Domain Task:**
+```
+"Design and build a landing page"
+→ Spawns: ux-architect, ui-designer, frontend-developer, reality-checker
+→ Synthesizes outputs
+→ Returns: Complete, validated landing page
+```
+
+### QA and Review
+
+Need an extra review step? The orchestrator can re-prompt any specialist to act as a supervisor:
+
+```
+→ Spawns: backend-architect (implementation)
+→ Spawns: senior-developer (code review)
+→ Spawns: reality-checker (QA certification)
+```
+
+## Specialist Roster
+
+### Design (6 agents)
+| Agent | Focus |
+|-------|-------|
+| brand-guardian | Brand identity, consistency, positioning |
+| ui-designer | Visual design systems, component libraries |
+| ux-architect | Technical architecture, CSS systems |
+| ux-researcher | User testing, behavior analysis |
+| visual-storyteller | Visual narratives, multimedia |
+| whimsy-injector | Personality, delight, playful interactions |
+
+### Engineering (7 agents)
+| Agent | Focus |
+|-------|-------|
+| ai-engineer | ML models, deployment, AI integration |
+| backend-architect | API design, database architecture |
+| devops-automator | CI/CD, infrastructure automation |
+| frontend-developer | React/Vue/Angular, UI implementation |
+| mobile-app-builder | iOS/Android, cross-platform |
+| rapid-prototyper | Fast POCs, MVPs |
+| senior-developer | Laravel/Livewire, advanced patterns |
+
+### Marketing (8 agents)
+| Agent | Focus |
+|-------|-------|
+| app-store-optimizer | ASO, conversion optimization |
+| content-creator | Multi-platform content, editorial |
+| growth-hacker | User acquisition, viral loops |
+| instagram-curator | Visual storytelling, community |
+| reddit-community-builder | Authentic engagement |
+| social-media-strategist | Cross-platform strategy |
+| tiktok-strategist | Viral content, algorithm optimization |
+| twitter-engager | Real-time engagement, thought leadership |
+
+### Product (3 agents)
+| Agent | Focus |
+|-------|-------|
+| feedback-synthesizer | User feedback analysis |
+| sprint-prioritizer | Agile planning, feature prioritization |
+| trend-researcher | Market intelligence, competitive analysis |
+
+### Project Management (5 agents)
+| Agent | Focus |
+|-------|-------|
+| management-experiment-tracker | A/B tests, hypothesis validation |
+| management-project-shepherd | Cross-functional coordination |
+| management-studio-operations | Day-to-day efficiency |
+| management-studio-producer | High-level orchestration |
+| manager-senior | Realistic scoping, task conversion |
+
+### Spatial Computing (6 agents)
+| Agent | Focus |
+|-------|-------|
+| cockpit-interaction-specialist | Cockpit controls |
+| immersive-developer | WebXR, browser-based AR/VR |
+| interface-architect | Spatial interaction design |
+| integration-specialist | CLI tools, terminal workflows |
+| spatial-engineer | Vision Pro apps |
+| spatial-metal-engineer | Swift, Metal, Vision Pro |
+
+### Specialized (2 agents)
+| Agent | Focus |
+|-------|-------|
+| data-analytics-reporter | Business intelligence, insights |
+| index-engineer | Code intelligence, LSP implementation |
+
+### Support (6 agents)
+| Agent | Focus |
+|-------|-------|
+| analytics-reporter | Data analysis, dashboards, KPIs |
+| executive-summary-generator | C-suite communication |
+| finance-tracker | Financial planning, budget management |
+| infrastructure-maintainer | System reliability, performance |
+| legal-compliance-checker | Compliance, regulations |
+| support-responder | Customer service, issue resolution |
+
+### Testing (7 agents)
+| Agent | Focus |
+|-------|-------|
+| api-tester | API validation, integration testing |
+| evidence-collector | Screenshot-based QA, visual proof |
+| performance-benchmarker | Performance testing, optimization |
+| reality-checker | Evidence-based certification, quality gates |
+| test-results-analyzer | Test evaluation, metrics analysis |
+| tool-evaluator | Technology assessment, tool selection |
+| workflow-optimizer | Process analysis, workflow improvement |
 
 ## Structure
 
 ```
 legion/
-├── orchestrator/        # Master orchestrator
-├── agents/              # 51 specialist agents
-│   ├── design/          # 6 agents (UI, UX, Brand, etc.)
-│   ├── engineering/     # 7 agents (Frontend, Backend, Mobile, etc.)
-│   ├── marketing/       # 8 agents (Growth, Social, Content, etc.)
-│   ├── product/         # 3 agents (Strategy, Feedback, Sprint)
-│   ├── project-management/ # 5 agents (PM, Studio Ops, etc.)
-│   ├── spatial-computing/  # 6 agents (visionOS, Metal, AR/VR)
-│   ├── specialized/     # 3 agents (Analytics, Indexing, Orchestration)
-│   ├── support/         # 6 agents (Finance, Legal, Infra, etc.)
-│   └── testing/         # 7 agents (QA, Performance, Reality Check)
-│
-│
-├── UAT.md              # Sample User Acceptance Test 
-├── DEPARTMENTS.md      # Department structure & agent roster
-└── README.md           # This file
+├── agents/
+│   ├── 00-orchestrator/     # Central coordinator
+│   ├── design/              # 6 design specialists
+│   ├── engineering/         # 7 engineering specialists
+│   ├── marketing/           # 8 marketing specialists
+│   ├── product/             # 3 product specialists
+│   ├── project-management/  # 5 PM specialists
+│   ├── spatial-computing/   # 6 XR/spatial specialists
+│   ├── specialized/         # 2 specialized agents
+│   ├── support/             # 6 support specialists
+│   └── testing/             # 7 testing specialists
+├── legion-config.json       # Agent registry
+├── README.md                # This file
+└── UAT.md                   # User acceptance tests
 ```
 
-Each agent directory contains:
+Each specialist directory contains:
 - **SOUL.md** — Persona, mission, personality
 - **MEMORY.md** — Domain knowledge, templates, examples
 - **TOOLS.md** — Agent-specific tool notes (optional)
 
-## Installation
+## Why This Architecture?
 
-### Prerequisites
+### Problem: LLMs Do the Work Themselves
 
-- [OpenClaw](https://github.com/openclaw/openclaw) installed and configured
+When given tools, LLMs tend to do tasks directly rather than delegating. An "orchestrator" with full tool access will just write the code itself.
 
-### Setup
+### Solution: Tool Restrictions Force Delegation
 
-1. **Clone this repository into your OpenClaw workspace:**
-   ```bash
-   cd ~/.openclaw/workspace
-   git clone https://github.com/ArchitectVS7/Legion.git legion
-   ```
+By denying `write`, `edit`, and `exec` from the orchestrator:
+- It MUST spawn specialists to do implementation work
+- It focuses on task decomposition and coordination
+- Specialists get focused, single-purpose tasks
+- The orchestrator synthesizes results
 
-2. **Apply the Legion config:**
-   ```bash
-   openclaw gateway config.patch < legion/legion-config.json
-   ```
+### Why Not Deeper Hierarchies?
 
-   Or manually add the agent config from `legion-config.json` to your `openclaw.json`.
-
-
-## Usage
-
-Legion uses **intelligent delegation** — the orchestrator automatically picks the right level of coordination based on task complexity.
-
-### Example: Simple to Complex
-
-**Simple Task** (1 specialist):
-```
-"Create a React contact form component"
-→ Spawns: frontend-developer
-→ Returns: Component code
-```
-
-**Medium Task** (squad with QA):
-```
-"Build a REST API for a todo list with CRUD operations"
-→ Spawns: head-engineering
-→ Coordinates: backend-architect → reality-checker
-→ Returns: Tested, validated API
-```
-
-**Complex Task** (department orchestration):
-```
-"Build a complete task management web app with auth and dashboard"
-→ Spawns: head-engineering
-→ Coordinates: backend-architect, frontend-developer, mobile-app-builder, reality-checker
-→ Returns: Full-stack integrated application
-```
-
-**Cross-Department** (multiple heads):
-```
-"Design and implement a SaaS landing page"
-→ Spawns: head-design + head-engineering
-→ Design: ux-architect → ui-designer
-→ Engineering: frontend-developer → reality-checker
-→ Returns: Designed, implemented, and validated landing page
-```
-
-### Direct Specialist Spawn
-
-You can also spawn specialists directly:
-
-```bash
-"Please spawn frontend-developer to build a contact form component"
-```
-
-### Delegation Decision Framework
-
-The orchestrator evaluates each task and picks the optimal approach. See [UAT.md](./UAT.md) for the complete decision framework.
-
-## Use Cases
-
-### Engineering
-- Full-stack web apps
-- Mobile applications
-- DevOps automation
-- AI/ML integration
-- Rapid prototyping
-
-### Design
-- UI/UX design systems
-- Brand identity
-- Visual storytelling
-- Wireframes & mockups
-
-### Marketing
-- Growth campaigns
-- Social media strategy
-- Content creation
-- Community building
-- App store optimization
-
-### Product
-- Feature prioritization
-- User feedback synthesis
-- Trend research
-- Sprint planning
-
-### Testing & QA
-- Reality checks
-- Performance benchmarking
-- API testing
-- Evidence collection
-- Workflow optimization
-
-## Testing
-
-We include 4 UAT scenarios to validate the orchestration system:
-
-1. **UAT-1**: Simple task (single specialist)
-2. **UAT-2**: Medium task (multi-specialist squad)
-3. **UAT-3**: Complex task (department head orchestration)
-4. **UAT-4**: Cross-department coordination
-
-**See [UAT.md](./UAT.md) for complete test scenarios, success criteria, and test commands.**
+We considered adding "department heads" as an intermediate layer, but:
+- Adds complexity without clear benefit
+- Standard OpenClaw only allows 1 level of subagent spawning
+- The orchestrator can spawn multiple specialists directly
+- QA/review can be done by re-prompting any specialist
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on adding agents and improving the system.
-
-To add new agents:
-1. Create agent directory: `agents/<department>/<agent-id>/`
+To add new specialists:
+1. Create directory: `agents/<category>/<agent-id>/`
 2. Add `SOUL.md`, `MEMORY.md`, `TOOLS.md`
-3. Update department head's `allowAgents` list
-4. Add agent to `orchestrator`'s `allowAgents` list
-5. Test spawn command
+3. Add agent to `legion-config.json`
+4. Add to orchestrator's `allowAgents` list
 
 ## License
 
 MIT License - see [LICENSE](./LICENSE)
-
 
 ## Links
 
@@ -178,4 +249,4 @@ MIT License - see [LICENSE](./LICENSE)
 
 ---
 
-This is the way.
+_This is the way._

@@ -1,19 +1,18 @@
-# Legion Department Structure
+# Legion Specialist Roster
 
 ## Overview
 
-The Legion is organized into **9 departments**, each containing specialized agents and coordinated by a department head. This structure enables:
-- **Targeted deployments** (e.g., "deploy the Engineering team")
-- **Department-level coordination** via department heads
-- **Clear visualization** of available expertise
+The Legion consists of **51 specialist agents** organized into **9 domains**, all coordinated by a central orchestrator. The orchestrator spawns specialists directly — there are no intermediate layers.
+
+```
+Orchestrator → Specialists (any domain)
+```
 
 ---
 
-## Design Department (6 agents)
+## Design (6 specialists)
 
 Making it beautiful, usable, and delightful.
-
-**Head:** `00-design-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -26,11 +25,9 @@ Making it beautiful, usable, and delightful.
 
 ---
 
-## Engineering Department (7 agents)
+## Engineering (7 specialists)
 
 Building the future, one commit at a time.
-
-**Head:** `00-engineering-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -44,11 +41,9 @@ Building the future, one commit at a time.
 
 ---
 
-## Marketing Department (8 agents)
+## Marketing (8 specialists)
 
 Growing your audience, one authentic interaction at a time.
-
-**Head:** `00-marketing-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -63,11 +58,9 @@ Growing your audience, one authentic interaction at a time.
 
 ---
 
-## Product Department (3 agents)
+## Product (3 specialists)
 
 Building the right thing at the right time.
-
-**Head:** `00-product-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -77,11 +70,9 @@ Building the right thing at the right time.
 
 ---
 
-## Project Management Department (5 agents)
+## Project Management (5 specialists)
 
 Keeping the trains running on time (and under budget).
-
-**Head:** `00-project-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -93,11 +84,9 @@ Keeping the trains running on time (and under budget).
 
 ---
 
-## Spatial Computing Department (6 agents)
+## Spatial Computing (6 specialists)
 
 Building the immersive future.
-
-**Head:** `00-spatial-computing-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -110,25 +99,20 @@ Building the immersive future.
 
 ---
 
-## Specialized Department (3 agents)
+## Specialized (2 specialists)
 
 The unique specialists who don't fit in a box.
-
-**Head:** `00-specialized-agent-lead`
 
 | Agent | Focus |
 |-------|-------|
 | data-analytics-reporter | Business intelligence, insights |
 | index-engineer | Code intelligence, LSP implementation |
-| orchestrator | Multi-agent coordination |
 
 ---
 
-## Support Department (6 agents)
+## Support (6 specialists)
 
 The backbone of the operation.
-
-**Head:** `00-support-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -141,11 +125,9 @@ The backbone of the operation.
 
 ---
 
-## Testing Department (7 agents)
+## Testing (7 specialists)
 
 Breaking things so users don't have to.
-
-**Head:** `00-testing-lead`
 
 | Agent | Focus |
 |-------|-------|
@@ -159,31 +141,21 @@ Breaking things so users don't have to.
 
 ---
 
-## Department Statistics
+## Summary
 
-| Department | Agent Count | Head |
-|------------|-------------|------|
-| Marketing | 8 | head-marketing |
-| Engineering | 7 | head-engineering |
-| Testing | 7 | head-testing |
-| Design | 6 | head-design |
-| Spatial Computing | 6 | head-spatial-computing |
-| Support | 6 | head-support |
-| Project Management | 5 | head-project-management |
-| Product | 3 | head-product |
-| Specialized | 3 | head-specialized |
-
-**Total: 51 agents across 9 departments, each with a department head**
-
-```
-
-**Use Case:** "Build a full-stack web application with design system"
-- Orchestrator spawns department heads
-- Each head coordinates their specialists
-- Heads report back to LG2 for final integration
+| Domain | Count |
+|--------|-------|
+| Marketing | 8 |
+| Engineering | 7 |
+| Testing | 7 |
+| Design | 6 |
+| Spatial Computing | 6 |
+| Support | 6 |
+| Project Management | 5 |
+| Product | 3 |
+| Specialized | 2 |
+| **Total** | **51** |
 
 ---
 
-_The structure establishes the Process._
-
-
+_The structure enables the mission._

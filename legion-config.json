@@ -2,25 +2,16 @@
   "agents": {
     "list": [
       {
-        "id": "lg2",
-        "name": "LG2 - Orchestrator",
+        "id": "orchestrator",
+        "name": "Orchestrator",
         "agentDir": "agents/00-orchestrator",
         "model": "anthropic/claude-sonnet-4-5",
         "identity": {
-          "name": "LG2",
+          "name": "<NAME>",
           "theme": "Bridge between dreams and data"
         },
         "subagents": {
           "allowAgents": [
-            "head-design",
-            "head-engineering",
-            "head-marketing",
-            "head-product",
-            "head-project-management",
-            "head-spatial-computing",
-            "head-specialized",
-            "head-support",
-            "head-testing",
             "brand-guardian",
             "ui-designer",
             "ux-architect",
@@ -56,7 +47,6 @@
             "cockpit-interaction-specialist",
             "immersive-developer",
             "interface-architect",
-            "lg2",
             "data-analytics-reporter",
             "index-engineer",
             "analytics-reporter",
@@ -79,138 +69,6 @@
             "write",
             "edit",
             "exec"
-          ]
-        }
-      },
-      {
-        "id": "head-design",
-        "agentDir": "agents/design/00-design-lead",
-        "model": "anthropic/claude-sonnet-4-5",
-        "subagents": {
-          "allowAgents": [
-            "brand-guardian",
-            "ui-designer",
-            "ux-architect",
-            "ux-researcher",
-            "visual-storyteller",
-            "whimsy-injector"
-          ]
-        }
-      },
-      {
-        "id": "head-engineering",
-        "agentDir": "agents/engineering/00-engineering-lead",
-        "model": "anthropic/claude-sonnet-4-5",
-        "subagents": {
-          "allowAgents": [
-            "frontend-developer",
-            "backend-architect",
-            "senior-developer",
-            "mobile-app-builder",
-            "ai-engineer",
-            "devops-automator",
-            "rapid-prototyper"
-          ]
-        }
-      },
-      {
-        "id": "head-marketing",
-        "agentDir": "agents/marketing/00-marketing-lead",
-        "model": "anthropic/claude-sonnet-4-5",
-        "subagents": {
-          "allowAgents": [
-            "growth-hacker",
-            "content-creator",
-            "social-media-strategist",
-            "twitter-engager",
-            "instagram-curator",
-            "tiktok-strategist",
-            "reddit-community-builder",
-            "app-store-optimizer"
-          ]
-        }
-      },
-      {
-        "id": "head-product",
-        "agentDir": "agents/product/00-product-lead",
-        "model": "anthropic/claude-sonnet-4-5",
-        "subagents": {
-          "allowAgents": [
-            "feedback-synthesizer",
-            "sprint-prioritizer",
-            "trend-researcher"
-          ]
-        }
-      },
-      {
-        "id": "head-project-management",
-        "agentDir": "agents/project-management/00-project-lead",
-        "model": "anthropic/claude-sonnet-4-5",
-        "subagents": {
-          "allowAgents": [
-            "management-project-shepherd",
-            "management-studio-producer",
-            "management-studio-operations",
-            "management-experiment-tracker",
-            "manager-senior"
-          ]
-        }
-      },
-      {
-        "id": "head-spatial-computing",
-        "agentDir": "agents/spatial-computing/00-spatial-computing-lead",
-        "model": "anthropic/claude-sonnet-4-5",
-        "subagents": {
-          "allowAgents": [
-            "spatial-engineer",
-            "immersive-developer",
-            "interface-architect",
-            "cockpit-interaction-specialist",
-            "integration-specialist",
-            "spatial-metal-engineer"
-          ]
-        }
-      },
-      {
-        "id": "head-specialized",
-        "agentDir": "agents/specialized/00-specialized-agent-lead",
-        "model": "anthropic/claude-sonnet-4-5",
-        "subagents": {
-          "allowAgents": [
-            "lg2",
-            "data-analytics-reporter",
-            "index-engineer"
-          ]
-        }
-      },
-      {
-        "id": "head-support",
-        "agentDir": "agents/support/00-support-lead",
-        "model": "anthropic/claude-sonnet-4-5",
-        "subagents": {
-          "allowAgents": [
-            "support-responder",
-            "analytics-reporter",
-            "finance-tracker",
-            "legal-compliance-checker",
-            "infrastructure-maintainer",
-            "executive-summary-generator"
-          ]
-        }
-      },
-      {
-        "id": "head-testing",
-        "agentDir": "agents/testing/00-testing-lead",
-        "model": "anthropic/claude-sonnet-4-5",
-        "subagents": {
-          "allowAgents": [
-            "reality-checker",
-            "api-tester",
-            "performance-benchmarker",
-            "evidence-collector",
-            "test-results-analyzer",
-            "tool-evaluator",
-            "workflow-optimizer"
           ]
         }
       },
