@@ -226,6 +226,62 @@ function pushToClient(clientId, message) {
 export { pushToClient };
 
 // ============================================================
+// Workspace State — Cyberscape hex data feed
+// ============================================================
+import { readdirSync, statSync, existsSync } from "fs";
+import { join } from "path";
+
+const WORKSPACE_ROOT = process.env.WORKSPACE_ROOT || "/root/.openclaw/workspace";
+
+const HEX_MAP = [
+  { id: "sparks",       label: "Sparks",      row: 0, col: 0 },
+  { id: "legion",       label: "Legion",      row: 0, col: 1 },
+  { id: "office-space", label: "Office",      row: 0, col: 2 },
+  { id: "ovi-pwa",      label: "OVI PWA",     row: 1, col: 0 },
+  { id: "ovi-native",   label: "OVI App",     row: 1, col: 1 },
+  { id: "ovi-skill",    label: "OVI Skill",   row: 1, col: 2 },
+  { id: "dev-brain",    label: "Dev Brain",   row: 2, col: 0 },
+  { id: "todo-api",     label: "Todo API",    row: 2, col: 1 },
+  { id: "testing",      label: "Testing",     row: 2, col: 2 },
+];
+
+function getHexStatus(dirId) {
+  const dirPath = join(WORKSPACE_ROOT, dirId);
+  if (!existsSync(dirPath)) return "idle";
+  try {
+    const files = readdirSync(dirPath, { recursive: false });
+    const hasActivity = files.some(f => f.endsWith(".lock") || f.endsWith(".tmp") || f === ".wip");
+    return hasActivity ? "active" : "idle";
+  } catch {
+    return "idle";
+  }
+}
+
+app.get("/api/workspace-state", (req, res) => {
+  const hexes = HEX_MAP.map(hex => ({
+    ...hex,
+    status: getHexStatus(hex.id),
+    agentCount: 0,
+  }));
+  res.json({ hexes, timestamp: new Date().toISOString() });
+});
+
+// ============================================================
+// Push token registration (Expo push notifications)
+// ============================================================
+const pushTokens = new Set();
+
+app.post("/api/register-push", (req, res) => {
+  const { token } = req.body;
+  if (!token || typeof token !== "string") {
+    return res.status(400).json({ error: "Missing token" });
+  }
+  pushTokens.add(token);
+  console.log(`[OVI Push] Token registered: ${token.slice(0, 20)}... (total: ${pushTokens.size})`);
+  res.json({ ok: true, registered: pushTokens.size });
+});
+
+// ============================================================
 // Start server + connect gateway
 // ============================================================
 server.listen(PORT, "127.0.0.1", async () => {
