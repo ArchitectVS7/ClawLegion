@@ -1,0 +1,42 @@
+{
+  "agents": {
+    "list": [
+      {
+        "id": "main",
+        "name": "LG2",
+        "model": "anthropic/claude-sonnet-4-5",
+        "identity": {
+          "name": "LG2",
+          "theme": "Bridge between dreams and data"
+        },
+        "subagents": {
+          "allowAgents": ["orchestrator"]
+        }
+      },
+      {
+        "id": "orchestrator",
+        "name": "Orchestrator (READ-ONLY)",
+        "agentDir": "legion/agents/00-orchestrator",
+        "model": "anthropic/claude-sonnet-4-5",
+        "disableTools": ["write", "edit", "exec"],
+        "identity": {
+          "name": "Orchestrator",
+          "theme": "Delegation coordinator"
+        },
+        "subagents": {
+          "allowAgents": [
+            "head-design",
+            "head-engineering",
+            "head-marketing",
+            "head-product",
+            "head-project-management",
+            "head-spatial-computing",
+            "head-specialized",
+            "head-support",
+            "head-testing"
+          ]
+        }
+      }
+    ]
+  }
+}

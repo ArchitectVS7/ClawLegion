@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+*.env
+*.pem
+*.key
+/memory/
+/MEMORY.md
+openclaw.json
+*.log
+.DS_Store
+legion-backup-*/
+legion-fresh/
+*/models.json

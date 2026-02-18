@@ -1,0 +1,32 @@
+[Unit]
+Description=OVI PWA Backend Server
+After=network.target openclaw.service
+Wants=openclaw.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/var/www/ovi-server
+ExecStart=/usr/bin/node /var/www/ovi-server/server/index.js
+Restart=on-failure
+RestartSec=5
+
+# Environment
+Environment=NODE_ENV=production
+Environment=OVI_PORT=3721
+Environment=OPENCLAW_GATEWAY_URL=ws://127.0.0.1:18789
+Environment=OPENCLAW_GATEWAY_TOKEN=7c036c8f707599804ce9b8b03675b7f10cd5c41fcb5dc4b0
+# Set these in /etc/environment or EnvironmentFile:
+# ELEVENLABS_API_KEY=...
+# OPENAI_API_KEY=...
+# VAPID_PUBLIC_KEY=...
+# VAPID_PRIVATE_KEY=...
+# VAPID_EMAIL=ovi@yourdomain.com
+EnvironmentFile=-/etc/ovi/env
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ovi-server
+
+[Install]
+WantedBy=multi-user.target
