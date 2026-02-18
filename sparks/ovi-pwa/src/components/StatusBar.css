@@ -1,0 +1,34 @@
+/* StatusBar — Connection status styles
+ * P4.4: Reconnecting pulse animation (#1)
+ */
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.status-dot--connected {
+  background-color: #22c55e; /* green-500 */
+}
+
+.status-dot--partial {
+  background-color: #3b82f6; /* blue-500 */
+}
+
+.status-dot--reconnecting {
+  background-color: #f59e0b; /* amber-500 */
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.status-dot--disconnected {
+  background-color: #ef4444; /* red-500 */
+}
