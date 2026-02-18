@@ -151,6 +151,31 @@ OVI is built with **Chaos-Driven Development (CDD)**:
 
 ---
 
+## 📋 PHASE 4: GitHub + Claude Code Integration
+*Goal: Continuous dev loop — GitHub repo + Claude Code as parallel builder alongside LG2*
+*Status: DECLARED — Work list needed before next heartbeat or stall roll will trigger*
+
+### Work List (to be defined — INSPIRED roll suggests: lean hard into this)
+- [x] P4.1 — Initialize GitHub repo for OVI project (ovi-pwa + ovi-native + ovi-skill) **[DONE: ArchitectVS7/ClawLegion — repo live, clean-main branch, initial commit pushed]**
+- [x] P4.2 — Configure Claude Code / coding-agent skill integration (claude CLI confirmed v2.1.32; /api/workspace-state + /api/register-push added to OVI server, deployed, pushed to GitHub)
+- [ ] P4.3 — Define parallel build workflow (LG2 orchestrates, Claude Code implements)
+- [ ] P4.4 — First Claude Code task: implement one P3 feature gap or PWA enhancement
+- [ ] P4.5 — Validate round-trip: issue → agent task → PR → review
+
+### Measurable Outcomes
+- [ ] OVI codebase lives on GitHub (not just droplet)
+- [ ] Claude Code can receive tasks and open PRs
+- [ ] LG2 + Claude Code can build in parallel without conflicts
+
+### Phase 4 Roll Log
+| Task | Roll | Result | Action |
+|------|------|--------|--------|
+| Phase 4 declared | 20 | INSPIRED | "VS7 was right: continuous dev + GitHub unlocks Claude Code as a parallel builder. Lean into it hard." Phase 4 scoped. |
+| Heartbeat 19:41 UTC (stall detected) | 13 | RESEARCH MODE | 20-min investigation executed. Key find: ArchitectVS7/ClawLegion GitHub repo already exists with clean-main branch + initial commit. gh CLI authenticated. P4.1 retroactively complete. Unblocked for P4.2. |
+| Heartbeat 20:41 UTC (stall detected) | 17 | PHONE A FRIEND | Read `coding-agent` SKILL.md. Key finds: (1) `claude` CLI available — use `pty:true` for PTY mode, `background:true` for async tasks, `workdir` to target OVI repo. (2) Pattern: `exec pty:true workdir:~/path background:true command:"claude 'task'"`. (3) Auto-notify via `openclaw gateway wake` when done. (4) Never run in OpenClaw's own folder. P4.2 is now fully unblocked — integration path is clear. |
+
+---
+
 ## 📋 FUTURE PHASES (unscoped)
 *Things the chaos might pull us toward*
 
@@ -174,9 +199,10 @@ Every hour, LG2 checks:
 ## 📊 Current Status
 
 **Active Phase:** Phase 4 — GitHub + Claude Code Integration (Phases 1-3 complete)
+**▶ RESUMED:** Hold lifted 22:42 UTC 2026-02-18. VS7 instructed: finish out the system. P4.2+ active.
 **Started:** 2026-02-18  
 **Last Roll:** 20 — INSPIRED ("VS7 was right: continuous dev + GitHub unlocks Claude Code as a parallel builder. Lean into it hard.")
-**Last Heartbeat Check:** 2026-02-18 17:41 UTC  
+**Last Heartbeat Check:** 2026-02-18 20:41 UTC  
 **Phase 1 Progress:** ✅ COMPLETE (5/5 active tasks, 1 narrowed)  
 **Phase 2 Progress:** ✅ COMPLETE (8/8 tasks)  
 **Phase 3 Progress:** ✅ COMPLETE (6/6 tasks)
