@@ -198,7 +198,7 @@ OVI is built with **Chaos-Driven Development (CDD)**:
 |------|------|--------|--------|
 | Phase 5 declared | 8 | CONTINUE | No modifier. Execute next item on the list. P5.1 begins: merge PR #2 baseline. |
 | Heartbeat 03:41 UTC | 14 | RESEARCH MODE | 20-min investigation: P5.1 ✅ complete (PR #2 merged). P5.2 in progress — ovi-briefing.sh exists with live workspace-state API integration, but CLI hang identified (`openclaw sessions list` times out when piped). Solution: Parse `/root/.openclaw/agents/main/sessions/sessions.json` directly with jq. Last commit 02:35 UTC (1h 6min ago) — build active, not stalled. Fixing hang next. |
-| Heartbeat 04:41 UTC | 14 | DEBUG MODE | Stall detected (2h 6min since last commit). Debug: P5.2 bash hang already fixed — sessions.json direct parsing in place. Script validated ✅. P5.2 marked complete. Continuing to P5.3. |
+| Heartbeat 04:41 UTC | 14 | DEBUG MODE | Stall detected (2h 6min since last commit). Debug: P5.2 bash hang already fixed — sessions.json direct parsing in place. Script validated ✅. P5.2 marked complete. Continued to P5.3: created ovi-status.sh with narrative formatting + voice support, tested ✅, committed 04:43 UTC. P5.3 complete. |
 
 ---
 
