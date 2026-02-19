@@ -8,6 +8,7 @@ import express from "express";
 import cors from "cors";
 import { createServer } from "http";
 import { randomUUID } from "crypto";
+import rateLimit from "express-rate-limit";
 import { getGateway } from "./gateway.js";
 import { transcribeAudio } from "./whisper.js";
 import { synthesizeSpeech } from "./tts.js";
@@ -17,12 +18,54 @@ const app = express();
 const server = createServer(app);
 const PORT = process.env.OVI_PORT || 3721;
 
-// Middleware
+// CORS — restrict to configured origins (defaults to same-origin only)
+const ALLOWED_ORIGINS = process.env.OVI_ALLOWED_ORIGINS
+  ? process.env.OVI_ALLOWED_ORIGINS.split(",").map((o) => o.trim())
+  : [];
+
 app.use(cors({
-  origin: true,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (same-origin, curl, server-to-server)
+    if (!origin) return callback(null, true);
+    // Allow configured origins
+    if (ALLOWED_ORIGINS.length === 0 || ALLOWED_ORIGINS.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error("Not allowed by CORS"));
+  },
   credentials: true,
 }));
-app.use(express.json({ limit: "50mb" }));
+
+// Request size limits — 10mb for audio payloads, reasonable for base64 audio
+app.use(express.json({ limit: "10mb" }));
+
+// Rate limiting — per IP
+const chatLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 30,
+  message: { error: "Too many requests, slow down" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const ttsLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 40,
+  message: { error: "Too many TTS requests" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const transcribeLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 20,
+  message: { error: "Too many transcription requests" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Max message length for chat (characters)
+const MAX_MESSAGE_LENGTH = 4000;
 
 // Push notification manager
 const pushManager = new PushNotificationManager();
@@ -30,7 +73,7 @@ const pushManager = new PushNotificationManager();
 // ============================================================
 // Health check
 // ============================================================
-app.get("/api/status", async (req, res) => {
+app.get("/api/status", async (_req, res) => {
   let gatewayStatus = "disconnected";
   try {
     const gw = await Promise.race([
@@ -44,7 +87,7 @@ app.get("/api/status", async (req, res) => {
 
   res.json({
     ok: true,
-    version: "2.0.0",
+    version: "2.1.0",
     gateway: gatewayStatus,
     timestamp: new Date().toISOString(),
   });
@@ -53,11 +96,15 @@ app.get("/api/status", async (req, res) => {
 // ============================================================
 // Chat — Send message to OpenClaw, get response
 // ============================================================
-app.post("/api/chat", async (req, res) => {
+app.post("/api/chat", chatLimiter, async (req, res) => {
   const { message, sessionKey = "ovi-voice-session" } = req.body;
 
   if (!message || typeof message !== "string") {
     return res.status(400).json({ error: "message required" });
+  }
+
+  if (message.length > MAX_MESSAGE_LENGTH) {
+    return res.status(400).json({ error: `message too long (max ${MAX_MESSAGE_LENGTH} chars)` });
   }
 
   console.log(`[OVI] Chat: "${message.slice(0, 80)}..."`);
@@ -91,7 +138,7 @@ app.post("/api/chat", async (req, res) => {
 // ============================================================
 app.get("/api/chat/history", async (req, res) => {
   const sessionKey = req.query.sessionKey || "ovi-voice-session";
-  const limit = parseInt(req.query.limit) || 20;
+  const limit = Math.min(parseInt(req.query.limit) || 20, 100);
 
   try {
     const gw = await getGateway();
@@ -106,11 +153,11 @@ app.get("/api/chat/history", async (req, res) => {
 // ============================================================
 // STT — Transcribe audio via Whisper API
 // ============================================================
-app.post("/api/transcribe", async (req, res) => {
+app.post("/api/transcribe", transcribeLimiter, async (req, res) => {
   const { audio, mimeType = "audio/webm" } = req.body;
 
-  if (!audio) {
-    return res.status(400).json({ error: "audio (base64) required" });
+  if (!audio || typeof audio !== "string") {
+    return res.status(400).json({ error: "audio (base64 string) required" });
   }
 
   console.log("[OVI] Transcribing audio...");
@@ -127,11 +174,15 @@ app.post("/api/transcribe", async (req, res) => {
 // ============================================================
 // TTS — Synthesize speech via ElevenLabs
 // ============================================================
-app.post("/api/tts", async (req, res) => {
+app.post("/api/tts", ttsLimiter, async (req, res) => {
   const { text, voiceId } = req.body;
 
   if (!text || typeof text !== "string") {
     return res.status(400).json({ error: "text required" });
+  }
+
+  if (text.length > MAX_MESSAGE_LENGTH) {
+    return res.status(400).json({ error: `text too long (max ${MAX_MESSAGE_LENGTH} chars)` });
   }
 
   console.log(`[OVI] TTS: "${text.slice(0, 60)}..."`);
@@ -176,7 +227,7 @@ app.post("/api/push/send", async (req, res) => {
   }
 });
 
-app.get("/api/push/vapid-key", (req, res) => {
+app.get("/api/push/vapid-key", (_req, res) => {
   res.json({ publicKey: pushManager.getPublicKey() });
 });
 
@@ -185,9 +236,15 @@ app.get("/api/push/vapid-key", (req, res) => {
 // ============================================================
 const pendingPolls = new Map(); // clientId -> { res, timer }
 const proactiveQueue = new Map(); // clientId -> messages[]
+const POLL_TIMEOUT_MS = 30_000;
 
 app.get("/api/poll/:clientId", (req, res) => {
   const { clientId } = req.params;
+
+  // Validate clientId format
+  if (!/^[\w-]{4,40}$/.test(clientId)) {
+    return res.status(400).json({ error: "invalid clientId" });
+  }
 
   // If there are queued messages, send immediately
   if (proactiveQueue.has(clientId) && proactiveQueue.get(clientId).length > 0) {
@@ -196,13 +253,21 @@ app.get("/api/poll/:clientId", (req, res) => {
     return res.json({ ok: true, messages });
   }
 
-  // Otherwise, long-poll (hold connection for up to 30s)
+  // Cancel any existing poll for this client (prevent leaked connections)
+  if (pendingPolls.has(clientId)) {
+    const existing = pendingPolls.get(clientId);
+    clearTimeout(existing.timer);
+    try { existing.res.json({ ok: true, messages: [] }); } catch {}
+    pendingPolls.delete(clientId);
+  }
+
+  // Long-poll (hold connection for up to 30s)
   const timer = setTimeout(() => {
     if (pendingPolls.has(clientId)) {
       pendingPolls.delete(clientId);
       res.json({ ok: true, messages: [] });
     }
-  }, 30000);
+  }, POLL_TIMEOUT_MS);
 
   pendingPolls.set(clientId, { res, timer });
 });
@@ -222,13 +287,13 @@ function pushToClient(clientId, message) {
   }
 }
 
-// Export for internal use
-export { pushToClient };
+// Export for internal use and testing
+export { app, server, pushToClient, pendingPolls, proactiveQueue };
 
 // ============================================================
 // Workspace State — Cyberscape hex data feed
 // ============================================================
-import { readdirSync, statSync, existsSync } from "fs";
+import { readdirSync, existsSync } from "fs";
 import { join } from "path";
 
 const WORKSPACE_ROOT = process.env.WORKSPACE_ROOT || "/root/.openclaw/workspace";
@@ -257,7 +322,7 @@ function getHexStatus(dirId) {
   }
 }
 
-app.get("/api/workspace-state", (req, res) => {
+app.get("/api/workspace-state", (_req, res) => {
   const hexes = HEX_MAP.map(hex => ({
     ...hex,
     status: getHexStatus(hex.id),
@@ -282,24 +347,33 @@ app.post("/api/register-push", (req, res) => {
 });
 
 // ============================================================
-// Start server + connect gateway
+// Start server + connect gateway (only when run directly)
 // ============================================================
-server.listen(PORT, "127.0.0.1", async () => {
-  console.log(`[OVI] Server listening on http://127.0.0.1:${PORT}`);
+function startServer() {
+  server.listen(PORT, "127.0.0.1", async () => {
+    console.log(`[OVI] Server listening on http://127.0.0.1:${PORT}`);
 
-  // Eagerly connect to gateway
-  try {
-    await getGateway();
-    console.log("[OVI] Gateway connected!");
-  } catch (err) {
-    console.error("[OVI] Gateway connection failed (will retry):", err.message);
-    // Non-fatal — will retry on next request
-  }
-});
+    // Eagerly connect to gateway
+    try {
+      await getGateway();
+      console.log("[OVI] Gateway connected!");
+    } catch (err) {
+      console.error("[OVI] Gateway connection failed (will retry):", err.message);
+    }
+  });
 
-// Graceful shutdown
-process.on("SIGTERM", () => {
-  console.log("[OVI] Shutting down...");
-  server.close();
-  process.exit(0);
-});
+  // Graceful shutdown
+  process.on("SIGTERM", () => {
+    console.log("[OVI] Shutting down...");
+    server.close();
+    process.exit(0);
+  });
+}
+
+// Auto-start when run directly (not when imported for testing)
+const isDirectRun = process.argv[1]?.endsWith("index.js") || process.argv[1]?.endsWith("server/index.js");
+if (isDirectRun) {
+  startServer();
+}
+
+export { startServer };
