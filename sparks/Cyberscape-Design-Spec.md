@@ -10,8 +10,9 @@
 
 1. [Project Overview](#1-project-overview)
 2. [Architecture](#2-architecture)
-3. [Data Model](#3-data-model)
-4. [Feature Specifications](#4-feature-specifications)
+3. [Integration Protocol](#3-integration-protocol)
+4. [Data Model](#4-data-model)
+5. [Feature Specifications](#5-feature-specifications)
    - F-01: World Data Model & Schema
    - F-02: Codebase Terrain Generator
    - F-03: Workspace State API v2
@@ -27,8 +28,8 @@
    - F-13: OVI Narration Integration
    - F-14: Human Presence (God View)
    - F-15: Persistence Layer
-5. [Tech Stack](#5-tech-stack)
-6. [Phase Roadmap](#6-phase-roadmap)
+6. [Tech Stack](#6-tech-stack)
+7. [Phase Roadmap](#7-phase-roadmap)
 
 ---
 
@@ -38,15 +39,20 @@
 
 A live, spatial visualization of software development as it happens. The codebase is rendered as hexagonal terrain. AI agents are visible workers moving through that terrain. Work, conflicts, and collaboration are observable in real time.
 
+**Framework-agnostic by design.** Cyberscape is a visualization layer, not an agent framework. It works with any AI agent system — LangChain, CrewAI, AutoGen, custom agents, or simple scripts — via a universal HTTP heartbeat API. If your agent can make a POST request, it can appear on the map. See [Section 3: Integration Protocol](#3-integration-protocol).
+
 ### What Cyberscape Is Not
 
 - Not a static dashboard or reporting tool
 - Not a project management UI
 - Not a code editor or IDE plugin
+- Not an agent orchestration framework — it *observes* agents, it doesn't *control* them
 
-### Core Principle
+### Core Principles
 
 **Data-first, aesthetics second.** The hex grid is a projection of a canonical data model. The data model must be correct and useful before any rendering is meaningful. A terminal ASCII view of the correct data model is more valuable than a beautiful 3D view of bad data.
+
+**Receiver, not controller.** Cyberscape observes what agents report. It does not manage, orchestrate, or direct agent behavior. This separation is what makes it framework-agnostic — any system that can send a heartbeat can participate.
 
 ### Existing Implementation (Inherit, Don't Rewrite)
 
@@ -66,9 +72,18 @@ The following exist and should be evolved, not replaced:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     DATA LAYER                              │
+│                  INGESTION LAYER                            │
 │                                                             │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐  │
+│  Any agent framework ──POST──> /api/cyberscape/heartbeat    │
+│  Git activity ─────────poll──> GitAdapter                   │
+│  CI/CD webhooks ───────POST──> /api/cyberscape/webhooks/ci  │
+│                                                             │
+└──────────────────────────┬──────────────────────────────────┘
+                           │
+┌──────────────────────────┼──────────────────────────────────┐
+│                     DATA LAYER                              │
+│                          │                                  │
+│  ┌──────────────┐  ┌─────▼────────┐  ┌──────────────────┐  │
 │  │ Terrain DB   │  │ Agent State  │  │ Event Log        │  │
 │  │ (hex map     │  │ (positions,  │  │ (git, CI, task   │  │
 │  │  from code)  │  │  activities) │  │  completions)    │  │
@@ -103,13 +118,151 @@ The following exist and should be evolved, not replaced:
 - **Single world state:** All renderers read from the same data model via the same API. There is one truth.
 - **Event-sourced:** The world state is built from an append-only event log. Current state is a projection.
 - **Renderer-agnostic:** The API emits generic hex/agent/event data. Renderers interpret it however they want (ASCII, 2D, 3D).
+- **Source-agnostic:** Agent data enters via a universal heartbeat API. Cyberscape doesn't know or care what framework sent it.
 - **Polling and push:** REST for initial load + catch-up. WebSocket for real-time deltas.
 
 ---
 
-## 3. Data Model
+## 3. Integration Protocol
 
-### 3.1 World
+Cyberscape is a **receiver, not a controller.** It observes what agents report. This section defines the universal contract for getting agent data into Cyberscape from any framework, language, or system.
+
+### 3.1 The Heartbeat — Universal Integration Primitive
+
+The heartbeat is a lightweight HTTP POST that an agent sends to report its current state. This is the only integration any external system needs to implement.
+
+```
+POST /api/cyberscape/heartbeat
+Content-Type: application/json
+
+{
+  "agentId": "string",          // unique ID for this agent instance
+  "name": "string",             // display name (e.g., "CodeReviewer-1")
+  "type": "string",             // agent role (e.g., "architect", "reviewer", "qa")
+  "currentFile": "string",      // file path the agent is currently working on
+  "activity": "string",         // one of: idle, reading, writing, blocked, reviewing, testing
+  "detail": "string"            // human-readable description (e.g., "refactoring auth middleware")
+}
+```
+
+**Response:** `{ "ok": true, "tileId": "string" }` — confirms receipt and returns the hex tile ID the file was mapped to.
+
+**Behavior:**
+- First heartbeat from an unknown `agentId` auto-spawns the agent (no separate registration needed)
+- Subsequent heartbeats update position and activity
+- If no heartbeat arrives for 60 seconds, the agent is auto-despawned
+- File paths are resolved to hex tile IDs via the terrain map; unknown paths map to the nearest region
+
+### 3.2 Lifecycle Endpoints (Optional)
+
+Agents can explicitly signal lifecycle transitions for more control. These are optional — heartbeats alone are sufficient.
+
+```
+POST /api/cyberscape/agents/spawn
+{ "agentId": "string", "name": "string", "type": "string", "currentFile": "string" }
+
+POST /api/cyberscape/agents/{agentId}/despawn
+(empty body)
+```
+
+If an agent doesn't send explicit spawn/despawn, Cyberscape handles it automatically via heartbeat presence.
+
+### 3.3 Agent Type Registry
+
+Agent types are **user-defined, not hardcoded.** The first heartbeat with an unknown type auto-registers it with a default color. Users can customize types via server config:
+
+```json
+{
+  "agentTypes": {
+    "architect": { "color": "#7c5cfc", "icon": "A" },
+    "qa":        { "color": "#5cfc7c", "icon": "Q" },
+    "reviewer":  { "color": "#fc5c7c", "icon": "R" },
+    "writer":    { "color": "#fcb05c", "icon": "W" }
+  }
+}
+```
+
+Unregistered types receive auto-assigned colors from a default palette.
+
+### 3.4 Integration Tiers
+
+Cyberscape ships with Tier 1. Higher tiers are built on top of it.
+
+| Tier | What | Who It's For | Ships When |
+|------|------|-------------|------------|
+| **1. HTTP API** | POST heartbeat JSON to Cyberscape's REST endpoint | Any developer, any language, any framework | Phase 1 (v0.1) |
+| **2. SDK Packages** | `@cyberscape/agent` (npm), `cyberscape` (pip) — thin wrappers around the HTTP API | JS/Python developers who want a one-liner | Phase 2 |
+| **3. Framework Adapters** | Drop-in plugins for popular agent frameworks — zero-config integration | Users of specific frameworks who want auto-reporting | Community-driven, post-launch |
+
+### 3.5 Integration Examples
+
+**curl (any system):**
+```bash
+curl -X POST http://localhost:4200/api/cyberscape/heartbeat \
+  -H "Content-Type: application/json" \
+  -d '{"agentId":"agent-1","name":"Reviewer","type":"qa","currentFile":"src/auth.ts","activity":"reviewing","detail":"Checking auth middleware"}'
+```
+
+**Python (requests):**
+```python
+import requests
+
+requests.post("http://localhost:4200/api/cyberscape/heartbeat", json={
+    "agentId": "agent-1",
+    "name": "Reviewer",
+    "type": "qa",
+    "currentFile": "src/auth.ts",
+    "activity": "reviewing",
+    "detail": "Checking auth middleware"
+})
+```
+
+**JavaScript (fetch):**
+```javascript
+await fetch("http://localhost:4200/api/cyberscape/heartbeat", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    agentId: "agent-1",
+    name: "Reviewer",
+    type: "qa",
+    currentFile: "src/auth.ts",
+    activity: "reviewing",
+    detail: "Checking auth middleware"
+  })
+});
+```
+
+**Future Tier 2 — npm SDK (not yet built):**
+```javascript
+import { CyberspaceAgent } from "@cyberscape/agent";
+
+const agent = new CyberspaceAgent({
+  id: "agent-1",
+  name: "Reviewer",
+  type: "qa",
+  server: "http://localhost:4200"
+});
+
+agent.heartbeat("reviewing", "src/auth.ts", "Checking auth middleware");
+// ... later
+agent.despawn();
+```
+
+**Future Tier 3 — LangChain adapter (not yet built):**
+```python
+from cyberscape.adapters.langchain import CyberspaceCallbackHandler
+
+handler = CyberspaceCallbackHandler(server="http://localhost:4200")
+chain.invoke(input, config={"callbacks": [handler]})
+# Agent automatically appears on the map, moves as the chain processes files
+```
+
+---
+
+## 4. Data Model
+
+### 4.1 World
 
 The top-level container. One World per monitored repository/workspace.
 
@@ -126,7 +279,7 @@ interface World {
 }
 ```
 
-### 3.2 Region / Zone / Tile (Terrain Hierarchy)
+### 4.2 Region / Zone / Tile (Terrain Hierarchy)
 
 ```typescript
 interface Region {
@@ -168,7 +321,7 @@ interface TileMetrics {
 }
 ```
 
-### 3.3 Agent
+### 4.3 Agent
 
 ```typescript
 type AgentActivity = 'idle' | 'reading' | 'writing' | 'blocked' | 'reviewing' | 'testing';
@@ -205,7 +358,7 @@ interface AgentHistoryEntry {
 }
 ```
 
-### 3.4 World Events
+### 4.4 World Events
 
 ```typescript
 type EventKind =
@@ -235,7 +388,7 @@ interface WorldEvent {
 
 ---
 
-## 4. Feature Specifications
+## 5. Feature Specifications
 
 Each feature below is independently implementable and testable. They are ordered by dependency — earlier features are prerequisites for later ones, but within a phase they can be parallelized.
 
@@ -248,10 +401,10 @@ Each feature below is independently implementable and testable. They are ordered
 **Location:** `sparks/cyberscape/src/models/`
 
 #### Description
-Implement the TypeScript types and runtime validation for the entire data model described in Section 3. This is the canonical schema that all other features depend on.
+Implement the TypeScript types and runtime validation for the entire data model described in Section 4. This is the canonical schema that all other features depend on.
 
 #### Acceptance Criteria
-- [ ] All interfaces from Section 3 are implemented as TypeScript types in `types.ts`
+- [ ] All interfaces from Section 4 are implemented as TypeScript types in `types.ts`
 - [ ] Runtime validation functions exist for each major type (`validateWorld()`, `validateAgent()`, `validateWorldEvent()`, etc.) using a lightweight schema validator (Zod)
 - [ ] A `WorldState` class holds the in-memory world and exposes read-only accessors
 - [ ] Factory functions exist to create valid instances for testing: `createMockWorld()`, `createMockAgent()`, `createMockEvent()`
@@ -445,36 +598,50 @@ sparks/cyberscape-term/tests/       — snapshot tests
 **Location:** `sparks/cyberscape/src/ingestion/`
 
 #### Description
-Connect Cyberscape to real data sources: git activity, CI/CD webhooks, and OpenClaw agent sessions. Each source is an adapter that transforms external events into WorldEvents.
+Connect Cyberscape to real data sources. This is where the Integration Protocol (Section 3) meets the internal data model. Three adapter types transform external signals into WorldEvents:
+
+1. **HeartbeatReceiver** — implements the universal heartbeat API from Section 3. This is the primary integration point for any external agent system.
+2. **GitAdapter** — polls git repos for commit/branch activity.
+3. **CIAdapter** — receives CI/CD webhook POSTs.
 
 #### Acceptance Criteria
+- [ ] `HeartbeatReceiver`: implements `POST /api/cyberscape/heartbeat` per Section 3.1
+- [ ] `HeartbeatReceiver`: validates incoming heartbeat JSON against the heartbeat schema (Zod)
+- [ ] `HeartbeatReceiver`: resolves `currentFile` path to a tile ID via terrain lookup
+- [ ] `HeartbeatReceiver`: auto-spawns unknown agents on first heartbeat (via AgentManager)
+- [ ] `HeartbeatReceiver`: updates agent position and activity on subsequent heartbeats
+- [ ] `HeartbeatReceiver`: auto-despawns agents after 60 seconds of silence
+- [ ] `HeartbeatReceiver`: implements `POST /api/cyberscape/agents/spawn` and `POST /api/cyberscape/agents/{agentId}/despawn` (Section 3.2)
+- [ ] `HeartbeatReceiver`: returns `{ ok: true, tileId }` on success, `{ ok: false, error }` on validation failure
 - [ ] `GitAdapter`: watches a git repo for new commits (via polling `git log`), emits `git_commit` events with affected file paths mapped to tile IDs
 - [ ] `GitAdapter`: detects branch creation/deletion, emits `git_branch` events
 - [ ] `CIAdapter`: accepts webhook POST at `/api/cyberscape/webhooks/ci`, emits `ci_start` and `ci_result` events
-- [ ] `AgentSessionAdapter`: accepts agent heartbeat POST at `/api/cyberscape/heartbeat`, updates agent position and activity via AgentManager
-- [ ] Heartbeat format: `{ agentId, name, type, currentFile, activity, detail }`
-- [ ] File paths in heartbeats are resolved to tile IDs via terrain lookup
 - [ ] All adapters are independently enableable via config
-- [ ] Dead agent detection: if no heartbeat for 60 seconds, auto-despawn
+- [ ] Unknown file paths in heartbeats gracefully map to the nearest Region hex (never rejected)
 
 #### Test Plan
+- Unit test HeartbeatReceiver: valid heartbeat -> agent spawned/updated, correct response
+- Unit test HeartbeatReceiver: invalid heartbeat (missing fields) -> 400 with error details
+- Unit test HeartbeatReceiver: auto-despawn after timeout
+- Unit test HeartbeatReceiver: file-to-tile resolution (known path -> known tile)
+- Unit test HeartbeatReceiver: unknown file path -> nearest region fallback
 - Unit test GitAdapter: given mock git log output, assert correct events emitted
 - Unit test CIAdapter: POST mock webhook, assert correct events emitted
-- Unit test heartbeat: POST heartbeat, assert agent position updated in AgentManager
-- Assert file-to-tile resolution works (known file path -> known tile ID)
-- Assert dead agent timeout triggers despawn event
-- Integration test: full pipeline from heartbeat -> agent move -> API response
+- Integration test: heartbeat -> agent appears in world -> visible via GET /api/cyberscape/agents
 
 #### Files to Create
 ```
-sparks/cyberscape/src/ingestion/git-adapter.ts
-sparks/cyberscape/src/ingestion/ci-adapter.ts
-sparks/cyberscape/src/ingestion/agent-session-adapter.ts
-sparks/cyberscape/src/ingestion/heartbeat-schema.ts
+sparks/cyberscape/src/ingestion/heartbeat-receiver.ts   — universal heartbeat endpoint
+sparks/cyberscape/src/ingestion/heartbeat-schema.ts     — Zod schema for heartbeat validation
+sparks/cyberscape/src/ingestion/tile-resolver.ts        — file path -> tile ID resolution
+sparks/cyberscape/src/ingestion/reaper.ts               — dead agent timeout detection
+sparks/cyberscape/src/ingestion/git-adapter.ts           — git activity polling
+sparks/cyberscape/src/ingestion/ci-adapter.ts            — CI/CD webhook handler
 sparks/cyberscape/src/ingestion/index.ts
+sparks/cyberscape/tests/ingestion/heartbeat-receiver.test.ts
+sparks/cyberscape/tests/ingestion/tile-resolver.test.ts
 sparks/cyberscape/tests/ingestion/git-adapter.test.ts
 sparks/cyberscape/tests/ingestion/ci-adapter.test.ts
-sparks/cyberscape/tests/ingestion/heartbeat.test.ts
 ```
 
 ---
@@ -753,11 +920,11 @@ sparks/cyberscape/tests/narration/narration-engine.test.ts
 **Location:** `sparks/cyberscape-web/src/components/`
 
 #### Description
-VS7 (the human operator) exists as a special agent in the Cyberscape world — a "god view" pawn that agents can see and respond to. The human can click on tiles to "focus" attention there, and agents see this as a signal.
+The human operator exists as a special agent in the Cyberscape world — a "god view" pawn that agents can see and respond to. The human can click on tiles to "focus" attention there, and agents see this as a signal.
 
 #### Acceptance Criteria
 - [ ] A special Agent type `human` with distinct visual treatment (golden pawn, larger than AI agents)
-- [ ] Human pawn auto-positioned based on which files VS7 has open (via editor integration or manual selection)
+- [ ] Human pawn auto-positioned based on which files the operator has open (via editor integration or manual selection)
 - [ ] Click any tile in the web renderer to "focus" the human pawn there
 - [ ] Focus emits an `annotation` event with kind `human_focus`, visible to all agents
 - [ ] Human can right-click a tile to add a text annotation (max 280 chars)
@@ -827,7 +994,7 @@ sparks/cyberscape/tests/persistence/event-store.test.ts
 
 ---
 
-## 5. Tech Stack
+## 6. Tech Stack
 
 | Layer | Technology | Rationale |
 |-------|-----------|-----------|
@@ -844,7 +1011,7 @@ sparks/cyberscape/tests/persistence/event-store.test.ts
 
 ---
 
-## 6. Phase Roadmap
+## 7. Phase Roadmap
 
 ### Phase 1 — Foundation (Features F-01 through F-05)
 
@@ -860,15 +1027,28 @@ F-01 World Data Model ──┬──> F-02 Terrain Generator ──> F-03 API v
 
 ### Phase 2 — Integration (Features F-06, F-07, F-08, F-09, F-15)
 
-**Goal:** Real data flows in. The web renderer works. State persists.
+**Goal:** Real data flows in. The web renderer works. State persists. External agents can connect.
 
 ```
-F-06 Event Ingestion ──> F-09 WebSocket Bridge
+F-06 Event Ingestion (Heartbeat API + Git + CI) ──> F-09 WebSocket Bridge
 F-07 Web Hex Terrain ──> F-08 Web Agent Pawns
 F-15 Persistence Layer
 ```
 
-**Done when:** Git commits and agent heartbeats produce live updates visible in both terminal and web renderer. Server restart preserves state.
+**Done when:** An external agent sends a heartbeat via curl, and its pawn appears on both the terminal and web renderer in real time. Git commits produce terrain updates. Server restart preserves state.
+
+**Also ships:** Tier 1 integration is fully operational — any system that can POST JSON can connect.
+
+### Phase 2.5 — SDK Packages (Post Phase 2, pre Phase 3)
+
+**Goal:** Make integration a one-liner for JS and Python developers.
+
+- `@cyberscape/agent` (npm) — thin wrapper: connect, heartbeat, despawn
+- `cyberscape` (pip) — same API surface for Python agents
+- Both packages are wrappers around the Tier 1 HTTP API — no new server-side code needed
+- README examples showing integration with LangChain, CrewAI, AutoGen, and vanilla scripts
+
+**Done when:** `npm install @cyberscape/agent` and three lines of code makes an agent appear on the map.
 
 ### Phase 3 — Sociology (Features F-10, F-11, F-12, F-13, F-14)
 
@@ -882,6 +1062,19 @@ F-14 Human Presence
 ```
 
 **Done when:** You can see agent conflicts, replay history, hear OVI narrate workspace state, and place your own pawn on the map.
+
+### Future — Framework Adapters (Community-Driven)
+
+**Goal:** Zero-config integration for popular agent frameworks.
+
+Tier 3 adapters are built on top of the SDK (Tier 2) and auto-report agent activity without users writing integration code. These are driven by community demand — build them when users ask for them, not before.
+
+Potential adapters:
+- LangChain callback handler
+- CrewAI task listener
+- AutoGen agent hook
+- OpenClaw session bridge
+- Custom webhook transformer
 
 ---
 
@@ -897,7 +1090,7 @@ sparks/cyberscape/
 │   ├── terrain/         — F-02: codebase -> hex map
 │   ├── agents/          — F-04: agent state machine
 │   ├── api/             — F-03, F-09: REST + WS server
-│   ├── ingestion/       — F-06: git/CI/agent adapters
+│   ├── ingestion/       — F-06: heartbeat receiver, git/CI adapters
 │   ├── persistence/     — F-15: SQLite storage
 │   ├── sociology/       — F-10, F-11: conflict + interaction
 │   ├── narration/       — F-13: OVI narration templates
