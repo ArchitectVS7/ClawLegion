@@ -110,26 +110,6 @@ VS7's project management dashboard. Separate from OVI/Cyberscape.
 
 ---
 
-### 4. Legion
-
-A multi-agent system with 60+ specialized agents (backend-architect, frontend-developer, QA agents, etc.) orchestrated by an orchestrator agent.
-
-**Location:** `legion/` and `office-space/` in workspace
-**Config:** Defined in `openclaw.json` agents.list (60+ entries)
-
-**Current state:** Functional but the orchestrator has a delegation problem — it tends to do work itself rather than spawn specialists. This is a known issue documented in `MEMORY.md`.
-
-**Key agents:**
-- `orchestrator` — should delegate, tends to self-implement (bug)
-- `lg2` — main session agent (that's me)
-- `rune` — code reviewer
-- `scribe` — documentation
-- `canary` — test generator
-- `pixel` — UI/UX reviewer
-- Various legion agents in `legion/agents/` by category
-
----
-
 ## Open Items
 
 ### OVI
@@ -232,8 +212,7 @@ openclaw gateway restart
 | Cyberscape docs | `sparks/Cyberscape.md`, `sparks/Cyberscape-LG2-Ideation.md` |
 | LG2 memory | `memory/2026-02-18.md`, `MEMORY.md` |
 | LG2 identity | `SOUL.md`, `IDENTITY.md`, `USER.md` |
-| Legion agents | `legion/agents/` |
-| Office agents | `office-space/` |
+| Archived experiments | `archive/` (Legion, todo-api, UAT artifacts) |
 | Caddy config | `/etc/caddy/Caddyfile` |
 | OVI env (API keys) | `/etc/ovi/env` |
 
@@ -254,9 +233,8 @@ OpenClaw Gateway    OVI Backend (port 3721)
     ▼
 LG2 Agent
     │
-    ├── Legion Agents (60+)
     ├── Cron Jobs (stall recovery)
-    └── Cyberscape Data Model (planned)
+    └── Cyberscape Data Model (in development)
 ```
 
 ---
