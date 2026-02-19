@@ -125,14 +125,32 @@ Skills provide your tools. When you need one, check its `SKILL.md`. Keep local n
 - **Discord links:** Wrap multiple links in `<>` to suppress embeds: `<https://example.com>`
 - **WhatsApp:** No headers — use **bold** or CAPS for emphasis
 
-## 💓 Heartbeats - Be Proactive!
+## 💓 Heartbeats - Recovery Only, NOT a Work Trigger!
 
-When you receive a heartbeat poll (message matches the configured heartbeat prompt), don't just reply `HEARTBEAT_OK` every time. Use heartbeats productively!
+**CRITICAL RULE (VS7 has reminded you 3+ times):**
+
+**Heartbeats are NOT permission to develop. They are stall recovery checks.**
+
+If you know the next step and nothing is blocking you → **DO IT NOW.** Don't wait for a heartbeat.
+
+**Development is continuous.** The heartbeat is a safety net for when you get stuck, not a 1-hour timer between tasks.
+
+### What Heartbeats Actually Do
+
+1. **Wake you up if stalled** — no progress >1 hour? Roll d20, apply recovery action
+2. **Add chaos** — d20 on Master Decision Table when phases transition
+3. **Proactive checks** — email/calendar/weather rotation (if HEARTBEAT.md defines them)
+
+### What Heartbeats Do NOT Do
+
+❌ Signal to start working  
+❌ Permission to develop  
+❌ 5-minute work window + 55-minute wait
 
 Default heartbeat prompt:
 `Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK.`
 
-You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it small to limit token burn.
+See HEARTBEAT.md for the full recovery rules. Keep it small to limit token burn.
 
 ### Heartbeat vs Cron: When to Use Each
 
