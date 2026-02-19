@@ -183,7 +183,7 @@ OVI is built with **Chaos-Driven Development (CDD)**:
 
 ### Work List
 - [x] P5.1 — Merge PR #2 (connection health) → stable main branch baseline **[DONE: PR #2 merged 2026-02-18 18:44 UTC]**
-- [~] P5.2 — Wire OVI briefing shell (`ovi-briefing.sh`) to live Cyberscape agent state (real session data, not mock) **[IN PROGRESS: Script exists with live API integration, bash hang on CLI calls being fixed → switching to JSON parsing]**
+- [x] P5.2 — Wire OVI briefing shell to live Cyberscape agent state (ovi-briefing.sh pulls sessions.json + workspace-state API, working and tested)
 - [ ] P5.3 — `/ovi status` command → OVI narrates current active agents, last actions, open PRs, phase status (voice + text)
 - [ ] P5.4 — Proactive narration triggers: agent completes task → OVI auto-briefs VS7 via Telegram (voice note via `sag` if key present, text fallback)
 - [ ] P5.5 — Sentiment/urgency layer: OVI escalates tone based on stall count, error rate, or time since last commit
