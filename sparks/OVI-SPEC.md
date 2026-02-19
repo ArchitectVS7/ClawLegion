@@ -1,6 +1,6 @@
 # 🎙️ OVI — Master Build Spec
 *Living document. Updated by LG2 during build.*  
-*Last updated: 2026-02-18*
+*Last updated: 2026-02-19*
 
 ---
 
@@ -163,9 +163,9 @@ OVI is built with **Chaos-Driven Development (CDD)**:
 - [x] P4.5 — Validate round-trip: issue → agent task → PR → review **[DONE: Issue #1 created → task implemented → feat/connection-health branch → PR #2 open at github.com/ArchitectVS7/ClawLegion/pull/2 — pending VS7 merge review]**
 
 ### Measurable Outcomes
-- [ ] OVI codebase lives on GitHub (not just droplet)
-- [ ] Claude Code can receive tasks and open PRs
-- [ ] LG2 + Claude Code can build in parallel without conflicts
+- [x] OVI codebase lives on GitHub (ArchitectVS7/ClawLegion — clean-main + feat branch live)
+- [x] Claude Code can receive tasks and open PRs (Issue #1 → PR #2 open at github.com/ArchitectVS7/ClawLegion/pull/2)
+- [x] LG2 + Claude Code can build in parallel without conflicts (worktree workflow documented + validated)
 
 ### Phase 4 Roll Log
 | Task | Roll | Result | Action |
@@ -177,14 +177,36 @@ OVI is built with **Chaos-Driven Development (CDD)**:
 
 ---
 
+## 📋 PHASE 5: OVI as Cyberscape Narrator
+*Goal: OVI speaks the system — real-time voice narration of what agents are doing, declarative briefings, the voice of the machine*
+*Status: DECLARED — Roll: 8 (CONTINUE). No modifier. Execute next item. Phase 5 begins now.*
+
+### Work List
+- [ ] P5.1 — Merge PR #2 (connection health) → stable main branch baseline
+- [ ] P5.2 — Wire OVI briefing shell (`ovi-briefing.sh`) to live Cyberscape agent state (real session data, not mock)
+- [ ] P5.3 — `/ovi status` command → OVI narrates current active agents, last actions, open PRs, phase status (voice + text)
+- [ ] P5.4 — Proactive narration triggers: agent completes task → OVI auto-briefs VS7 via Telegram (voice note via `sag` if key present, text fallback)
+- [ ] P5.5 — Sentiment/urgency layer: OVI escalates tone based on stall count, error rate, or time since last commit
+
+### Measurable Outcomes
+- [ ] VS7 can ask "what's OVI doing?" and receive a voice + text briefing from live agent state
+- [ ] Agent task completions proactively surface via Telegram without VS7 asking
+- [ ] Briefing tone reflects system health (calm when stable, urgent when stalled)
+
+### Phase 5 Roll Log
+| Task | Roll | Result | Action |
+|------|------|--------|--------|
+| Phase 5 declared | 8 | CONTINUE | No modifier. Execute next item on the list. P5.1 begins: merge PR #2 baseline. |
+
+---
+
 ## 📋 FUTURE PHASES (unscoped)
 *Things the chaos might pull us toward*
 
 - Cyberscape 3D renderer (Three.js)
 - OVI wake word ("Hey OVI")
 - Multi-agent briefing (OVI aggregates from multiple Legion agents)
-- OVI as Cyberscape narrator (real-time play-by-play)
-- Sentiment/tone tracking (OVI escalates urgency naturally)
+- Sentiment/tone tracking compound model
 
 ---
 
@@ -199,15 +221,14 @@ Every hour, LG2 checks:
 
 ## 📊 Current Status
 
-**Active Phase:** Phase 4 — GitHub + Claude Code Integration (Phases 1-3 complete)
-**▶ COMPLETE:** P4.1–P4.5 all done. Phase 4 delivered.
-**Started:** 2026-02-18  
-**Last Roll:** 16 — PHONE A FRIEND (re-read coding-agent + github skills → executed full parallel workflow)
-**Last Heartbeat Check:** 2026-02-18 23:41 UTC  
+**Active Phase:** Phase 5 — OVI as Cyberscape Narrator
+**Last Roll:** 8 — CONTINUE (Phase 4 complete, no modifier, Phase 5 begins)
+**Last Heartbeat Check:** 2026-02-19 00:41 UTC  
 **Phase 1 Progress:** ✅ COMPLETE (5/5 active tasks, 1 narrowed)  
 **Phase 2 Progress:** ✅ COMPLETE (8/8 tasks)  
 **Phase 3 Progress:** ✅ COMPLETE (6/6 tasks)  
-**Phase 4 Progress:** ✅ COMPLETE (5/5 tasks)
+**Phase 4 Progress:** ✅ COMPLETE (5/5 tasks)  
+**Phase 5 Progress:** 🔄 IN PROGRESS (0/5 tasks — P5.1 queued: merge PR #2)
 
 ---
 
