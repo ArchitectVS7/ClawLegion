@@ -60,11 +60,11 @@ The following exist and should be evolved, not replaced:
 
 | Component | Location | Status |
 |-----------|----------|--------|
-| Terminal hex renderer | `sparks/cyberscape-term/index.js` | Working, basic |
-| RN HexGrid component | `sparks/ovi-native/app/components/HexGrid.tsx` | Working, visual only |
-| HexCell type | `sparks/ovi-native/app/types/hex.ts` | Minimal |
-| Workspace state API | `sparks/ovi-pwa/server/index.js` (L236-267) | Working, stub data |
-| Workspace parser | `sparks/ovi-native/utils/workspaceParser.ts` | Working, fallback data |
+| Terminal hex renderer | `packages/cyberscape-term/index.js` | Working, basic |
+| RN HexGrid component | External: `ovi-native/app/components/HexGrid.tsx` | Working, visual only |
+| HexCell type | External: `ovi-native/app/types/hex.ts` | Minimal |
+| Workspace state API | External: `ovi-pwa/server/index.js` (L236-267) | Working, stub data |
+| Workspace parser | External: `ovi-native/utils/workspaceParser.ts` | Working, fallback data |
 
 ---
 
@@ -398,7 +398,7 @@ Each feature below is independently implementable and testable. They are ordered
 
 **Phase:** 1 (Foundation)
 **Depends on:** Nothing
-**Location:** `sparks/cyberscape/src/models/`
+**Location:** `src/models/`
 
 #### Description
 Implement the TypeScript types and runtime validation for the entire data model described in Section 4. This is the canonical schema that all other features depend on.
@@ -418,12 +418,12 @@ Implement the TypeScript types and runtime validation for the entire data model 
 
 #### Files to Create
 ```
-sparks/cyberscape/src/models/types.ts        — all interfaces/types
-sparks/cyberscape/src/models/validation.ts   — Zod schemas + validate fns
-sparks/cyberscape/src/models/world-state.ts  — WorldState class
-sparks/cyberscape/src/models/hex-math.ts     — hex coordinate utilities
-sparks/cyberscape/src/models/mocks.ts        — test factories
-sparks/cyberscape/src/models/index.ts        — barrel export
+src/models/types.ts        — all interfaces/types
+src/models/validation.ts   — Zod schemas + validate fns
+src/models/world-state.ts  — WorldState class
+src/models/hex-math.ts     — hex coordinate utilities
+src/models/mocks.ts        — test factories
+src/models/index.ts        — barrel export
 ```
 
 ---
@@ -432,7 +432,7 @@ sparks/cyberscape/src/models/index.ts        — barrel export
 
 **Phase:** 1 (Foundation)
 **Depends on:** F-01
-**Location:** `sparks/cyberscape/src/terrain/`
+**Location:** `src/terrain/`
 
 #### Description
 Given a repository root path, scan the directory structure and produce a terrain map (Regions, Zones, Tiles) with hex coordinates assigned via a deterministic layout algorithm.
@@ -459,13 +459,13 @@ Given a repository root path, scan the directory structure and produce a terrain
 
 #### Files to Create
 ```
-sparks/cyberscape/src/terrain/generator.ts        — main generateTerrain()
-sparks/cyberscape/src/terrain/scanner.ts          — filesystem scanning
-sparks/cyberscape/src/terrain/layout.ts           — hex coordinate assignment
-sparks/cyberscape/src/terrain/config.ts           — TerrainConfig type + defaults
-sparks/cyberscape/src/terrain/index.ts            — barrel export
-sparks/cyberscape/tests/terrain/fixtures/         — test directory structures
-sparks/cyberscape/tests/terrain/generator.test.ts
+src/terrain/generator.ts        — main generateTerrain()
+src/terrain/scanner.ts          — filesystem scanning
+src/terrain/layout.ts           — hex coordinate assignment
+src/terrain/config.ts           — TerrainConfig type + defaults
+src/terrain/index.ts            — barrel export
+tests/terrain/fixtures/         — test directory structures
+tests/terrain/generator.test.ts
 ```
 
 ---
@@ -474,7 +474,7 @@ sparks/cyberscape/tests/terrain/generator.test.ts
 
 **Phase:** 1 (Foundation)
 **Depends on:** F-01, F-02
-**Location:** `sparks/cyberscape/src/api/`
+**Location:** `src/api/`
 
 #### Description
 Replace the current stub `/api/workspace-state` endpoint with a full Cyberscape API that serves terrain, agent state, and events. This is the single API that all renderers consume.
@@ -500,15 +500,15 @@ Replace the current stub `/api/workspace-state` endpoint with a full Cyberscape 
 
 #### Files to Create
 ```
-sparks/cyberscape/src/api/server.ts          — Express app setup
-sparks/cyberscape/src/api/routes/world.ts    — /world endpoint
-sparks/cyberscape/src/api/routes/terrain.ts  — /terrain endpoint
-sparks/cyberscape/src/api/routes/agents.ts   — /agents endpoint
-sparks/cyberscape/src/api/routes/events.ts   — /events endpoint
-sparks/cyberscape/src/api/routes/tiles.ts    — /tile/:id endpoint
-sparks/cyberscape/src/api/compat.ts          — backwards-compat shim
-sparks/cyberscape/src/api/index.ts
-sparks/cyberscape/tests/api/endpoints.test.ts
+src/api/server.ts          — Express app setup
+src/api/routes/world.ts    — /world endpoint
+src/api/routes/terrain.ts  — /terrain endpoint
+src/api/routes/agents.ts   — /agents endpoint
+src/api/routes/events.ts   — /events endpoint
+src/api/routes/tiles.ts    — /tile/:id endpoint
+src/api/compat.ts          — backwards-compat shim
+src/api/index.ts
+tests/api/endpoints.test.ts
 ```
 
 ---
@@ -517,7 +517,7 @@ sparks/cyberscape/tests/api/endpoints.test.ts
 
 **Phase:** 1 (Foundation)
 **Depends on:** F-01
-**Location:** `sparks/cyberscape/src/agents/`
+**Location:** `src/agents/`
 
 #### Description
 Model agent lifecycle and state transitions. An agent spawns, moves between tiles, changes activity, may enter conflict, and eventually despawns. Each transition emits a WorldEvent.
@@ -543,13 +543,13 @@ Model agent lifecycle and state transitions. An agent spawns, moves between tile
 
 #### Files to Create
 ```
-sparks/cyberscape/src/agents/agent-manager.ts    — AgentManager class
-sparks/cyberscape/src/agents/state-machine.ts    — transition logic
-sparks/cyberscape/src/agents/history.ts          — ring buffer implementation
-sparks/cyberscape/src/agents/conflicts.ts        — conflict detection
-sparks/cyberscape/src/agents/index.ts
-sparks/cyberscape/tests/agents/agent-manager.test.ts
-sparks/cyberscape/tests/agents/conflicts.test.ts
+src/agents/agent-manager.ts    — AgentManager class
+src/agents/state-machine.ts    — transition logic
+src/agents/history.ts          — ring buffer implementation
+src/agents/conflicts.ts        — conflict detection
+src/agents/index.ts
+tests/agents/agent-manager.test.ts
+tests/agents/conflicts.test.ts
 ```
 
 ---
@@ -558,7 +558,7 @@ sparks/cyberscape/tests/agents/conflicts.test.ts
 
 **Phase:** 1 (Foundation)
 **Depends on:** F-01, F-03
-**Location:** `sparks/cyberscape-term/` (evolve existing)
+**Location:** `packages/cyberscape-term/` (evolve existing)
 
 #### Description
 Upgrade the existing terminal renderer to consume the new Cyberscape API and display richer information: agent names, activity types, conflict indicators, and zoom levels.
@@ -583,10 +583,10 @@ Upgrade the existing terminal renderer to consume the new Cyberscape API and dis
 
 #### Files to Modify
 ```
-sparks/cyberscape-term/index.js     — rewrite to consume v2 API
-sparks/cyberscape-term/renderer.js  — extract rendering logic (new file)
-sparks/cyberscape-term/zoom.js      — zoom state management (new file)
-sparks/cyberscape-term/tests/       — snapshot tests
+packages/cyberscape-term/index.js     — rewrite to consume v2 API
+packages/cyberscape-term/renderer.js  — extract rendering logic (new file)
+packages/cyberscape-term/zoom.js      — zoom state management (new file)
+packages/cyberscape-term/tests/       — snapshot tests
 ```
 
 ---
@@ -595,7 +595,7 @@ sparks/cyberscape-term/tests/       — snapshot tests
 
 **Phase:** 2 (Integration)
 **Depends on:** F-01, F-04
-**Location:** `sparks/cyberscape/src/ingestion/`
+**Location:** `src/ingestion/`
 
 #### Description
 Connect Cyberscape to real data sources. This is where the Integration Protocol (Section 3) meets the internal data model. Three adapter types transform external signals into WorldEvents:
@@ -631,17 +631,17 @@ Connect Cyberscape to real data sources. This is where the Integration Protocol 
 
 #### Files to Create
 ```
-sparks/cyberscape/src/ingestion/heartbeat-receiver.ts   — universal heartbeat endpoint
-sparks/cyberscape/src/ingestion/heartbeat-schema.ts     — Zod schema for heartbeat validation
-sparks/cyberscape/src/ingestion/tile-resolver.ts        — file path -> tile ID resolution
-sparks/cyberscape/src/ingestion/reaper.ts               — dead agent timeout detection
-sparks/cyberscape/src/ingestion/git-adapter.ts           — git activity polling
-sparks/cyberscape/src/ingestion/ci-adapter.ts            — CI/CD webhook handler
-sparks/cyberscape/src/ingestion/index.ts
-sparks/cyberscape/tests/ingestion/heartbeat-receiver.test.ts
-sparks/cyberscape/tests/ingestion/tile-resolver.test.ts
-sparks/cyberscape/tests/ingestion/git-adapter.test.ts
-sparks/cyberscape/tests/ingestion/ci-adapter.test.ts
+src/ingestion/heartbeat-receiver.ts   — universal heartbeat endpoint
+src/ingestion/heartbeat-schema.ts     — Zod schema for heartbeat validation
+src/ingestion/tile-resolver.ts        — file path -> tile ID resolution
+src/ingestion/reaper.ts               — dead agent timeout detection
+src/ingestion/git-adapter.ts           — git activity polling
+src/ingestion/ci-adapter.ts            — CI/CD webhook handler
+src/ingestion/index.ts
+tests/ingestion/heartbeat-receiver.test.ts
+tests/ingestion/tile-resolver.test.ts
+tests/ingestion/git-adapter.test.ts
+tests/ingestion/ci-adapter.test.ts
 ```
 
 ---
@@ -650,7 +650,7 @@ sparks/cyberscape/tests/ingestion/ci-adapter.test.ts
 
 **Phase:** 2 (Integration)
 **Depends on:** F-01, F-03
-**Location:** `sparks/cyberscape-web/src/`
+**Location:** `packages/cyberscape-web/src/`
 
 #### Description
 A browser-based hex terrain renderer using Three.js and React. Renders the terrain from the Cyberscape API as a 3D hexagonal grid with synthwave aesthetics.
@@ -679,15 +679,15 @@ A browser-based hex terrain renderer using Three.js and React. Renders the terra
 
 #### Files to Create
 ```
-sparks/cyberscape-web/package.json
-sparks/cyberscape-web/src/App.tsx
-sparks/cyberscape-web/src/components/HexTerrain.tsx
-sparks/cyberscape-web/src/components/HexTile3D.tsx
-sparks/cyberscape-web/src/components/TileTooltip.tsx
-sparks/cyberscape-web/src/components/TileDetail.tsx
-sparks/cyberscape-web/src/hooks/useTerrain.ts
-sparks/cyberscape-web/src/theme.ts
-sparks/cyberscape-web/tests/HexTerrain.test.tsx
+packages/cyberscape-web/package.json
+packages/cyberscape-web/src/App.tsx
+packages/cyberscape-web/src/components/HexTerrain.tsx
+packages/cyberscape-web/src/components/HexTile3D.tsx
+packages/cyberscape-web/src/components/TileTooltip.tsx
+packages/cyberscape-web/src/components/TileDetail.tsx
+packages/cyberscape-web/src/hooks/useTerrain.ts
+packages/cyberscape-web/src/theme.ts
+packages/cyberscape-web/tests/HexTerrain.test.tsx
 ```
 
 ---
@@ -696,7 +696,7 @@ sparks/cyberscape-web/tests/HexTerrain.test.tsx
 
 **Phase:** 2 (Integration)
 **Depends on:** F-07
-**Location:** `sparks/cyberscape-web/src/components/`
+**Location:** `packages/cyberscape-web/src/components/`
 
 #### Description
 Render agents as animated "pawn" meshes on the hex terrain. Agents move between tiles with smooth interpolation. Activity state is shown via visual effects.
@@ -722,12 +722,12 @@ Render agents as animated "pawn" meshes on the hex terrain. Agents move between 
 
 #### Files to Create
 ```
-sparks/cyberscape-web/src/components/AgentPawn.tsx
-sparks/cyberscape-web/src/components/AgentLabel.tsx
-sparks/cyberscape-web/src/components/AgentDetail.tsx
-sparks/cyberscape-web/src/hooks/useAgents.ts
-sparks/cyberscape-web/src/animations/movement.ts
-sparks/cyberscape-web/tests/AgentPawn.test.tsx
+packages/cyberscape-web/src/components/AgentPawn.tsx
+packages/cyberscape-web/src/components/AgentLabel.tsx
+packages/cyberscape-web/src/components/AgentDetail.tsx
+packages/cyberscape-web/src/hooks/useAgents.ts
+packages/cyberscape-web/src/animations/movement.ts
+packages/cyberscape-web/tests/AgentPawn.test.tsx
 ```
 
 ---
@@ -736,7 +736,7 @@ sparks/cyberscape-web/tests/AgentPawn.test.tsx
 
 **Phase:** 2 (Integration)
 **Depends on:** F-03, F-04
-**Location:** `sparks/cyberscape/src/api/`
+**Location:** `src/api/`
 
 #### Description
 Add WebSocket support to the Cyberscape API server. Clients connect and receive real-time WorldEvent deltas, eliminating the need for polling.
@@ -762,10 +762,10 @@ Add WebSocket support to the Cyberscape API server. Clients connect and receive 
 
 #### Files to Create/Modify
 ```
-sparks/cyberscape/src/api/websocket.ts       — WS server setup
-sparks/cyberscape/src/api/ws-client.ts       — client-side WS helper (for renderers)
-sparks/cyberscape/src/api/server.ts          — integrate WS into Express server
-sparks/cyberscape/tests/api/websocket.test.ts
+src/api/websocket.ts       — WS server setup
+src/api/ws-client.ts       — client-side WS helper (for renderers)
+src/api/server.ts          — integrate WS into Express server
+tests/api/websocket.test.ts
 ```
 
 ---
@@ -774,7 +774,7 @@ sparks/cyberscape/tests/api/websocket.test.ts
 
 **Phase:** 3 (Sociology)
 **Depends on:** F-04, F-06
-**Location:** `sparks/cyberscape/src/sociology/`
+**Location:** `src/sociology/`
 
 #### Description
 Detect and classify conflicts between agents working in overlapping areas. This is the foundation of the "sociological simulation" — making invisible team dynamics visible.
@@ -798,10 +798,10 @@ Detect and classify conflicts between agents working in overlapping areas. This 
 
 #### Files to Create
 ```
-sparks/cyberscape/src/sociology/conflict-detector.ts
-sparks/cyberscape/src/sociology/conflict-types.ts
-sparks/cyberscape/src/sociology/index.ts
-sparks/cyberscape/tests/sociology/conflict-detector.test.ts
+src/sociology/conflict-detector.ts
+src/sociology/conflict-types.ts
+src/sociology/index.ts
+tests/sociology/conflict-detector.test.ts
 ```
 
 ---
@@ -810,7 +810,7 @@ sparks/cyberscape/tests/sociology/conflict-detector.test.ts
 
 **Phase:** 3 (Sociology)
 **Depends on:** F-04, F-10
-**Location:** `sparks/cyberscape/src/sociology/`
+**Location:** `src/sociology/`
 
 #### Description
 Build and maintain a graph of agent-to-agent relationships based on their interaction history. This powers the "sociology" view — understanding how agents collaborate and where handoffs break down.
@@ -834,10 +834,10 @@ Build and maintain a graph of agent-to-agent relationships based on their intera
 
 #### Files to Create
 ```
-sparks/cyberscape/src/sociology/interaction-graph.ts
-sparks/cyberscape/src/sociology/team-dynamics.ts
-sparks/cyberscape/tests/sociology/interaction-graph.test.ts
-sparks/cyberscape/tests/sociology/team-dynamics.test.ts
+src/sociology/interaction-graph.ts
+src/sociology/team-dynamics.ts
+tests/sociology/interaction-graph.test.ts
+tests/sociology/team-dynamics.test.ts
 ```
 
 ---
@@ -846,7 +846,7 @@ sparks/cyberscape/tests/sociology/team-dynamics.test.ts
 
 **Phase:** 3 (Sociology)
 **Depends on:** F-06, F-15
-**Location:** `sparks/cyberscape/src/replay/`
+**Location:** `src/replay/`
 
 #### Description
 Record all WorldEvents to persistent storage and allow replaying them as a timelapse. Watch the last hour, day, or week of development activity as an animation.
@@ -870,10 +870,10 @@ Record all WorldEvents to persistent storage and allow replaying them as a timel
 
 #### Files to Create
 ```
-sparks/cyberscape/src/replay/replay-engine.ts
-sparks/cyberscape/src/replay/time-cursor.ts
-sparks/cyberscape/src/replay/index.ts
-sparks/cyberscape/tests/replay/replay-engine.test.ts
+src/replay/replay-engine.ts
+src/replay/time-cursor.ts
+src/replay/index.ts
+tests/replay/replay-engine.test.ts
 ```
 
 ---
@@ -882,7 +882,7 @@ sparks/cyberscape/tests/replay/replay-engine.test.ts
 
 **Phase:** 3 (Sociology)
 **Depends on:** F-03, F-10
-**Location:** `sparks/cyberscape/src/narration/`
+**Location:** `src/narration/`
 
 #### Description
 Connect Cyberscape state to OVI so that OVI can narrate what's happening in the workspace in real time. OVI becomes the voice of Cyberscape.
@@ -905,10 +905,10 @@ Connect Cyberscape state to OVI so that OVI can narrate what's happening in the 
 
 #### Files to Create
 ```
-sparks/cyberscape/src/narration/narration-engine.ts
-sparks/cyberscape/src/narration/templates.ts
-sparks/cyberscape/src/narration/index.ts
-sparks/cyberscape/tests/narration/narration-engine.test.ts
+src/narration/narration-engine.ts
+src/narration/templates.ts
+src/narration/index.ts
+tests/narration/narration-engine.test.ts
 ```
 
 ---
@@ -917,7 +917,7 @@ sparks/cyberscape/tests/narration/narration-engine.test.ts
 
 **Phase:** 3 (Sociology)
 **Depends on:** F-04, F-07, F-08
-**Location:** `sparks/cyberscape-web/src/components/`
+**Location:** `packages/cyberscape-web/src/components/`
 
 #### Description
 The human operator exists as a special agent in the Cyberscape world — a "god view" pawn that agents can see and respond to. The human can click on tiles to "focus" attention there, and agents see this as a signal.
@@ -943,11 +943,11 @@ The human operator exists as a special agent in the Cyberscape world — a "god 
 
 #### Files to Create/Modify
 ```
-sparks/cyberscape/src/agents/human-agent.ts
-sparks/cyberscape/src/api/routes/human.ts
-sparks/cyberscape-web/src/components/HumanPawn.tsx
-sparks/cyberscape-web/src/components/Annotation.tsx
-sparks/cyberscape-web/tests/HumanPawn.test.tsx
+src/agents/human-agent.ts
+src/api/routes/human.ts
+packages/cyberscape-web/src/components/HumanPawn.tsx
+packages/cyberscape-web/src/components/Annotation.tsx
+packages/cyberscape-web/tests/HumanPawn.test.tsx
 ```
 
 ---
@@ -956,13 +956,13 @@ sparks/cyberscape-web/tests/HumanPawn.test.tsx
 
 **Phase:** 2 (Integration)
 **Depends on:** F-01
-**Location:** `sparks/cyberscape/src/persistence/`
+**Location:** `src/persistence/`
 
 #### Description
 Persist world state and events to disk so that Cyberscape state survives server restarts and enables historical replay (F-12). Lightweight — SQLite for structured data, append-only file for events.
 
 #### Acceptance Criteria
-- [ ] SQLite database at `sparks/cyberscape/data/cyberscape.db` (gitignored)
+- [ ] SQLite database at `data/cyberscape.db` (gitignored)
 - [ ] Tables: `terrain` (hex map), `agents` (last known state), `events` (append-only log)
 - [ ] `PersistenceLayer` class with: `saveTerrain()`, `loadTerrain()`, `saveAgentSnapshot()`, `loadAgentSnapshot()`, `appendEvent()`, `queryEvents(since, until, kinds?, limit?)`
 - [ ] On server start: load last terrain + agent snapshot, then replay events since snapshot to reconstruct current state
@@ -981,15 +981,15 @@ Persist world state and events to disk so that Cyberscape state survives server 
 
 #### Files to Create
 ```
-sparks/cyberscape/src/persistence/database.ts       — SQLite setup + migrations
-sparks/cyberscape/src/persistence/terrain-store.ts   — terrain CRUD
-sparks/cyberscape/src/persistence/agent-store.ts     — agent snapshot CRUD
-sparks/cyberscape/src/persistence/event-store.ts     — event append + query
-sparks/cyberscape/src/persistence/compaction.ts      — auto-compact logic
-sparks/cyberscape/src/persistence/index.ts
-sparks/cyberscape/data/.gitkeep
-sparks/cyberscape/tests/persistence/database.test.ts
-sparks/cyberscape/tests/persistence/event-store.test.ts
+src/persistence/database.ts       — SQLite setup + migrations
+src/persistence/terrain-store.ts   — terrain CRUD
+src/persistence/agent-store.ts     — agent snapshot CRUD
+src/persistence/event-store.ts     — event append + query
+src/persistence/compaction.ts      — auto-compact logic
+src/persistence/index.ts
+data/.gitkeep
+tests/persistence/database.test.ts
+tests/persistence/event-store.test.ts
 ```
 
 ---
@@ -1081,29 +1081,33 @@ Potential adapters:
 ## Appendix A: Project Structure
 
 ```
-sparks/cyberscape/
+cyberscape/                    — repo root
 ├── package.json
 ├── tsconfig.json
 ├── vitest.config.ts
+├── README.md
+├── docs/
+│   ├── DESIGN-SPEC.md         — this file
+│   ├── IDEATION.md            — initial ideation notes
+│   └── VISION.md              — original vision document
 ├── src/
-│   ├── models/          — F-01: data model + validation
-│   ├── terrain/         — F-02: codebase -> hex map
-│   ├── agents/          — F-04: agent state machine
-│   ├── api/             — F-03, F-09: REST + WS server
-│   ├── ingestion/       — F-06: heartbeat receiver, git/CI adapters
-│   ├── persistence/     — F-15: SQLite storage
-│   ├── sociology/       — F-10, F-11: conflict + interaction
-│   ├── narration/       — F-13: OVI narration templates
-│   ├── replay/          — F-12: historical replay
-│   └── index.ts         — main entry point
+│   ├── models/                — F-01: data model + validation
+│   ├── terrain/               — F-02: codebase -> hex map
+│   ├── agents/                — F-04: agent state machine
+│   ├── api/                   — F-03, F-09: REST + WS server
+│   ├── ingestion/             — F-06: heartbeat receiver, git/CI adapters
+│   ├── persistence/           — F-15: SQLite storage
+│   ├── sociology/             — F-10, F-11: conflict + interaction
+│   ├── narration/             — F-13: OVI narration templates
+│   ├── replay/                — F-12: historical replay
+│   └── index.ts               — main entry point
 ├── tests/
 │   └── (mirrors src/ structure)
 ├── data/
 │   └── .gitkeep
-└── README.md
-
-sparks/cyberscape-web/   — F-07, F-08, F-14: Three.js web renderer
-sparks/cyberscape-term/  — F-05: terminal renderer (existing, evolved)
+├── packages/
+│   ├── cyberscape-web/        — F-07, F-08, F-14: Three.js web renderer
+│   └── cyberscape-term/       — F-05: terminal renderer (existing, evolved)
 ```
 
 ## Appendix B: Coding Agent Instructions
