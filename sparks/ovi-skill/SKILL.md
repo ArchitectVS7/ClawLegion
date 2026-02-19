@@ -39,22 +39,54 @@ Returns the transcript as plain text. Treat it as VS7's spoken message.
 
 ## Briefing Mode
 
-When VS7 says `/ovi` or asks for an OVI briefing:
+### Commands
+
+- **`/ovi`** or **`/ovi status`** — Trigger executive briefing (current system state, active work, recent progress)
+- **`/ovi brief`** — Alias for `/ovi status`
+
+When triggered:
 
 ```bash
-bash {baseDir}/scripts/ovi-briefing.sh
+bash {baseDir}/scripts/ovi-status.sh [--voice]
 ```
 
-Returns a structured briefing:
+(Internally calls `ovi-briefing.sh` for data, formats as narrative)
+
+Returns structured data:
 ```
-[STATUS]    — one-line system health
-[DONE]      — completed since last check
-[ACTIVE]    — in progress now
-[DECISIONS] — what needs VS7's input
-[WATCH]     — developing situations
+[STATUS]    — Active sessions, current phase, overall progress
+[ACTIVE]    — Which workspace modules/hexes are active
+[DONE]      — Recent git commits, completed tasks
+[DECISIONS] — Where to find current phase work list
+[WATCH]     — Tools to monitor system state
 ```
 
-Narrate this in OVI voice: calm, direct, executive. No filler. Like a trusted lead engineer giving a 30-second hallway update.
+### Response Format
+
+**Narrate in OVI voice:** Calm, direct, executive. No filler. Like a trusted lead engineer giving a 30-second hallway update.
+
+**Example:**
+```
+🎙️ OVI STATUS — 04:41 UTC
+
+One session active. Phase 5 in progress — 2 of 5 tasks complete.
+
+Workspace quiet. All modules idle.
+
+Recent: heartbeat is recovery only, NOT a development trigger.
+
+Current focus: P5.3 — implement /ovi status command with voice + text output.
+
+Check sparks/OVI-SPEC.md for full phase 5 work list.
+```
+
+**Structure:**
+1. Timestamp
+2. Session count + current phase
+3. Active work / quiet state
+4. Recent commits (if any in last 4h)
+5. Next task focus
+6. Reference to full spec
 
 ---
 
