@@ -18,10 +18,11 @@ done
 # Gather data points
 TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
 
-# === LIVE AGENT STATE (from OpenClaw sessions) ===
-SESSIONS_RAW=$(openclaw sessions list 2>/dev/null | tail -n +3 | grep -v "^$" || echo "")
-ACTIVE_COUNT=$(echo "$SESSIONS_RAW" | grep -c "." || echo 0)
-ISOLATED_COUNT=$(echo "$SESSIONS_RAW" | grep -c "isolated" || echo 0)
+# === LIVE AGENT STATE (from OpenClaw sessions JSON) ===
+# Fix: CLI hangs when piped; parse JSON directly instead
+SESSIONS_JSON="${WORKSPACE}/../agents/main/sessions/sessions.json"
+ACTIVE_COUNT=$(cat "$SESSIONS_JSON" 2>/dev/null | jq 'length' 2>/dev/null || echo 0)
+ISOLATED_COUNT=$(cat "$SESSIONS_JSON" 2>/dev/null | jq '[.[] | select(.kind == "isolated")] | length' 2>/dev/null || echo 0)
 
 # === CYBERSCAPE HEX STATE (from workspace-state API) ===
 WORKSPACE_STATE=$(curl -s "$OVI_API/workspace-state" 2>/dev/null || echo '{"hexes":[],"timestamp":""}')

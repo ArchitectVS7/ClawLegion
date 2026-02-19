@@ -182,8 +182,8 @@ OVI is built with **Chaos-Driven Development (CDD)**:
 *Status: DECLARED — Roll: 8 (CONTINUE). No modifier. Execute next item. Phase 5 begins now.*
 
 ### Work List
-- [ ] P5.1 — Merge PR #2 (connection health) → stable main branch baseline
-- [ ] P5.2 — Wire OVI briefing shell (`ovi-briefing.sh`) to live Cyberscape agent state (real session data, not mock)
+- [x] P5.1 — Merge PR #2 (connection health) → stable main branch baseline **[DONE: PR #2 merged 2026-02-18 18:44 UTC]**
+- [~] P5.2 — Wire OVI briefing shell (`ovi-briefing.sh`) to live Cyberscape agent state (real session data, not mock) **[IN PROGRESS: Script exists with live API integration, bash hang on CLI calls being fixed → switching to JSON parsing]**
 - [ ] P5.3 — `/ovi status` command → OVI narrates current active agents, last actions, open PRs, phase status (voice + text)
 - [ ] P5.4 — Proactive narration triggers: agent completes task → OVI auto-briefs VS7 via Telegram (voice note via `sag` if key present, text fallback)
 - [ ] P5.5 — Sentiment/urgency layer: OVI escalates tone based on stall count, error rate, or time since last commit
@@ -197,6 +197,7 @@ OVI is built with **Chaos-Driven Development (CDD)**:
 | Task | Roll | Result | Action |
 |------|------|--------|--------|
 | Phase 5 declared | 8 | CONTINUE | No modifier. Execute next item on the list. P5.1 begins: merge PR #2 baseline. |
+| Heartbeat 03:41 UTC | 14 | RESEARCH MODE | 20-min investigation: P5.1 ✅ complete (PR #2 merged). P5.2 in progress — ovi-briefing.sh exists with live workspace-state API integration, but CLI hang identified (`openclaw sessions list` times out when piped). Solution: Parse `/root/.openclaw/agents/main/sessions/sessions.json` directly with jq. Last commit 02:35 UTC (1h 6min ago) — build active, not stalled. Fixing hang next. |
 
 ---
 
@@ -222,13 +223,13 @@ Every hour, LG2 checks:
 ## 📊 Current Status
 
 **Active Phase:** Phase 5 — OVI as Cyberscape Narrator
-**Last Roll:** 8 — CONTINUE (Phase 4 complete, no modifier, Phase 5 begins)
-**Last Heartbeat Check:** 2026-02-19 00:41 UTC  
+**Last Roll:** 14 — RESEARCH MODE (technical blocker in P5.2 identified, solution ready)
+**Last Heartbeat Check:** 2026-02-19 03:41 UTC  
 **Phase 1 Progress:** ✅ COMPLETE (5/5 active tasks, 1 narrowed)  
 **Phase 2 Progress:** ✅ COMPLETE (8/8 tasks)  
 **Phase 3 Progress:** ✅ COMPLETE (6/6 tasks)  
 **Phase 4 Progress:** ✅ COMPLETE (5/5 tasks)  
-**Phase 5 Progress:** 🔄 IN PROGRESS (0/5 tasks — P5.1 queued: merge PR #2)
+**Phase 5 Progress:** 🔄 IN PROGRESS (1/5 complete, 1 in progress — P5.1 ✅ merged, P5.2 🔄 fixing bash hang)
 
 ---
 
