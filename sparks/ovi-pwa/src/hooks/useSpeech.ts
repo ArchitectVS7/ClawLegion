@@ -119,75 +119,77 @@ export function useSpeech(onTranscribeAudio?: (blob: Blob) => Promise<string>) {
 
   // ─── Whisper (MediaRecorder → server transcription) ──────────────────────
 
-  const startWhisper = useCallback((): Promise<string> => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        streamRef.current = stream;
-        audioChunksRef.current = [];
+  const startWhisper = useCallback(async (): Promise<string> => {
+    let stream: MediaStream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (err: unknown) {
+      const error = err instanceof Error ? err : new Error("Microphone access denied");
+      setState((s) => ({ ...s, error: error.message }));
+      throw error;
+    }
 
-        const mimeType = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
-          ? "audio/webm;codecs=opus"
-          : "audio/webm";
+    streamRef.current = stream;
+    audioChunksRef.current = [];
 
-        const recorder = new MediaRecorder(stream, { mimeType });
-        mediaRecorderRef.current = recorder;
-        resolveRef.current = resolve;
-        rejectRef.current = reject;
+    const mimeType = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
+      ? "audio/webm;codecs=opus"
+      : "audio/webm";
 
-        recorder.ondataavailable = (e) => {
-          if (e.data.size > 0) audioChunksRef.current.push(e.data);
-        };
+    const recorder = new MediaRecorder(stream, { mimeType });
+    mediaRecorderRef.current = recorder;
 
-        recorder.onstop = async () => {
-          // Stop all tracks
-          stream.getTracks().forEach((t) => t.stop());
-          streamRef.current = null;
+    return new Promise<string>((resolve, reject) => {
+      resolveRef.current = resolve;
+      rejectRef.current = reject;
 
-          setState((s) => ({ ...s, isListening: false }));
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) audioChunksRef.current.push(e.data);
+      };
 
-          const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
+      recorder.onstop = async () => {
+        stream.getTracks().forEach((t) => t.stop());
+        streamRef.current = null;
 
-          if (audioBlob.size < 100) {
-            resolve("");
-            return;
-          }
+        setState((s) => ({ ...s, isListening: false }));
 
-          try {
-            setState((s) => ({ ...s, interimTranscript: "Transcribing..." }));
-            const transcript = await onTranscribeAudio!(audioBlob);
-            setState((s) => ({
-              ...s,
-              transcript: transcript,
-              interimTranscript: "",
-            }));
-            resolve(transcript);
-          } catch (err: unknown) {
-            const error = err instanceof Error ? err : new Error("Transcription failed");
-            setState((s) => ({ ...s, error: error.message, interimTranscript: "" }));
-            reject(error);
-          }
-        };
+        const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
 
-        recorder.onerror = (_e) => {
-          stream.getTracks().forEach((t) => t.stop());
-          reject(new Error("Recording error"));
-        };
+        if (audioBlob.size < 100) {
+          resolve("");
+          return;
+        }
 
-        recorder.start(250); // Collect data every 250ms
-        setState((s) => ({
-          ...s,
-          isListening: true,
-          mode: "whisper",
-          transcript: "",
-          interimTranscript: "",
-          error: null,
-        }));
-      } catch (err: unknown) {
-        const error = err instanceof Error ? err : new Error("Microphone access denied");
-        setState((s) => ({ ...s, error: error.message }));
-        reject(error);
-      }
+        try {
+          setState((s) => ({ ...s, interimTranscript: "Transcribing..." }));
+          const transcript = await onTranscribeAudio!(audioBlob);
+          setState((s) => ({
+            ...s,
+            transcript: transcript,
+            interimTranscript: "",
+          }));
+          resolve(transcript);
+        } catch (err: unknown) {
+          const error = err instanceof Error ? err : new Error("Transcription failed");
+          setState((s) => ({ ...s, error: error.message, interimTranscript: "" }));
+          reject(error);
+        }
+      };
+
+      recorder.onerror = (_e) => {
+        stream.getTracks().forEach((t) => t.stop());
+        reject(new Error("Recording error"));
+      };
+
+      recorder.start(250);
+      setState((s) => ({
+        ...s,
+        isListening: true,
+        mode: "whisper",
+        transcript: "",
+        interimTranscript: "",
+        error: null,
+      }));
     });
   }, [onTranscribeAudio]);
 
