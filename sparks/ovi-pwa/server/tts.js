@@ -5,6 +5,7 @@
  */
 
 import { readFileSync } from "fs";
+import { createHash } from "crypto";
 import { join } from "path";
 import { homedir } from "os";
 
@@ -32,7 +33,8 @@ const phraseCache = new Map();
 const MAX_CACHE_SIZE = 50;
 
 function getCacheKey(text, voiceId) {
-  return `${voiceId}:${text.slice(0, 200)}`;
+  const hash = createHash("sha256").update(text).digest("hex").slice(0, 16);
+  return `${voiceId}:${hash}`;
 }
 
 export async function synthesizeSpeech(text, voiceId = DEFAULT_VOICE_ID) {

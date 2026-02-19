@@ -20,29 +20,61 @@ export interface OVIStatus {
 }
 
 const API_BASE = "/api";
-const CLIENT_ID = `ovi-${Math.random().toString(36).slice(2, 10)}`;
+const CLIENT_ID = `ovi-${crypto.randomUUID().slice(0, 8)}`;
 
 // Exponential backoff config
 const BACKOFF_BASE_MS = 2000;
 const BACKOFF_MAX_MS = 30000;
 const POLL_INTERVAL_MS = 10000;
 
+// localStorage persistence
+const STORAGE_KEY = "ovi-messages";
+const MAX_STORED_MESSAGES = 100;
+
+function loadMessages(): OVIMessage[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return parsed.map((m: Record<string, unknown>) => ({
+      ...m,
+      timestamp: new Date(m.timestamp as string),
+    }));
+  } catch {
+    return [];
+  }
+}
+
+function saveMessages(messages: OVIMessage[]) {
+  try {
+    const toStore = messages.slice(-MAX_STORED_MESSAGES);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(toStore));
+  } catch {
+    // Storage full or unavailable — non-fatal
+  }
+}
+
 export function useOVI() {
-  const [messages, setMessages] = useState<OVIMessage[]>([]);
+  const [messages, setMessages] = useState<OVIMessage[]>(loadMessages);
   const [status, setStatus] = useState<OVIStatus>({
     connected: false,
     gateway: "disconnected",
     reconnecting: false,
   });
   const [isProcessing, setIsProcessing] = useState(false);
-  const pollRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isProcessingRef = useRef(false);
   const abortRef = useRef<AbortController | null>(null);
   const failureCountRef = useRef<number>(0);
   const wasConnectedRef = useRef<boolean>(false);
 
-  // Calculate backoff delay from failure count
+  // Persist messages whenever they change
+  useEffect(() => {
+    saveMessages(messages);
+  }, [messages]);
+
+  // Calculate backoff delay from failure count (capped exponent to prevent overflow)
   const getBackoffMs = useCallback((failures: number): number => {
-    const delay = BACKOFF_BASE_MS * Math.pow(2, failures - 1);
+    const delay = BACKOFF_BASE_MS * Math.pow(2, Math.min(failures - 1, 4));
     return Math.min(delay, BACKOFF_MAX_MS);
   }, []);
 
@@ -69,10 +101,11 @@ export function useOVI() {
     }
   }, []);
 
-  // Send message to OVI backend
+  // Send message to OVI backend (uses ref for isProcessing to avoid stale closure)
   const sendMessage = useCallback(async (text: string): Promise<string> => {
-    if (isProcessing) throw new Error("Already processing");
+    if (isProcessingRef.current) throw new Error("Already processing");
 
+    isProcessingRef.current = true;
     setIsProcessing(true);
 
     // Add user message immediately
@@ -109,9 +142,10 @@ export function useOVI() {
 
       return responseText;
     } finally {
+      isProcessingRef.current = false;
       setIsProcessing(false);
     }
-  }, [isProcessing]);
+  }, []);
 
   // Transcribe audio via Whisper API (server-side)
   const transcribeAudio = useCallback(async (audioBlob: Blob): Promise<string> => {
@@ -176,7 +210,6 @@ export function useOVI() {
       } catch (err: unknown) {
         if (err instanceof Error && err.name === "AbortError") return;
         consecutiveErrors += 1;
-        // Exponential backoff on poll errors
         const backoff = getBackoffMs(consecutiveErrors);
         await new Promise((r) => setTimeout(r, backoff));
       }
@@ -199,7 +232,6 @@ export function useOVI() {
   useEffect(() => {
     checkStatus();
 
-    // Adaptive status check: faster when reconnecting, normal otherwise
     let intervalId: ReturnType<typeof setInterval>;
 
     const scheduleCheck = () => {
@@ -209,7 +241,6 @@ export function useOVI() {
         : POLL_INTERVAL_MS;
       intervalId = setInterval(() => {
         checkStatus();
-        // Reschedule with potentially updated backoff
         scheduleCheck();
       }, delay);
     };
@@ -220,7 +251,6 @@ export function useOVI() {
     return () => {
       clearInterval(intervalId);
       stopPolling();
-      if (pollRef.current) clearTimeout(pollRef.current);
     };
   }, [checkStatus, startPolling, getBackoffMs]);
 
