@@ -223,15 +223,54 @@ Every hour, LG2 checks:
 
 ## 📊 Current Status
 
-**Active Phase:** Phase 5 — OVI as Cyberscape Narrator
-**Last Roll:** 14 — DEBUG MODE (P5.2 bash hang already fixed, validated)
-**Last Heartbeat Check:** 2026-02-19 04:41 UTC  
+**Active Phase:** ✅ BUILD COMPLETE — All phases delivered
+**Last Roll:** 17 → SCOPE CUT (06:41 UTC heartbeat)
+**Last Heartbeat Check:** 2026-02-19 06:41 UTC  
 **Phase 1 Progress:** ✅ COMPLETE (5/5 active tasks, 1 narrowed)  
 **Phase 2 Progress:** ✅ COMPLETE (8/8 tasks)  
 **Phase 3 Progress:** ✅ COMPLETE (6/6 tasks)  
 **Phase 4 Progress:** ✅ COMPLETE (5/5 tasks)  
-**Phase 5 Progress:** 🔄 IN PROGRESS (3/5 complete — P5.1 ✅ merged, P5.2 ✅ briefing shell, P5.3 ✅ /ovi status command)
+**Phase 5 Progress:** ✅ COMPLETE (3/3 tasks — P5.4/P5.5 cut as future enhancements)
+
+**Phase 5 Final Deliverables:**
+- ✅ `/ovi status` command → live system briefing with voice + text
+- ✅ ovi-briefing.sh reads live agent state from workspace-state API
+- ✅ Voice narration functional (ElevenLabs Rachel, eleven_flash_v2_5 model)
+- ✅ Cyberscape narrator foundation complete
+
+**Scope Cuts (06:41 UTC, Roll 17):**
+- P5.4 (proactive narration triggers) → requires event-driven agent hooks (future enhancement)
+- P5.5 (sentiment/urgency layer) → requires sentiment scoring system (future enhancement)
+
+**Transition Roll (Roll 11):** ADJUST SCOPE TO CODE — The deliverable works end-to-end. Spec updated to match reality.
 
 ---
 
-*This spec is alive. LG2 updates it as phases complete, rolls are made, and scope evolves.*
+## ✅ OVI BUILD: COMPLETE
+
+**What Exists:**
+- Voice transcription (Telegram voice → Whisper → LG2)
+- `/ovi` briefing mode (executive summary format)
+- OVI PWA (React 19 + Vite 7, live at https://68.183.155.91:8445)
+- Native mobile scaffold (Expo + React Native)
+- GitHub workflow (LG2 → Claude Code → PR → merge)
+- Live Cyberscape narrator (`/ovi status` → voice briefing)
+- ElevenLabs TTS integration (9000+ credits, main account)
+
+**What Works:**
+- Round-trip voice: Telegram voice note → transcription → LG2 response → audio reply
+- PWA installable on mobile with offline support
+- Backend API (status, chat, TTS, transcribe, workspace-state)
+- Hourly cron stall-recovery mechanism
+- GitHub repo with 75 passing tests
+
+**Future Enhancements (not blocking):**
+- Event-driven proactive narration (agent task complete → OVI auto-briefs)
+- Sentiment/urgency scoring layer
+- Wake word detection
+- Multi-agent briefing aggregation
+- Cyberscape 3D visualization
+
+---
+
+*Build archived. OVI is live and functional. Chaos-Driven Development: successful.*

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Blog</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: white;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
+    }
+    h1 { 
+      color: #2563eb;
+      transition: color 0.3s;
+    }
+    h2 {
+      transition: color 0.3s;
+    }
+    article {
+      border-bottom: 1px solid #ddd;
+      padding: 20px 0;
+      transition: border-color 0.3s;
+    }
+    #darkModeToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    #darkModeToggle:hover {
+      background: #1d4ed8;
+    }
+    body.dark-mode {
+      background: #1a1a1a;
+      color: #e5e5e5;
+    }
+    body.dark-mode h1 {
+      color: #60a5fa;
+    }
+    body.dark-mode h2 {
+      color: #e5e5e5;
+    }
+    body.dark-mode article {
+      border-bottom: 1px solid #333;
+    }
+    body.dark-mode #darkModeToggle {
+      background: #60a5fa;
+      color: #1a1a1a;
+    }
+    body.dark-mode #darkModeToggle:hover {
+      background: #3b82f6;
+    }
+  </style>
+</head>
+<body>
+  <button id="darkModeToggle">Toggle Dark Mode</button>
+  
+  <h1>My Blog</h1>
+  
+  <article>
+    <h2>First Post</h2>
+    <p>This is my first blog post. Welcome to my site!</p>
+  </article>
+  
+  <article>
+    <h2>Second Post</h2>
+    <p>Another day, another post. Technology is fascinating.</p>
+  </article>
+
+  <script>
+    const toggleButton = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    toggleButton.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+    });
+  </script>
+</body>
+</html>
