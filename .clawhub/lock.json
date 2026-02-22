@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "skills": {
+    "self-improving-agent": {
+      "version": "1.0.5",
+      "installedAt": 1771689927808
+    },
+    "proactive-agent": {
+      "version": "3.1.0",
+      "installedAt": 1771689933868
+    },
+    "tavily-search": {
+      "version": "1.0.0",
+      "installedAt": 1771690811545
+    },
+    "ontology": {
+      "version": "0.1.2",
+      "installedAt": 1771690819286
+    }
+  }
+}

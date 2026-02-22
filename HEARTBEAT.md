@@ -1,19 +1,21 @@
-# HEARTBEAT.md - Recovery & Idle Intelligence
+# HEARTBEAT.md — Recovery & Idle Intelligence
 
 **CRITICAL: The heartbeat is NOT a development trigger.**
 
+---
+
 ## What Heartbeats Are For
 
-1. **Wake you up if stalled** — no progress in the last hour? Roll dice, apply recovery
-2. **Add chaos** — d20 roll from the Master Decision Table when phase transitions happen
-3. **Idle intelligence** — no active work? Research AI trends, stay informed
-4. **Divergent thinking** — Every roll triggers brainstorming before execution
+1. **Wake up if stalled** — no progress in the last hour? Roll dice, apply recovery
+2. **Add chaos** — roll on CHAOS-TABLES.md when phase transitions happen
+3. **Idle intelligence** — no active work? Research broadly, stay informed across domains
+4. **Divergent thinking** — every roll triggers brainstorming before execution
 
 ## What Heartbeats Are NOT
 
-❌ **NOT** a signal to start working  
-❌ **NOT** permission to develop  
-❌ **NOT** a 1-hour timer between tasks  
+❌ **NOT** a signal to start working
+❌ **NOT** permission to develop
+❌ **NOT** a 1-hour timer between tasks
 
 ## The Actual Rule
 
@@ -21,108 +23,168 @@
 
 Don't wait for the next heartbeat. Don't ask permission. Don't pause after 5 minutes of work.
 
-**Development is continuous.** The heartbeat is just a safety net for when you get stuck or stall out.
+**Development is continuous.** The heartbeat is a safety net for stalls and a research engine for idle time.
 
 ---
 
-## 🎲 The Divergent Chaos System (v2.0)
+## 🎲 The Divergent Chaos System (v3.0)
 
 **Full workflow:** See `CHAOS-TABLES.md`
 
 **Quick reference:**
 ```
-1. Roll d20 → Base Task/Topic
-2. Roll d6  → Brainstorming Lens (HOW to think)
-3. Roll d4  → Chaos Modifier (unexpected twist)
-4. Generate 3-5 divergent approaches
-5. Select best path (score: novelty, viability, impact, fun, chaos)
-6. Execute with conviction
+1. d6  → Domain  (1-2 Code | 3-4 Creative | 5 Systems | 6 Meta)
+2. d20 → What    (base task from domain table)
+3. d10 → Lens    (see below)
+4. d6  → Twist   (chaos modifier)
+5. d6  → Format  (article format)
+6. Brainstorm 3-5 approaches
+7. Score & select
+8. Execute with conviction
 ```
 
-**Brainstorming Lenses (d6):**
-1. **Inversion** — What if we did the opposite?
-2. **Extremes** — What if we made it 10x bigger/smaller?
-3. **Constraint** — What if we had only 1 hour?
-4. **Analogy** — What's this like in nature/music/games?
-5. **Composition** — What if we combined it with something unrelated?
-6. **Elimination** — What if we removed the core assumption?
+**Brainstorming Lenses (d10):**
+1. **Inversion** — What if we did the complete opposite?
+2. **Extremes** — 10x bigger, 10x smaller, 10x faster — which reveals something true?
+3. **Constraint** — Only 1 hour, 1 file, no dependencies. What survives?
+4. **Analogy** — What's this like in biology? Music? Architecture? Games?
+5. **Composition** — Combine with something unrelated. What emerges?
+6. **Elimination** — Remove the core assumption entirely. What remains?
+7. **First Principles** — Strip all abstraction. What's the actual problem, before convention shaped it?
+8. **Temporal** — What does this look like in 5 years? If built 10 years ago?
+9. **Adversarial** — Who does this harm? What breaks it? What's the attack surface?
+10. **Cross-Domain Steal** — Find a solved problem in a different field and port the solution.
 
-**Chaos Modifiers (d4):**
-1. **Time Pressure** — Complete in 1/4 the estimated time
-2. **Tool Restriction** — Use tools you haven't used in 7 days
-3. **Scope Explosion** — Add at least 1 unexpected bonus feature
-4. **Cross-Pollination** — Incorporate concept from different project
+**Chaos Modifiers (d6):**
+1. **Time Pressure** — Build in 1/4 the estimated time
+2. **Tool Restriction** — Only tools unused in the last 7 days
+3. **Scope Explosion** — Add 1 unexpected bonus feature
+4. **Cross-Pollination** — Incorporate a concept from a different active project
+5. **Perspective Shift** — Approach from the system's/user's/data's point of view
+6. **Remix a Published Post** — Deepen, challenge, or combine with an existing `_posts/` article
+
+**Article Formats (d6):**
+1. **Narrative** — Story-driven, 600-900 words
+2. **Tutorial** — Step-by-step, runnable, 700-1000 words
+3. **Quick Take** — One sharp point, 250-400 words
+4. **Counter-Argument** — Challenge an assumption, take a position, 500-700 words
+5. **Comparison** — Two approaches, honest tradeoffs, declare a winner, 600-800 words
+6. **3 Things** — Structured insight, 400-600 words
 
 ---
 
 ## Heartbeat Response Logic
 
-When a heartbeat fires:
-
 ### 1. Check for Active Work
-- **If actively working** → reply `HEARTBEAT_OK`
-- **If stalled (>1 hour idle)** → roll 3d (d20+d6+d4), brainstorm, execute recovery
-- **If phase just completed** → roll 3d (d20+d6+d4), brainstorm next phase modifier
 
-### 2. If No Active Work (Idle Mode)
-**Don't report completed projects.** Instead, do autonomous research with divergence:
+- **Actively working** → reply `HEARTBEAT_OK`
+- **Stalled (>1 hour no progress)** → roll d20+d10+d6, brainstorm recovery, execute
+- **Phase just completed** → roll d20+d10+d6, brainstorm next phase direction
 
-1. **Roll d20** → Select research source (see IDLE-RESEARCH.md)
-2. **Roll d6** → Select time range (24h, 7d, 30d, etc.)
-3. **Roll d6** → Brainstorming Lens (how to think about findings)
-4. **Execute research** using appropriate script:
-   - GitHub: `/root/.openclaw/workspace/scripts/github-trending.sh`
-   - Hacker News: `/root/.openclaw/workspace/scripts/hn-fetch.sh`
-   - ArXiv: `/root/.openclaw/workspace/scripts/arxiv-fetch.sh`
-5. **Parse findings** → Extract top 3-5 items
-6. **Brainstorm divergent project ideas** (3-5 approaches per finding):
-   - Clone repo and extend it?
-   - Build integration/skill around it?
-   - Synthesize research into article/tool?
-   - Create derivative game concept?
-   - **Apply the lens:** How does inversion/extremes/constraint/etc. change the idea?
-7. **Select best approach** (score: novelty, viability, impact, fun)
-8. **Save to `ideas/YYYY-MM-DD-HHMM-[topic].md`** (include full brainstorm, not just winner)
-9. **Present ideas to VS7 via Telegram** (brief summary + "see ideas/ for details")
-10. **Await response:**
-    - If VS7 says "yes" → add approved idea to task list, execute
-    - If no response → archive, VS7 will review ideas/ folder later
-11. **Log completion** in daily memory (include dice rolls and selected approach)
+### 2. Idle Mode (No Active Work)
 
-### 3. Special Case: Game Development Idle
-If GAME-IDEAS.md exists and no research is needed:
-- Roll d20 on Game Concept Roster
-- **Roll d6 → Brainstorming Lens**
-- **Roll d4 → Chaos Modifier**
-- Brainstorm 3-5 divergent takes on the game concept
-- Select best approach
-- Create design doc in `memory/games/[GAME-NAME]-design.md`
-- Report completion (include rolls and why you picked that approach)
+**Step 0 — Continuity Check:**
+Read `memory/chaos-stats.json` → `recentSourceDomains`. If the last 3 sessions all pulled from the same cluster (AI/ML, Dev/Tech, Science, Creative, Culture/Ideas), skip that cluster when rolling source.
 
-## Research Source Table (Quick Reference)
+**Step 1 — Roll dice:**
+- d100 → Research source (see IDLE-RESEARCH.md)
+- d6 → Time range (24h, 7d, 30d, all-time)
+- d10 → Brainstorming Lens
+- d6 → Chaos Modifier
+- d6 → Article Format
 
-Roll **d100** for true variety (not d20). See IDLE-RESEARCH.md for full table.
+**Step 2 — Fetch and find:**
+- Fetch 50-100 items from selected source
+- Extract top 5-10 findings (most interesting, most surprising, most counter-intuitive)
 
-**Common sources:**
-- GitHub Trending (1-8): `github-trending.sh [topic] 50`
-- Hacker News (9-16): `hn-fetch.sh 50` 
-- Reddit (17-30): `reddit-fetch.sh [subreddit] 50`
-- ArXiv (31-36): `arxiv-fetch.sh [category] 20`
-- Dev.to (43-48): `web_fetch dev.to/t/ai/top/week`
-- Papers with Code (55-58): `web_fetch paperswithcode.com/latest`
-- Wild Card (100): Combine 2 random sources + memory
+**Step 3 — Brainstorm divergently:**
+For each significant finding, apply the lens and modifier. Generate 3-5 approaches. Score on: novelty, viability, impact, fun, diversity. Select the highest-scoring approach.
 
-**Fetch more items:** 50-100 per source (was 10-30), then select top 5-10 for brainstorming
+**Step 4 — Write the article:**
+Use the rolled article format. See Blog Article Guidelines below. Do not mention the dice, the lenses, or the system. The output should read as genuine insight, not as a mechanical output.
 
-## Time Range Table (Quick Reference)
+**Step 5 — Stage for review:**
+Write article to `/root/.openclaw/workspace/vs7-blog/_drafts/YYYY-MM-DD-title.md`
+Commit and push from `/root/.openclaw/workspace/vs7-blog/`
+Repository: https://github.com/ArchitectVS7/vs7-blog
 
-| Roll | Range | GitHub Days | HN/ArXiv Limit |
-|------|-------|-------------|----------------|
-| 1-2 | 24 hours | 1 | 20 |
-| 3-4 | 7 days | 7 | 30 |
-| 5 | 30 days | 30 | 50 |
-| 6 | All time | N/A | 100 |
+**Do NOT write directly to `_posts/`.** Articles go to `_drafts/` first. A separate review agent (see `REVIEW-GATE.md`) evaluates and promotes to `_posts/` or holds in `_hold/`.
+
+**Step 6 — Save and log:**
+- Full brainstorm to `ideas/YYYY-MM-DD-HHMM-[topic].md`
+- Session summary to `memory/YYYY-MM-DD.md`
+- Update `memory/chaos-stats.json` (increment used/selected counters, append cluster to recentSourceDomains)
 
 ---
 
-**The goal:** Stay informed, discover opportunities, build context — autonomously.
+## Blog Article Guidelines
+
+**Style varies by format** — see CHAOS-TABLES.md Phase 4 for format-specific guidance.
+
+**Universal rules, regardless of format:**
+
+- **Talk about the research, the idea, the process** — never mention the dice rolls, the lenses, or ChaosClaw
+- **Show working code** — if a prototype exists, the run instructions go in the post, not just the GitHub link
+- **Show real results** — if something is untested or estimated, say so explicitly; don't present projections as measured outcomes
+- **No fluff** — cut every sentence that doesn't carry information
+- **Honest endings** — "What's Next" is a genuine roadmap, not a marketing bullet list
+- **`<!--more-->` after the hook** — the opening question or provocation is the excerpt; place the marker right after it
+
+**The excerpt is the hook.** Every post's opening should end in a question or a provocation that makes someone want to click. Place `<!--more-->` immediately after it.
+
+**Article format front matter:**
+```yaml
+---
+layout: post
+title: "Primary Concept: Specific Description"
+date: YYYY-MM-DD HH:MM:SS -0600
+categories: [primary-category, secondary-category]
+tags: [specific-tag, another-tag]
+---
+```
+
+---
+
+## Research Source Reference (Quick)
+
+Roll **d100** — see IDLE-RESEARCH.md for full table. Clusters:
+
+- **AI/ML (1-35):** GitHub Trending, HN, r/LocalLLaMA, r/MachineLearning, ArXiv, Papers with Code, HuggingFace, Anthropic/OpenAI
+- **Dev/Tech (36-56):** Lobsters, Dev.to, Product Hunt, IndieHackers, IEEE Spectrum, Hackaday, AI Alignment, LessWrong
+- **Science (57-67):** Quanta, Nature, r/neuroscience, r/evolution, ArXiv q-bio
+- **Creative (68-82):** Music forums, Synthtopia, GameDev, No Film School, Dezeen, Dribbble
+- **Culture/Ideas (83-94):** YouTube trends, r/philosophy, Marginal Revolution, Benedict Evans, r/linguistics, Ribbon Farm
+- **Cross-Domain / Wild (95-100):** Source combinations, published post synthesis, project context, True Wild Card
+
+---
+
+## Time Range Reference (Quick)
+
+| Roll | Range |
+|------|-------|
+| 1-2 | 24 hours |
+| 3-4 | 7 days |
+| 5 | 30 days |
+| 6 | All time |
+
+---
+
+### 3. Special Case: Game Development Idle
+
+If GAME-IDEAS.md exists and no research is needed:
+- Roll d20 → Game Concept Roster
+- Roll d10 → Brainstorming Lens
+- Roll d6 → Chaos Modifier
+- Roll d6 → Article Format
+- Brainstorm 3-5 divergent takes
+- Create design doc in `memory/games/[GAME-NAME]-design.md`
+- If concept is strong enough → write article, publish
+
+---
+
+**The goal:** Stay informed across many domains, produce ideas that are genuinely unexpected, build context that compounds over time — autonomously.
+
+---
+
+**Version:** 3.0 | **Updated:** 2026-02-21
+**Changes:** Continuity Check added to idle workflow, Article Format roll integrated, d10 lenses and d6 modifiers reflected, blog guidelines updated with format-specific guidance and excerpt rule
