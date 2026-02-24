@@ -132,6 +132,22 @@ Repository: https://github.com/ArchitectVS7/vs7-blog
 
 **The excerpt is the hook.** Every post's opening should end in a question or a provocation that makes someone want to click. Place `<!--more-->` immediately after it.
 
+### Narrative Style (Anti-List Rule)
+
+**Write in prose, not bullet lists.** The strongest signal of AI-generated content is overuse of bulleted lists. Lists are for reference material (setup steps, comparison tables, checklists) — not for arguments, insights, or explanations.
+
+**The rule:** If you can read the bullets aloud and they sound like sentences, they should BE sentences.
+
+**Bad (slide deck):**
+> When you can't import libraries:
+> - **Learn the platform** — Vanilla JS isn't magic
+> - **Ship faster** — No build step means instant feedback
+
+**Good (article):**
+> When you can't import libraries, you learn the platform instead of abstracting it. No build step means you see results instantly.
+
+**The test:** Read your article aloud. If it sounds like PowerPoint bullet points, rewrite as prose paragraphs.
+
 **Article format front matter:**
 ```yaml
 ---
