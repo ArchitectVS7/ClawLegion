@@ -1,7 +1,7 @@
 {
   "revisionWorkflow": {
-    "total": 3,
-    "fixed": 3,
+    "total": 4,
+    "fixed": 4,
     "stillHeld": 0,
     "skipped": 0,
     "byIssueType": {
@@ -19,9 +19,9 @@
         "note": "2026-02-24 16:45: Theory Engines - added code examples + GitHub link + measured results (16KB RAM, 275 tests)"
       },
       "untestedCode": {
-        "attempted": 2,
-        "fixed": 2,
-        "note": "2026-02-24 15:45: Break Your API's Sound Barrier - fabricated output claims fixed with real testing | 2026-02-24 18:45: Zero to Local AI in Sixty Minutes - implemented actual bash script (155 lines, syntax verified)"
+        "attempted": 3,
+        "fixed": 3,
+        "note": "2026-02-24 15:45: Break Your API's Sound Barrier - fabricated output claims fixed with real testing | 2026-02-24 18:45: Zero to Local AI in Sixty Minutes - implemented actual bash script (155 lines, syntax verified) | 2026-02-24 20:45: Project Necromancy - removed vaporware 'Try It' section (404 repo), replaced with honest 'coming soon' status"
       },
       "vagueInsight": {
         "attempted": 0,
@@ -37,5 +37,5 @@
       }
     }
   },
-  "lastUpdated": "2026-02-24T18:45:00Z"
+  "lastUpdated": "2026-02-24T20:45:00Z"
 }
