@@ -1,0 +1,41 @@
+{
+  "revisionWorkflow": {
+    "total": 3,
+    "fixed": 3,
+    "stillHeld": 0,
+    "skipped": 0,
+    "byIssueType": {
+      "scopeTooWide": {
+        "attempted": 0,
+        "fixed": 0
+      },
+      "scopeTooNarrow": {
+        "attempted": 0,
+        "fixed": 0
+      },
+      "missingVerification": {
+        "attempted": 1,
+        "fixed": 1,
+        "note": "2026-02-24 16:45: Theory Engines - added code examples + GitHub link + measured results (16KB RAM, 275 tests)"
+      },
+      "untestedCode": {
+        "attempted": 2,
+        "fixed": 2,
+        "note": "2026-02-24 15:45: Break Your API's Sound Barrier - fabricated output claims fixed with real testing | 2026-02-24 18:45: Zero to Local AI in Sixty Minutes - implemented actual bash script (155 lines, syntax verified)"
+      },
+      "vagueInsight": {
+        "attempted": 0,
+        "fixed": 0
+      },
+      "weakHook": {
+        "attempted": 0,
+        "fixed": 0
+      },
+      "missingDifferentiation": {
+        "attempted": 0,
+        "fixed": 0
+      }
+    }
+  },
+  "lastUpdated": "2026-02-24T18:45:00Z"
+}
