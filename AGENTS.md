@@ -45,6 +45,20 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
 
+### ✅ File Operations - Check Before Edit
+
+**Rule:** Never assume files exist. Always verify before editing.
+
+**Before editing any file:**
+1. Check if it exists: `ls -la /path/to/file.md 2>&1` or use `Read` tool
+2. If uncertain, search workspace: `find /root/.openclaw/workspace -name "*keyword*"`
+3. If file doesn't exist and is needed, use `Write` to create it first
+4. Only use `Edit` on files confirmed to exist
+
+**Why:** The `Edit` tool fails silently if the file doesn't exist. You'll waste time and confuse the user. Check first, edit second.
+
+**For status tracking:** Use `memory/YYYY-MM-DD.md` files - they're designed for logging what happened. Don't create redundant tracking files unless there's a clear, documented need.
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.
