@@ -13,7 +13,9 @@
 
 ---
 
-## Step 1: Select 3 Random Articles
+## Step 1: Select 3 Random Articles (or Expand Ideas)
+
+**Primary mode:** Check hold directory for articles needing fixes
 
 ```bash
 ls _hold/*.md | shuf -n 3
@@ -23,6 +25,17 @@ For each of the 3 candidates, extract:
 - Title
 - Date held
 - Reason held (from git commit message or review gate log)
+
+**Fallback mode:** If hold directory is empty, expand an idea instead
+
+```bash
+ls ideas/*.md | shuf -n 3
+```
+
+For each of the 3 idea candidates, evaluate:
+- Original brainstorm quality (score, lens, approach)
+- Current relevance (is the topic still timely?)
+- Expansion potential (can it become a full article?)
 
 ---
 
@@ -42,10 +55,15 @@ For each of the 3 candidates, extract:
 - ❌ **Relies on unavailable resources** (e.g., hardware we don't have)
 - ❌ **Fundamentally wrong premise** (e.g., disproven theory)
 
-**Selection criteria:**
+**Selection criteria (held articles):**
 - Pick the article with the **highest fix-to-effort ratio**
 - If all 3 are unfixable, select 3 more
-- If still none fixable, reply `REVISION_SKIP` (no viable candidates this cycle)
+- If still none fixable after 2 rounds, fall back to idea expansion
+
+**Selection criteria (ideas):**
+- Pick the idea with the **highest expansion potential**
+- Look for: high brainstorm scores, timely topics, unique angles
+- Prefer ideas with working code/research already done
 
 ---
 
@@ -144,6 +162,42 @@ For each of the 3 candidates, extract:
 3. Apply different lens/modifier combo (roll dice from CHAOS-TABLES.md)
 4. Add cross-pollination: reference and extend existing post
 5. Re-check differentiation gate
+
+---
+
+## Step 3b: Idea Expansion (Fallback Mode)
+
+**When:** Hold directory is empty, no articles need fixing
+
+**Process:**
+1. Select 3 random ideas from `ideas/`
+2. Evaluate each for expansion potential
+3. Pick the strongest candidate
+4. Roll dice for article format (d6 from CHAOS-TABLES.md Phase 4)
+5. Expand idea into full article
+6. Save to `02-rough-draft/` (not `_drafts/` — needs review first)
+
+**Expansion strategy:**
+- Read original brainstorm file (includes lens, modifier, score, approaches)
+- If original approach is still strong, use it
+- If needs refresh, roll new lens/modifier combo
+- Target word count based on format (Quick Take 400-600, Narrative 600-900, etc.)
+- Follow format-specific guidelines from CHAOS-TABLES.md Phase 4
+
+**Quality check before writing:**
+- Does the idea have a clear insight?
+- Is it differentiated from existing posts?
+- Can it support the target word count?
+- If no: pick different idea
+
+**After expansion:**
+- Commit to git with message: `revision: [title] (expanded from idea [date])`
+- Log to memory/YYYY-MM-DD.md
+- Update chaos-stats.json revisionWorkflow counters
+
+**Key difference from held article fixes:**
+- Ideas go to `02-rough-draft/` (for heartbeat review)
+- Held articles go to `_drafts/` (already passed once, just needed refinement)
 
 ---
 

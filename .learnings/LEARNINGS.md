@@ -59,3 +59,51 @@ Attempted to edit `WORKFLOW_AUTO.md` which I assumed existed for tracking pipeli
 - **Notes**: Core rule added to workspace guidelines - always verify file existence before editing
 
 ---
+
+## [LRN-20260225-002] document_fallback_behavior
+
+**Logged**: 2026-02-25T21:50:00Z
+**Priority**: high
+**Status**: resolved
+**Area**: docs
+
+### Summary
+Revision workflow has fallback behavior (expand ideas when hold is empty) but it wasn't documented in REVISION-WORKFLOW.md
+
+### Details
+**What happened:**
+1. Revision cron job ran at 21:45 UTC
+2. Hold directory was empty (just cleared last article at 20:45)
+3. Isolated session returned REVISION_SKIP
+4. User corrected: "You're supposed to do something else when hold is empty"
+
+**What was wrong:**
+- Fallback behavior (expand ideas) was implemented in earlier sessions (17:55 UTC, 18:45 UTC)
+- Memory logs show idea expansion working correctly
+- But REVISION-WORKFLOW.md didn't document this fallback mode
+- Isolated cron sessions can't access full memory/conversation history, only workspace files
+
+**What's correct:**
+- When hold is empty: select 3 random ideas, evaluate expansion potential, write article to 02-rough-draft/
+- This keeps pipeline fed even when no rescue work needed
+- Already working pattern from earlier today
+
+### Suggested Action
+✅ **COMPLETED:** Updated REVISION-WORKFLOW.md to document fallback mode:
+- Added "or Expand Ideas" to Step 1 header
+- Documented fallback selection criteria
+- Added new Step 3b: Idea Expansion (full process)
+- Clarified: ideas → rough-draft, held articles → drafts
+
+### Metadata
+- Source: user_correction
+- Related Files: REVISION-WORKFLOW.md, memory/2026-02-25.md
+- Tags: documentation, workflow, cron_jobs
+- Category: correction
+
+### Resolution
+- **Resolved**: 2026-02-25T21:52:00Z
+- **Updated**: REVISION-WORKFLOW.md (added fallback documentation)
+- **Notes**: Fallback behavior was already working, just not documented. Isolated sessions need workspace files, not just memory.
+
+---
