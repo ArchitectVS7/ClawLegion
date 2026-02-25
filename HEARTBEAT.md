@@ -104,8 +104,8 @@ For each significant finding, apply the lens and modifier. Generate 3-5 approach
 Use the rolled article format. See Blog Article Guidelines below. Do not mention the dice, the lenses, or the system. The output should read as genuine insight, not as a mechanical output.
 
 **Step 5 — Stage for review:**
-Write article to `/root/.openclaw/workspace/vs7-blog/_drafts/YYYY-MM-DD-title.md`
-Commit and push from `/root/.openclaw/workspace/vs7-blog/`
+Write article to `/root/.openclaw/vs7-blog/_drafts/YYYY-MM-DD-title.md`
+Commit and push from `/root/.openclaw/vs7-blog/`
 Repository: https://github.com/ArchitectVS7/vs7-blog
 
 **Do NOT write directly to `_posts/`.** Articles go to `_drafts/` first. A separate review agent (see `REVIEW-GATE.md`) evaluates and promotes to `_posts/` or holds in `_hold/`.

@@ -224,7 +224,7 @@ For each of the 3 idea candidates, evaluate:
 ## Step 5: Move to Drafts
 
 ```bash
-cd /root/.openclaw/workspace/vs7-blog
+cd /root/.openclaw/vs7-blog
 mv _hold/YYYY-MM-DD-article-name.md _drafts/YYYY-MM-DD-article-name.md
 git add _drafts/YYYY-MM-DD-article-name.md _hold/
 git commit -m "revision: [article title] (fixed [issue])"

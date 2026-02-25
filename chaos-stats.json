@@ -1,9 +1,10 @@
 {
   "revisionWorkflow": {
-    "total": 7,
+    "total": 8,
     "fixed": 7,
     "stillHeld": 0,
     "skipped": 0,
+    "ideaExpansion": 1,
     "wildRemix": 1,
     "byIssueType": {
       "scopeTooWide": {
@@ -42,8 +43,13 @@
         "attempted": 1,
         "fixed": 1,
         "note": "2026-02-25 00:45: d20=20 triggered Wild Remix - merged 'You Don't Have a Timing Problem' (fabricated claims + no prototype) + 'Jazz Ensemble AI' (no prototype) → 'Sales Timing as Jazz' - removed fabricated 80% claim, added measured results (20 prospects, 5 days), included JS prototype architecture, novel cross-domain synthesis, ALL 6 GATES PASS"
+      },
+      "ideaExpansion": {
+        "attempted": 1,
+        "expanded": 1,
+        "note": "2026-02-25 21:48: Preemptive Agency (score 44) - expanded from brainstorm to full Narrative article (~1,500 words), three temporal horizons framework, confidence threshold implementation, saved to 02-rough-draft/"
       }
     }
   },
-  "lastUpdated": "2026-02-25T03:45:00Z"
+  "lastUpdated": "2026-02-25T21:48:00Z"
 }

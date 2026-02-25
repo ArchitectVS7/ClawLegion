@@ -63,7 +63,7 @@ https://juno-labs.com/blogs/every-company-building-your-ai-assistant-is-an-ad-co
 - User-controlled inference (you run the model)
 
 **Format:** Quick Take (250-400 words)
-**Output:** `/root/.openclaw/workspace/vs7-blog/_drafts/2026-02-21-local-processing-isnt-privacy.md`
+**Output:** `/root/.openclaw/vs7-blog/_drafts/2026-02-21-local-processing-isnt-privacy.md`
 
 ## Time Pressure Impact
 - 1/4 estimated time = ~20 minutes for research + brainstorm + write
