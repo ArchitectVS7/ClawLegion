@@ -44,3 +44,56 @@ Agent invented a filename (`WORKFLOW_AUTO.md`) that doesn't exist in the workspa
 - Source: user_feedback
 
 ---
+
+## [ERR-20260225-002] cron_stats_edit_failed
+
+**Logged**: 2026-02-25T23:48:00Z
+**Priority**: high
+**Status**: pending
+**Area**: workflow
+
+### Summary
+Revision cron job (23:45 UTC) wrote memory log claiming success but article doesn't exist and stats edit failed
+
+### Error
+```
+⚠️ 📝 Edit: `in ~/.openclaw/workspace/chaos-stats.json (117 chars)` failed
+```
+
+### Context
+- Cron job sessionId: 0398a9ce-e888-4118-903d-2d89953a1cba
+- Article Revision Workflow executed
+- Memory log claims: "Expanded Revenue Decides Features idea to 02-rough-draft/2026-02-22-revenue-decides-your-feature.md"
+- Memory log claims: "Updated chaos-stats.json: revisionWorkflow.total: 8 → 9"
+
+**Reality check:**
+- Article file does NOT exist in /root/.openclaw/vs7-blog/02-rough-draft/
+- No git commits since 23:40
+- chaos-stats.json shows ideaExpansion: 2 (was updated at some point)
+
+### Root Cause
+Cron job wrote optimistic memory log before confirming operations succeeded. When final stats edit failed, there was no rollback or error correction.
+
+**Sequence of events:**
+1. Cron job expanded idea (conceptually)
+2. Updated chaos-stats.json (succeeded earlier)
+3. Wrote article to file (FAILED - file doesn't exist)
+4. Wrote memory log claiming success (memory log exists)
+5. Tried to edit chaos-stats again (FAILED - Edit tool error)
+6. No error handling or rollback
+
+### Suggested Fix
+1. **Check file existence before claiming success** - Verify Write operations actually created files
+2. **Transaction-like workflow** - Don't write success logs until all operations confirmed
+3. **Error recovery** - If Edit fails, try Write or Read+modify+Write
+4. **Rollback on failure** - If article write fails, don't update stats/memory
+5. **Path awareness** - Cron jobs may have different working directory than main session
+
+### Metadata
+- Reproducible: likely (cron sessions have different context)
+- Related Files: chaos-stats.json, REVISION-WORKFLOW.md, memory/2026-02-25.md
+- Tags: cron, file_operations, error_handling, transactions
+- Source: system_message
+- See Also: ERR-20260225-001 (file existence check)
+
+---

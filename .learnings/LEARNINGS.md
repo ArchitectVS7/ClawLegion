@@ -107,3 +107,70 @@ Revision workflow has fallback behavior (expand ideas when hold is empty) but it
 - **Notes**: Fallback behavior was already working, just not documented. Isolated sessions need workspace files, not just memory.
 
 ---
+
+## [LRN-20260225-003] automatic_error_investigation
+
+**Logged**: 2026-02-25T23:50:00Z
+**Priority**: high
+**Status**: pending
+**Area**: workflow
+
+### Summary
+Always investigate cron job errors automatically - don't wait to be asked
+
+### Details
+**What happened:**
+User received system message: "⚠️ 📝 Edit: `in ~/.openclaw/workspace/chaos-stats.json (117 chars)` failed"
+
+I forwarded the error and asked "Should I investigate?"
+
+User corrected: "You should always investigate what happened. Make this part of your self correction."
+
+**What was wrong:**
+- Waiting for permission to investigate errors
+- Not being proactive about debugging
+- Treating error investigation as optional
+
+**What's correct:**
+- When a cron job reports an error, investigate immediately
+- Use wildcard search to find actual filenames when file not found
+- Don't just forward the error message - dig into what actually happened
+- Check file existence, git history, session logs, memory files
+- Report findings with root cause analysis
+
+### Suggested Action
+**Pattern when system message reports error:**
+1. **Acknowledge** the error exists
+2. **Wildcard search** if file not found: `find /path -name "*partial-name*"`
+3. **Check what actually happened** - read memory logs, check git, verify files exist
+4. **Identify root cause** - don't just describe symptoms
+5. **Fix or document** - either resolve immediately or log to .learnings/
+6. **Report** findings + root cause + fix
+
+**Example workflow:**
+```bash
+# Error: "Edit failed on chaos-stats.json"
+# Don't just forward the error - investigate:
+
+# 1. Find the actual file
+find /root/.openclaw -name "*chaos-stats*" 2>/dev/null
+
+# 2. Check what the cron job tried to do
+tail -50 /root/.openclaw/workspace/memory/YYYY-MM-DD.md
+
+# 3. Verify claimed outcomes
+ls -la /path/to/article.md  # Does it exist?
+git log --oneline --since="HH:MM"  # Was it committed?
+
+# 4. Identify discrepancy
+# 5. Log to .learnings/ERRORS.md
+# 6. Fix or escalate
+```
+
+### Metadata
+- Source: user_correction
+- Related Files: .learnings/ERRORS.md (ERR-20260225-002)
+- Tags: proactive, debugging, error_handling, cron_jobs
+- Category: best_practice
+
+---
