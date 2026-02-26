@@ -1,10 +1,10 @@
 {
   "revisionWorkflow": {
-    "total": 10,
+    "total": 12,
     "fixed": 8,
     "stillHeld": 0,
     "skipped": 0,
-    "ideaExpansion": 2,
+    "ideaExpansion": 4,
     "wildRemix": 1,
     "byIssueType": {
       "scopeTooWide": {
@@ -45,11 +45,11 @@
         "note": "2026-02-25 00:45: d20=20 triggered Wild Remix - merged 'You Don't Have a Timing Problem' (fabricated claims + no prototype) + 'Jazz Ensemble AI' (no prototype) → 'Sales Timing as Jazz' - removed fabricated 80% claim, added measured results (20 prospects, 5 days), included JS prototype architecture, novel cross-domain synthesis, ALL 6 GATES PASS"
       },
       "ideaExpansion": {
-        "attempted": 2,
-        "expanded": 2,
-        "note": "2026-02-25 21:48: Preemptive Agency (score 44) - expanded from brainstorm to full Narrative article (~1,500 words), three temporal horizons framework, confidence threshold implementation, saved to 02-rough-draft/ | 2026-02-25 23:45: Revenue Decides Features (score 43) - d6 format roll=2 (Tutorial), expanded brainstorm into step-by-step tutorial with runnable Python code (950 words), revenue-only decision framework, saved to 02-rough-draft/"
+        "attempted": 4,
+        "expanded": 4,
+        "note": "2026-02-25 21:48: Preemptive Agency (score 44) - expanded from brainstorm to full Narrative article (~1,500 words), three temporal horizons framework, confidence threshold implementation, saved to 02-rough-draft/ | 2026-02-25 23:45: Revenue Decides Features (score 43) - d6 format roll=2 (Tutorial), expanded brainstorm into step-by-step tutorial with runnable Python code (950 words), revenue-only decision framework, saved to 02-rough-draft/ | 2026-02-26 06:45: Quantum Darwinian Documentation (score 42) - d6 format roll=4 (Counter-Argument), challenged traditional documentation practices using physics lens, 684 words, pointer state testing framework, saved to 02-rough-draft/ | 2026-02-26 11:45: Brutalist Jam Inversion (Approaches 2+5 scored 40) - d6 format roll=6 (3 Things), expanded behavioral constraint design idea into 563-word article, psychological brutalism concept, cross-pollinated game design + social deduction mechanics, saved to 02-rough-draft/"
       }
     }
   },
-  "lastUpdated": "2026-02-26T03:45:00Z"
+  "lastUpdated": "2026-02-26T11:45:00Z"
 }
