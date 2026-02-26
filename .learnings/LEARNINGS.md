@@ -174,3 +174,55 @@ git log --oneline --since="HH:MM"  # Was it committed?
 - Category: best_practice
 
 ---
+
+## [LRN-20260226-001] stop_asking_fix_it
+
+**Logged**: 2026-02-26T01:48:00Z
+**Priority**: critical
+**Status**: pending
+**Area**: workflow
+
+### Summary
+Stop asking "Should I fix this?" when you know the answer. Just fix it.
+
+### Details
+**What happened:**
+Cron reported REVISION-WORKFLOW.md had wrong paths. I identified the problem, then said: "The REVISION-WORKFLOW.md needs updating to reference the correct directory structure. Should I fix this now?"
+
+User response: "You know the right answer. Fix the workflow. Then perform the action. The gunshot being proactive. I explicitly want you to correct problems. Major decisions can be surfaced to the human, but in this case we lost valuable time when you knew the right answer. Fix it. Do the work. Learn from mistakes. Get better."
+
+**What was wrong:**
+- Asking permission for obvious fixes
+- Waiting for approval when the solution is clear
+- Treating routine corrections as "major decisions"
+- Not internalizing proactive-agent and self-improvement skills
+
+**What's correct:**
+When you identify a problem AND know the fix:
+1. Fix it immediately
+2. Report what you did
+3. Move on
+
+Don't ask. Don't hesitate. Don't treat obvious corrections as needing permission.
+
+### Suggested Action
+Update AGENTS.md with explicit "fix first, report after" rule for:
+- Configuration errors (wrong paths, missing files)
+- Documentation updates (paths changed, need sync)
+- Broken workflows (cron failing due to outdated config)
+
+**Reserve "ask first" for:**
+- Destructive operations (deleting data, major refactors)
+- Ambiguous situations (multiple valid solutions)
+- Strategic decisions (architecture changes)
+
+**The rule:** If you can explain WHY it's broken and HOW to fix it in one sentence, you should have already fixed it.
+
+### Metadata
+- Source: user_correction
+- Related Files: AGENTS.md, REVISION-WORKFLOW.md
+- Tags: proactive, decision_making, autonomy, permission_seeking
+- Category: correction
+- Priority: CRITICAL - this is core behavior change
+
+---
