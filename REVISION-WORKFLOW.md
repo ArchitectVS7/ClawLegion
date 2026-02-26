@@ -15,10 +15,12 @@
 
 ## Step 1: Select 3 Random Articles (or Expand Ideas)
 
+**Blog location:** `/root/.openclaw/vs7-blog` (moved outside workspace to avoid submodule issues)
+
 **Primary mode:** Check hold directory for articles needing fixes
 
 ```bash
-ls _hold/*.md | shuf -n 3
+ls /root/.openclaw/vs7-blog/03-development-hold/*.md | shuf -n 3
 ```
 
 For each of the 3 candidates, extract:
@@ -29,7 +31,7 @@ For each of the 3 candidates, extract:
 **Fallback mode:** If hold directory is empty, expand an idea instead
 
 ```bash
-ls ideas/*.md | shuf -n 3
+ls /root/.openclaw/vs7-blog/01-bare-ideas/*.md | shuf -n 3
 ```
 
 For each of the 3 idea candidates, evaluate:
@@ -196,8 +198,8 @@ For each of the 3 idea candidates, evaluate:
 - Update chaos-stats.json revisionWorkflow counters
 
 **Key difference from held article fixes:**
-- Ideas go to `02-rough-draft/` (for heartbeat review)
-- Held articles go to `_drafts/` (already passed once, just needed refinement)
+- Expanded ideas go to `02-rough-draft/` (first-time review via heartbeat)
+- Fixed held articles go to `_drafts/` (already reviewed once, just needed refinement)
 
 ---
 
@@ -217,7 +219,7 @@ For each of the 3 idea candidates, evaluate:
    - Differentiation
    - Code Verification
 7. If all gates pass: move to `_drafts/`
-8. If gates still fail: note what needs more work, leave in `_hold/` with updated commit message
+8. If gates still fail: note what needs more work, leave in `03-development-hold/` with updated commit message
 
 ---
 
@@ -225,8 +227,8 @@ For each of the 3 idea candidates, evaluate:
 
 ```bash
 cd /root/.openclaw/vs7-blog
-mv _hold/YYYY-MM-DD-article-name.md _drafts/YYYY-MM-DD-article-name.md
-git add _drafts/YYYY-MM-DD-article-name.md _hold/
+mv 03-development-hold/YYYY-MM-DD-article-name.md _drafts/YYYY-MM-DD-article-name.md
+git add _drafts/YYYY-MM-DD-article-name.md 03-development-hold/
 git commit -m "revision: [article title] (fixed [issue])"
 git push
 ```
