@@ -196,10 +196,12 @@ For each of the 3 idea candidates, evaluate:
 - Commit to git with message: `revision: [title] (expanded from idea [date])`
 - Log to memory/YYYY-MM-DD.md
 - Update chaos-stats.json revisionWorkflow counters
+- **Archive the source idea:** Move from `01-bare-ideas/` to `05-archived-ideas/` with prefix `expanded-YYYY-MM-DD-original-filename.md`
 
 **Key difference from held article fixes:**
 - Expanded ideas go to `02-rough-draft/` (first-time review via heartbeat)
 - Fixed held articles go to `_drafts/` (already reviewed once, just needed refinement)
+- **Source ideas must be archived** to prevent re-selection in future runs
 
 ---
 
