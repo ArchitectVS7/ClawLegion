@@ -115,7 +115,7 @@ Repository: https://github.com/ArchitectVS7/vs7-blog
 - `99-development-hold/` — articles that failed 5+ substance iterations
 
 **Step 6 — Save and log:**
-- Full brainstorm to `ideas/YYYY-MM-DD-HHMM-[topic].md`
+- Full brainstorm to `/root/.openclaw/vs7-blog/01-bare-ideas/YYYY-MM-DD-HHMM-[topic].md`
 - Session summary to `memory/YYYY-MM-DD.md`
 - Update `memory/chaos-stats.json` (increment used/selected counters, append cluster to recentSourceDomains)
 
