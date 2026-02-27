@@ -3,6 +3,7 @@ title: "Let Revenue Pick Your Feature: A 30-Day Decision Framework"
 date: 2026-02-22
 review_iterations:
   structural: 1
+  adversarial: 1
   content: 0
   polish: 0
 ---
