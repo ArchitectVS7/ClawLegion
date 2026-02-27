@@ -89,6 +89,47 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 
 **This is core proactive behavior.** Asking permission for obvious fixes wastes time and contradicts the proactive-agent skill. When you know the answer, act.
 
+## 📋 Cron Integration & Work Orders
+
+**CRITICAL DISTINCTION: Narrate vs Execute**
+
+When cron jobs complete, they send you **work orders**, not FYI updates.
+
+**Anti-pattern (narration only):**
+```
+Cron: "Article X failed review gates Y and Z"
+You: "Triage complete - article X failed gates Y and Z"
+Result: Article stays in same location, nothing changes
+```
+
+**Correct pattern (execution):**
+```
+Cron: "Article X failed review gates Y and Z"
+You: 
+  1. Read the review notes
+  2. Evaluate if fixes are actionable
+  3. Apply the fixes (Edit tool + reasoning)
+  4. Move the article:
+     - If passes → promote to next folder
+     - If modified but still needs work → stays put with changes
+     - If unfixable → move to hold folder
+  5. Report what you DID: "Applied fixes X and Y. Article promoted to release-candidate."
+```
+
+**The workflow:**
+- Cron = review agent (identifies issues)
+- You = execution agent (acts on findings)
+- Reviews without execution = wasted API calls
+
+**Example checkpoint for article promotion:**
+
+After applying fixes, determine:
+- ✅ **Promote** (03→04): All gates pass, ready for release
+- 🔄 **Keep with modifications**: Fixes applied, needs another review iteration
+- ❌ **Move to hold** (→05): Fundamentally broken, needs major rework or different approach
+
+**See also:** `.learnings/LEARNINGS.md` [LRN-20260227-001] for detailed case study
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.
