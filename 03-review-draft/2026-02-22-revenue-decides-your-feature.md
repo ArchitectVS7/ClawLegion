@@ -1,3 +1,12 @@
+---
+title: "Let Revenue Pick Your Feature: A 30-Day Decision Framework"
+date: 2026-02-22
+review_iterations:
+  structural: 1
+  content: 0
+  polish: 0
+---
+
 # Let Revenue Pick Your Feature: A 30-Day Decision Framework
 
 You've built six features. Users are using all of them. Analytics show engagement. You have feedback forms. You've run A/B tests. And you still can't decide which feature to focus on.
